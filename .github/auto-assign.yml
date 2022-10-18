@@ -2,7 +2,7 @@
 addReviewers: true
 
 # Set to 'author' to add PR's author as a assignee
-addAssignees: author
+addAssignees: true
 
 # A list of reviewers to be added to PRs (GitHub user  name)
 reviewers:
