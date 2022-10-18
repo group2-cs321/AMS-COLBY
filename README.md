@@ -8,36 +8,36 @@ For this milestone, our objective was to create static web pages using HTML and 
 ### Results
 Our main result from this milestone is our repository housing all of the static web pages. The repository can be accessed at https://github.com/tymkiwdylan/cs_321_milestone_3.io and the website is https://tymkiwdylan.github.io/. Below are screenshots and short descriptions of the web pages that we have created.<br>
 
-![Login Page](/assets/report_images/login.png)
+![Login Page](/website/assets/report_images/login.png)
 <p align="center"><b>Login page</b></p>
 This is the initial page that the user will interact with to sign into the athlete management system. <br>
 
-![Admin View](/assets/report_images/admin_view.png)
+![Admin View](/website/assets/report_images/admin_view.png)
 <p align="center"><b>Admin view</b></p>
 This is the page that the admin will see and use to view data on various teams, generate reports, and edit user permissions.<br>
 
-![Athlete view coach 1](/assets/report_images/a_coach1.png)
-![Athlete view coach 2](/assets/report_images/a_coach2.png)
+![Athlete view coach 1](/website/assets/report_images/a_coach1.png)
+![Athlete view coach 2](/website/assets/report_images/a_coach2.png)
 <p align="center"><b>Athlete view (coach)</b></p>
 This is the page that the coach will have access to, providing them with visualizations for readiness, sleep, nutrition, and performance data.<br>
   
-![Athlete view](/assets/report_images/a_view.png)
+![Athlete view](/website/assets/report_images/a_view.png)
 <p align="center"><b>Athlete view</b></p>
 This is the page that the athlete will see, giving them an overview of their readiness, sleep, and nutritional trends and data.<br>
 
-![PEAK view](/assets/report_images/p_view.png)
+![PEAK view](/website/assets/report_images/p_view.png)
 <p align="center"><b>PEAK view</b></p>
 This is the page that PEAK team members will have access to, allowing them to view information on various teams, generate reports, and post notes for individual athletes.<br>
 
-![Permissions page](/assets/report_images/p_page.png)
+![Permissions page](/website/assets/report_images/p_page.png)
 <p align="center"><b>Permission page</b></p>
 This page will be accessible by the admin and will enable them to change permissions of individual users, create and delete users, and modify various data.<br>
 
-![Restfulness page](/assets/report_images/r_page.png)
+![Restfulness page](/website/assets/report_images/r_page.png)
 <p align="center"><b>Restfulness page</b></p>
 This page provides users with a visual representation of the athlete’s current restfulness data in addition to their restfulness trends.<br>
 
-![Sleep page](/assets/report_images/s_page.png)
+![Sleep page](/website/assets/report_images/s_page.png)
 <p align="center"><b>Sleep page</b></p>
 This page provides users with a visual representation of the athlete’s current sleep data in addition to their sleep trends.<br>
 
@@ -53,11 +53,11 @@ Developing new pages based on an html template was a lot of fun and we learned a
 We have created pages for more specified metrics, such as restfulness page and sleep page, so users can see more detailed information.
 2. Use additional GitHub features like projects and create a burndown chart of your project. 
 We used GitHub Projects to keep track of our tasks (issues). For some reasons, the “generate chart” feature doesn’t work though.
-![extension 2-1](/assets/report_images/e_2_1.png)
-![extension 2-2](/assets/report_images/e_2_2.png)
+![extension 2-1](/website/assets/report_images/e_2_1.png)
+![extension 2-2](/website/assets/report_images/e_2_2.png)
 3. Calculate Agile metrics for your team such as team velocity.
 A burndown chart, one of the most common and useful Agile metrics, is created using Excel and is shown below. It demonstrates our daily efforts in comparison to the ideal burndown, as well as actual and planned hours working every day.
-![extension 3](/assets/report_images/2_3.jpg)
+![extension 3](/website/assets/report_images/2_3.jpg)
 4. Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
 Done.
 5. Suggest your own creative extensions. 
