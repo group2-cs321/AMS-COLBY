@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User, Note
+from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -10,7 +10,7 @@ auth = Blueprint('auth', __name__)
 def login():
 
     if request.method == 'POST':
-        email = request.form.get('colby_id')
+        colby_id = request.form.get('colby_id')
         password = request.form.get('password')
 
         user = User.query.filter_by(colby_id=colby_id).first()
@@ -18,14 +18,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                if user.role == 0: #User is super admin 
-                    return redirect(url_for('views.admin_view')) # TODO: do these checks in views instead
-                elif user.role == 1: #User is peak
-                    return redirect(url_for('views.peak_view'))
-                elif user.role == 2: # User is a coach
-                    return redirect(url_for('views.coach_view'))
-                elif user.role == 3: # User is an athlete
-                    return redirect(url_for('views.athlete_view'))
+                return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
@@ -49,6 +42,12 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         last_name = request.form.get('lastname')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+        athlete_data = request.form.get('athlete_data')
+        team_data = request.form.get('team_data')
+        notes = request.form.get('notes')
+        create_account = request.form.get('create_account')
+        permission_change = request.form.get('permission_change')
+        role = request.form.get('role')
 
         user = User.query.filter_by(colby_id=colby_id).first()
         if user: #TODO: Find better checks
@@ -63,11 +62,17 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
             flash('Passwords don\'t match.', category='error')
         else:
             # add user to database
-            new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name, password=generate_password_hash(password1, method='sha256')) #TODO: Figure out parameters for permissions
+            new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
+             password=generate_password_hash(password1, method='sha256'),
+             role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
+             create_account = create_account, permission_change = permission_change) #TODO: Figure out parameters for permissions
             db.session.add(new_user)
             db.session.commit()
             #login_user(user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.admin_view'))
+            print(User.query.filter_by(colby_id=colby_id).first().role)
+            return redirect(url_for('views.home'))
 
-    return render_template("signup.html", user=current_user)
+    return render_template("create_user.html", user=current_user)
+
+
