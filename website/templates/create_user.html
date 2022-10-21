@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Permission Setting</title>
+    <title>Create User</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/css/vendor.bundle.base.css')}}">
@@ -20,7 +20,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{url_for('static', filename ='assets/css/style.css') }}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="colby.svg" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='colby.svg')}}" />
   </head>
   <body>
   <div class="container-fluid page-body-wrapper">
@@ -104,29 +104,29 @@
                     
                     <div class="form-group">
                       <label> Colby ID * </label>
-                      <input type="text" name="colby_id" class="form-control p_input" style="background-color: black; color: white;">
+                      <input type="text" id="colby_id" name="colby_id" class="form-control p_input" style="background-color: black; color: white;">
                     </div>
                     <div class="form-group">
                       <label> First Name * </label>
-                      <input type="text" name="firstname" class="form-control p_input" style="background: black;, color: white;">
+                      <input type="text" id="firsname" name="firstname" class="form-control p_input" style="background: black;, color: white;">
                     </div>
                     
                     <div class="form-group">
                       <label> Last Name * </label>
-                      <input type="text" name="lastname" class="form-control p_input" style="background: black;, color: white;">
+                      <input type="text" id="lastname" name="lastname" class="form-control p_input" style="background: black;, color: white;">
                     </div>
                     <div class="form-group">
                       <label> Enter Password * </label>
-                      <input type="password" name="password1" class="form-control p_input" style="background: black;, color: white;">
+                      <input type="password" id="password1" name="password1" class="form-control p_input" style="background: black;, color: white;">
                     </div>
                     <div class="form-group">
                       <label> Confirm Password * </label>
-                      <input type="password" name="password2" class="form-control p_input" style="background: black;, color: white;">
+                      <input type="password" id="password2" name="password2" class="form-control p_input" style="background: black;, color: white;">
                     </div>
 
                     <div class="form-group">
                       <label> Select Role</label>
-                      <select class="form-control" name="role" style="color: white;">
+                      <select class="form-control" id="role" name="role" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -144,7 +144,7 @@
 
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Athlete Data</label>
-                      <select class="form-control" name="athlete_data" style="color: white;">
+                      <select class="form-control" id="athlete_data" name="athlete_data" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -154,7 +154,7 @@
                     
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Team Data</label>
-                      <select class="form-control" name="team_data" style="color: white;">
+                      <select class="form-control" id="team_data" name="team_data" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Notes</label>
-                      <select class="form-control" name="notes" style="color: white;">
+                      <select class="form-control" id="notes" name="notes" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -173,7 +173,7 @@
                     
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Create Account</label>
-                      <select class="form-control" name="create_account" style="color: white;">
+                      <select class="form-control" id="create_account" name="create_account" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -183,7 +183,7 @@
                 
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Permissions Acess</label>
-                      <select class="form-control" name="permission_change" style="color: white;">
+                      <select class="form-control" id="permssion_change" name="permission_change" style="color: white;">
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
@@ -203,24 +203,24 @@
           </div>
       </div>
       </div>
-      <script src="static/assets/vendors/js/vendor.bundle.base.js"></script>
+      <script src="{{url_for('static', filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <!-- <script src="assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script> -->
+    <script src="{{url_for('static', filename='assets/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+    <script src="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.js')}}"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <!-- <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script> -->
+    <script src="{{url_for('static', filename= 'assets/js/off-canvas.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/hoverable-collapse.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/settings.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <!-- <script src="assets/js/dashboard.js"></script> -->
+    <script src="{{url_for('static', filename='assets/js/dashboard.js')}}"></script>
     <!-- End custom js for this page -->
   </body>
 </html>
