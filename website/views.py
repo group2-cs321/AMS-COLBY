@@ -23,7 +23,11 @@ def home():
     else:
         return render_template("login.html", user=current_user)
 
+@views.route('/permissions', methods = ['GET'])
+def permissions():
 
-@views.route('/coach_view')
-def coach_view():
-    return render_template("coach_dashboard.html")
+    if int(current_user.permission_change) != 0:
+        return redirect(url_for('views.home'))
+
+    else:
+        return render_template('permission.html', user=current_user)

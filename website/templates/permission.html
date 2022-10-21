@@ -29,7 +29,7 @@
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
 
             <ul class="navbar-nav navbar-nav-left">
-              <li><a href="admin_view.html" class="btn btn-primary">Back</a></li>
+              <li><a href="/" class="btn btn-primary">Back</a></li>
                 <li class="nav-item border-left">
                 <img src="assets/images/mule.jpg" width="40" height="25">
                   
@@ -83,7 +83,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="login.html" class="btn btn-primary">Log Out</a>
+                <a href="/logout" class="btn btn-primary">Log Out</a>
               </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -194,7 +194,7 @@
     <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="{{url_for('static', 'assets/js/dashboard.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/dashboard.js')}}"></script>
     <!-- End custom js for this page -->
   </body>
 </html>
