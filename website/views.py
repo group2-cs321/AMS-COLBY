@@ -19,7 +19,7 @@ def home():
     elif int(role) == 2:
         return render_template("coach_dashboard.html", user=current_user)
     elif int(role) == 3:
-        return render_template("athlete_view.html", user=current_user)
+        return render_template("athleteView.html", user=current_user)
     else:
         return render_template("login.html", user=current_user)
 
