@@ -23,7 +23,6 @@ def login():
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('User does not exist.', category='error')
-            print('Noooooo-----')
 
     return render_template("login.html", user=current_user)
 
@@ -53,7 +52,8 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         user = User.query.filter_by(colby_id=colby_id).first()
         if user: #TODO: Find better checks
             flash('Email already exists.', category='error')
-        elif len(email) < 4:
+            print("--------------------------")
+        elif len(colby_id) < 4:
             flash('Email must be greater than 3 characters.', category='error')
         elif len(first_name) < 2:
             flash('First name must be greater than 1 character.', category='error')
@@ -66,14 +66,15 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
             new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
              password=generate_password_hash(password1, method='sha256'),
              role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
-             create_account = create_account, permission_change = permission_change) #TODO: Figure out parameters for permissions
+             account_create = create_account, permission_change = permission_change) #TODO: Figure out parameters for permissions
             db.session.add(new_user)
             db.session.commit()
-            #login_user(user, remember=True)
+            #login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            print(User.query.filter_by(colby_id=colby_id).first().role)
-            return redirect(url_for('views.home'))
+            return redirect(url_for('auth.login'))
 
-    return render_template("create_user.html", user=current_user)
+        
+
+    return render_template("create_user.html")
 
 

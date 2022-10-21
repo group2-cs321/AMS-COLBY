@@ -30,7 +30,7 @@
             
             <ul class="navbar-nav navbar-nav-left">
               <li class="nav-item">
-                <img src="assets/images/mule.jpg" width="80" height="50">
+                <img src="{{url_for('static', filename='assets/images/mule.jpg')}}" width="80" height="50">
               </li>
             </ul>
 
@@ -222,7 +222,7 @@
     <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="{{url_for('static', 'assets/js/dashboard.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/dashboard.js')}}"></script>
     <!-- End custom js for this page -->
   </body>
 </html>

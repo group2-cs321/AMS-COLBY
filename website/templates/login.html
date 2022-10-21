@@ -30,12 +30,12 @@
                 <h3 class="card-title text-left mb-3">Login</h3>
                 <form method="POST">
                   <div class="form-group">
-                    <label>Username or email *</label>
-                    <input type="text" class="form-control p_input" style="color: white;">
+                    <label>Colby ID *</label>
+                    <input type="text" name = "colby_id" id = "colby_id"class="form-control p_input" style="color: white;">
                   </div>
                   <div class="form-group">
                     <label>Password *</label>
-                    <input type="password" class="form-control p_input" style="color:white;">
+                    <input type="password" name = "password" id="password" class="form-control p_input" style="color:white;">
                   </div>
                   <!-- <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
@@ -46,7 +46,7 @@
                   </div> -->
                   <br>
                   <div class="text-center" href="{{url_for('static', filename = 'coach_dashboard.html')}}">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn" name = "password" >Login</button>
+                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                   </div>
                   <!-- <div class="d-flex">
                     <button class="btn btn-facebook mr-2 col">
