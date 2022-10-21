@@ -23,3 +23,6 @@ def home():
 @views.route('/create_user', methods = ['GET', 'POST'])
 def create_user():
     return render_template("create_user.html")
+@views.route('/coach_view')
+def coach_view():
+    return render_template("coach_dashboard.html")

@@ -28,7 +28,7 @@
                 <img src="{{url_for('static', filename = 'assets/images/mule.jpg')}}" alt="Colby Mule Icon" style="float:right;width:90px;height:60px;">
                 <!-- <h4 class="card-title text-left mb-3">Colby Athlete Management System</h4> -->
                 <h3 class="card-title text-left mb-3">Login</h3>
-                <form>
+                <form method="POST">
                   <div class="form-group">
                     <label>Username or email *</label>
                     <input type="text" class="form-control p_input" style="color: white;">
@@ -46,7 +46,7 @@
                   </div> -->
                   <br>
                   <div class="text-center" href="{{url_for('static', filename = 'coach_dashboard.html')}}">
-                    <a class="btn btn-primary btn-block enter-btn" href="coach_dashboard.html">Login</a>
+                    <button type="submit" class="btn btn-primary btn-block enter-btn" name = "password" >Login</button>
                   </div>
                   <!-- <div class="d-flex">
                     <button class="btn btn-facebook mr-2 col">
