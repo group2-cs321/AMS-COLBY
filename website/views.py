@@ -35,8 +35,12 @@ def permissions():
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
 
-    # if request.method == 'POST':
-    #     pass
+    if request.method == 'POST':
+        # TODO:
+        # Create a team with the given name
+        # Get the list of athletes from the form and add them to the team
+        # For each coach, add the team to the coach field team_id
+        pass
 
         
     print(Athlete.query.all())
