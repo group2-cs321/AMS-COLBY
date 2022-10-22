@@ -10,6 +10,7 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     role = current_user.role
+    print(current_user)
     print(role)
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user)
@@ -18,10 +19,9 @@ def home():
     elif int(role) == 2:
         return render_template("coach_dashboard.html", user=current_user)
     elif int(role) == 3:
-        print('this is role 3')
         return render_template("athleteView.html", user=current_user)
     else:
-        return render_template("login.html", user=current_user)
+        return render_template("login.html")
 
 @views.route('/permissions', methods = ['GET'])
 def permissions():

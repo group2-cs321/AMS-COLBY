@@ -33,25 +33,43 @@ class User(db.Model, UserMixin):
     permission_change = db.Column(db.Integer)
 
 
+# class Peak(db.Model, UserMixin):
+#     id = db.Column(db.Integer, primary_key=True)
+
+#     colby_id = db.Column(db.String(150), unique=True)
+#     first_name = db.Column(db.String(150))
+#     last_name = db.Column(db.String(150))
+#     password = db.Column(db.String(150))
+
+#     role = db.Column(db.String(150))
+
+#     notes = db.Column(db.Integer)
+#     #peak_data= db.Column(db.Integer)
+#     athlete_data = db.Column(db.Integer)
+#     team_data = db.Column(db.Integer)
+#     account_create = db.Column(db.Integer)
+#     permission_change = db.Column(db.Integer)
+
 class Athlete(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     colby_id = db.Column(db.String(150), unique=True)
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
-    password = db.Column(db.String(150))
-
-    role = db.Column(db.String(150))
-
-    notes = db.Column(db.Integer)
-    #peak_data= db.Column(db.Integer)
-    athlete_data = db.Column(db.Integer)
-    team_data = db.Column(db.Integer)
-    account_create = db.Column(db.Integer)
-    permission_change = db.Column(db.Integer)
     status = db.Column(db.Integer)
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    # password = db.Column(db.String(150))
+
+    # role = db.Column(db.String(150))
+
+    # notes = db.Column(db.Integer)
+    # #peak_data= db.Column(db.Integer)
+    # athlete_data = db.Column(db.Integer)
+    # team_data = db.Column(db.Integer)
+    # account_create = db.Column(db.Integer)
+    # permission_change = db.Column(db.Integer)
+    
 
 class Coach(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,21 +77,22 @@ class Coach(db.Model, UserMixin):
     colby_id = db.Column(db.String(150), unique=True)
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
-    password = db.Column(db.String(150))
+    teams = db.relationship('Team')
+    # password = db.Column(db.String(150))
 
-    role = db.Column(db.String(150))
+    # role = db.Column(db.String(150))
 
-    notes = db.Column(db.Integer)
-    #peak_data= db.Column(db.Integer)
-    athlete_data = db.Column(db.Integer)
-    team_data = db.Column(db.Integer)
-    account_create = db.Column(db.Integer)
-    permission_change = db.Column(db.Integer)
+    # notes = db.Column(db.Integer)
+    # #peak_data= db.Column(db.Integer)
+    # athlete_data = db.Column(db.Integer)
+    # team_data = db.Column(db.Integer)
+    # account_create = db.Column(db.Integer)
+    # permission_change = db.Column(db.Integer)
 
 
-    # team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+#     # team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
-    team = db.relationship('Team')
+     
 
 
 class Team(db.Model):

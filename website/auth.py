@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User, Athlete, Coach
+from .models import User, Coach, Athlete
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -41,7 +41,7 @@ def login():
         else:
             flash('User does not exist.', category='error')
 
-    return render_template("login.html", user=current_user)
+    return render_template("login.html")
 
 
 @auth.route('/logout')
@@ -65,7 +65,9 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         create_account = request.form.get('create_account')
         permission_change = request.form.get('permission_change')
         role = request.form.get('role')
+        print(role)
 
+        
         user = User.query.filter_by(colby_id=colby_id).first()
         if user: #TODO: Find better checks
             flash('User already exists.', category='error')
@@ -79,21 +81,18 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
             flash('Passwords don\'t match.', category='error')
         else:
             #add user to database'
+            new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
+                 password=generate_password_hash(password1, method='sha256'),
+                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
+                 account_create = create_account, permission_change = permission_change)
             if int(role) == 2:
-                new_user = Coach(colby_id=colby_id, first_name=first_name, last_name = last_name,
-                 password=generate_password_hash(password1, method='sha256'),
-                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
-                 account_create = create_account, permission_change = permission_change)
+                print("creating coach")
+                coach = Coach(colby_id=colby_id, first_name=first_name, last_name = last_name)
+                db.session.add(coach)
             if int(role) == 3:
-                new_user = Athlete(colby_id=colby_id, first_name=first_name, last_name = last_name,
-                 password=generate_password_hash(password1, method='sha256'),
-                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
-                 account_create = create_account, permission_change = permission_change)
-            else:
-                new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
-                 password=generate_password_hash(password1, method='sha256'),
-                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
-                 account_create = create_account, permission_change = permission_change) #TODO: Figure out parameters for permissions
+                athlete = Athlete(colby_id=colby_id, first_name=first_name, last_name = last_name)
+                db.session.add(athlete)
+            
             db.session.add(new_user)
             db.session.commit()
             #login_user(new_user, remember=True)
