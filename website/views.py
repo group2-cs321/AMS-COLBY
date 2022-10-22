@@ -10,8 +10,8 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     role = current_user.role
+    print(current_user)
     print(role)
-
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user)
     elif int(role) == 1:
@@ -21,7 +21,7 @@ def home():
     elif int(role) == 3:
         return render_template("athleteView.html", user=current_user)
     else:
-        return render_template("login.html", user=current_user)
+        return render_template("login.html")
 
 @views.route('/permissions', methods = ['GET'])
 def permissions():
@@ -40,7 +40,18 @@ def create_team():
         # Create a team with the given name
         # Get the list of athletes from the form and add them to the team
         # For each coach, add the team to the coach field team_id
-        pass
+        team_name = request.form.get('team_name')
+
+        athletes = request.form.getlist('athletes')
+        coaches = request.form.getlist('coaches')
+
+        # if len(team_name) < 1 or len(athletes) < 1 or len(coaches) < 1:
+        #     flash('Please input a team name', category = 'error')
+        # else:
+
+        #     new_team = 
+
+        # pass
 
         
     print(Athlete.query.all())
