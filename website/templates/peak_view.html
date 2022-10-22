@@ -6,21 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Home</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/css/vendor.bundle.base.css')}}">
+    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/jvectormap/jquery-jvectormap.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-    <link rel="stylesheet" href="{{url_for('static', filename ='assets/css/style.css') }}">
+    <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{url_for('static', filename='colby.svg')}}" />
+    <link rel="shortcut icon" href="colby.svg" />
   </head>
   <body>
   <div class="container-fluid page-body-wrapper">
@@ -86,7 +86,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                 <a class="btn btn-primary" href="/logout">Log Out</a>
+                 <a class="btn btn-primary" href="login.html">Log Out</a>
               </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -103,7 +103,7 @@
                   <input type="text" name="Search Teams.." placeholder="Search teams.." style="color: white; background-color: black;"> <!-- change style -->
                   <button type="submit" style="background-color: black; color: white;">Search</button>
                   <div class="card-body" style="max-height: 210px; overflow: scroll;">
-                    <div><a href="coach_dashboard.html">Squash</a></div>
+                    <!-- <div><a href="coach_dashboard.html">Squash</a></div>
                     <div><a href="coach_dashboard.html">Ice Hockey(W)</a></div>
                     <div><a href="coach_dashboard.html">Field Hockey</a></div>
                     <div><a href="coach_dashboard.html">Tennis</a></div>
@@ -115,7 +115,13 @@
                     <div><a href=coach_dashboard.html>Soccer (M)</a></div>
                     <div><a href="coach_dashboard.html">Soccer(W)</a></div>
                     <div><a href="coach_dashboard.html">Track and Field</a></div>
-                    <div><a href="coach_dashboard.html">Cross Country</a></div>
+                    <div><a href="coach_dashboard.html">Cross Country</a></div> -->
+
+                    {% for team in teams %}
+                      <div><a href="coach_dashboard/{{ team.id }}">{{ team.name }}</a></div>
+                    {% endfor %}
+
+                    
                   </div>
                 </div>
               </div>
@@ -205,24 +211,24 @@
           </div>
         </div>
       </div>
-      <script src="{{url_for('static', filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
+      <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="{{url_for('static', filename='assets/vendors/chart.js/Chart.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
-    <script src="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.js')}}"></script>
+    <script src="assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="{{url_for('static', filename= 'assets/js/off-canvas.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/settings.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="{{url_for('static', 'assets/js/dashboard.js')}}"></script>
+    <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
   </body>
 </html>
