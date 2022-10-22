@@ -1,7 +1,7 @@
 from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import User, Athlete, Coach
+from .models import User, Athlete, Coach, Team
 from . import db
 
 views = Blueprint('views', __name__)
@@ -43,16 +43,28 @@ def create_team():
         team_name = request.form.get('team_name')
 
         athletes = request.form.getlist('athletes')
-        coaches = request.form.getlist('coaches')
+        coach = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
 
-        # if len(team_name) < 1 or len(athletes) < 1 or len(coaches) < 1:
-        #     flash('Please input a team name', category = 'error')
-        # else:
+        team = Team.query.filter_by(team_name=team_name).first()
 
-        #     new_team = 
+        if team:
+            flash('Team Already exists', category = 'error')
+            return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
 
-        # pass
+        if len(team_name) < 1 or len(athletes) < 1:
+             flash('Please input a valid team name', category = 'error')
+             return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+        else:
+            new_team = Team(team_name=team_name, coach_id = coach.id)
+            db.session.add(new_team)
+            db.session.commit()
 
+            for athlete in athletes:
+                ath = Athlete.query.filter_by(colby_id=athlete).first()
+                ath.team_id = new_team.id
+                db.session.commit()
+
+        flash('Team created Succesfully', category='success')
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
         
-    print(Athlete.query.all())
     return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
