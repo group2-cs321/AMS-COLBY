@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Home</title>
     <!-- plugins:css -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/css/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/jvectormap/jquery-jvectormap.css')}}">
     <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
     <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="../assets/vendors/owl-carousel-2/owl.carousel.min.css">
@@ -658,9 +661,12 @@ const trendsplayer = new Chart(ctxplayer, {
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script src="{{url_for('static', filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
+    <script src="{{url_for('static', filename='assets/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
     <script src="../assets/vendors/chart.js/Chart.min.js"></script>
     <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
     <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
