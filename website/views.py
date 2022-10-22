@@ -1,6 +1,7 @@
 from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from .models import User, Athlete, Coach
 from . import db
 
 views = Blueprint('views', __name__)
@@ -12,7 +13,6 @@ def home():
     print(role)
 
     if int(role) == 0:
-        print("in condition")
         return render_template("admin_view.html", user=current_user)
     elif int(role) == 1:
         return render_template("peak_view.html", user=current_user)
@@ -35,6 +35,9 @@ def permissions():
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
 
-    if request.method == 'POST':
-        if current_user:
-            pass
+    # if request.method == 'POST':
+    #     pass
+
+        
+    print(Athlete.query.all())
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())

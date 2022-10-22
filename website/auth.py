@@ -14,8 +14,24 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(colby_id=colby_id).first()
+        coach = Coach.query.filter_by(colby_id=colby_id).first()
+        athlete = Athlete.query.filter_by(colby_id=colby_id).first()
         if user:
             if check_password_hash(user.password, password):
+                flash('Logged in successfully!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        elif coach:
+            if check_password_hash(coach.password, password):
+                flash('Logged in successfully!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        elif athlete:
+            if check_password_hash(athlete.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
