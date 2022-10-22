@@ -13,6 +13,8 @@ from sqlalchemy.sql import func
 #                     db.Column('coach_id', db.Integer, db.ForeignKey('coach.id')),
 #                     db.Column('team_id', db.Integer, db.ForeignKey('team.id')))
 
+# create one table per typer of user? Maybe that will work. Then we can only have reference to coaches and athletes in Teams
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -29,28 +31,55 @@ class User(db.Model, UserMixin):
     team_data = db.Column(db.Integer)
     account_create = db.Column(db.Integer)
     permission_change = db.Column(db.Integer)
-    #teams = db.relationship('Team')
 
 
-class Coach(User):
-    #teams = db.relationship('Team')
-    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
-    #teams = db.relationship('Team', secondary='CoachTeam', backref = 'Coach')
+class Athlete(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
 
-    teams = db.relationship('Team')
+    colby_id = db.Column(db.String(150), unique=True)
+    first_name = db.Column(db.String(150))
+    last_name = db.Column(db.String(150))
+    password = db.Column(db.String(150))
 
-class Athlete(User):
+    role = db.Column(db.String(150))
+
+    notes = db.Column(db.Integer)
+    #peak_data= db.Column(db.Integer)
+    athlete_data = db.Column(db.Integer)
+    team_data = db.Column(db.Integer)
+    account_create = db.Column(db.Integer)
+    permission_change = db.Column(db.Integer)
     status = db.Column(db.Integer)
-    in_season = db.Column(db.Boolean)
+
+class Coach(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+
+    colby_id = db.Column(db.String(150), unique=True)
+    first_name = db.Column(db.String(150))
+    last_name = db.Column(db.String(150))
+    password = db.Column(db.String(150))
+
+    role = db.Column(db.String(150))
+
+    notes = db.Column(db.Integer)
+    #peak_data= db.Column(db.Integer)
+    athlete_data = db.Column(db.Integer)
+    team_data = db.Column(db.Integer)
+    account_create = db.Column(db.Integer)
+    permission_change = db.Column(db.Integer)
 
 
-class Team(db.Model, UserMixin):
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+
+    team = db.relationship('Team')
+
+
+class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     team_name = db.Column(db.String(150), unique=True)
-    # coaches = db.Column(db.Integer, db.ForeignKey('user.id')) #db.relationship('Coach', secondary='CoachTeam', backref = 'Team')
-    athletes = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    athletes = db.relationship('User')
+    athlete_id = db.Column(db.Integer, db.ForeignKey('athlete.id'))
+    athlete = db.relationship('Athlete')
+    
 
 
     

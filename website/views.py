@@ -31,3 +31,10 @@ def permissions():
 
     else:
         return render_template('permission.html', user=current_user)
+
+@views.route('/create-team', methods = ['GET', 'POST'])
+def create_team():
+
+    if request.method == 'POST':
+        if current_user:
+            pass

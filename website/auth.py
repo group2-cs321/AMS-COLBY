@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User , Athlete, Coach
+from .models import User, Athlete, Coach
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -52,7 +52,6 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         user = User.query.filter_by(colby_id=colby_id).first()
         if user: #TODO: Find better checks
             flash('User already exists.', category='error')
-            print("--------------------------")
         elif len(colby_id) < 4:
             flash('Email must be greater than 3 characters.', category='error')
         elif len(first_name) < 2:
@@ -62,14 +61,14 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         elif password1 != password2:
             flash('Passwords don\'t match.', category='error')
         else:
-            # add user to database'
+            #add user to database'
             if int(role) == 2:
                 new_user = Coach(colby_id=colby_id, first_name=first_name, last_name = last_name,
                  password=generate_password_hash(password1, method='sha256'),
                  role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
                  account_create = create_account, permission_change = permission_change)
             if int(role) == 3:
-                new_user = Athlete(colby_id=colby_id, status = 0, first_name=first_name, last_name = last_name,
+                new_user = Athlete(colby_id=colby_id, first_name=first_name, last_name = last_name,
                  password=generate_password_hash(password1, method='sha256'),
                  role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
                  account_create = create_account, permission_change = permission_change)
