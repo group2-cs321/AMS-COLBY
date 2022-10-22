@@ -104,7 +104,7 @@
                     
                     <div class="form-group">
                       <label> Team Name * </label>
-                      <input type="text" id="colby_id" name="colby_id" class="form-control p_input" style="background-color: black; color: white;">
+                      <input type="text" id="team_name" name="team_name" class="form-control p_input" style="background-color: black; color: white;">
                     </div>
                     <h3 class="card-title">Pick Athletes and coaches</h3>
                     <div class="form-group">
@@ -118,7 +118,7 @@
                     
                     <div class="form-group">
                       <label for="exampleFormControlSelect2">Pick Coaches</label>
-                      <select multiple class="form-control" id="coaches" name="coaches" style="color: white;">
+                      <select class="form-control" id="coaches" name="coaches" style="color: white;">
                         {% for coach in coaches %}
                         <option>{{coach.colby_id}}</option>
                         {% endfor %}
