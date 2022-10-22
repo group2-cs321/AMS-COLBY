@@ -506,8 +506,21 @@ const trends2 = new Chart(ctx9, {
                         </thead>
                         <tbody>
                           <tr>
+
+                            {% for athlete in all_users %}
+                              {%if athlete.role == "athlete" and athlete.team == user.team%}
+
+                                <td>
+                                  <a href="athleteCoachView/{{athlete.id}}">
+                                  <span class="pl-2">{{athlete.name}}</span>
+                                    </a>
+                                </td>
+                                <td>{{athlete.athlete_data}}</td>
+                                
+                              {%endif%}  
+                            {% endfor %}
                             
-                            <td>
+                            <!-- <td>
                               <a href="athleteCoachView.html">
                               <span class="pl-2">Henry Klein</span>
                                 </a>
@@ -584,7 +597,7 @@ const trends2 = new Chart(ctx9, {
                             <td> 5 hrs </td>
                             <td> 70 bpm </td>
                             <td> 99% </td>
-                        
+                         -->
                             <td>
                               <div class="badge badge-outline-success">Cleared</div>
                             </td>

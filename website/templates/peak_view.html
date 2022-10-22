@@ -103,7 +103,7 @@
                   <input type="text" name="Search Teams.." placeholder="Search teams.." style="color: white; background-color: black;"> <!-- change style -->
                   <button type="submit" style="background-color: black; color: white;">Search</button>
                   <div class="card-body" style="max-height: 210px; overflow: scroll;">
-                    <div><a href="coach_dashboard.html">Squash</a></div>
+                    <!-- <div><a href="coach_dashboard.html">Squash</a></div>
                     <div><a href="coach_dashboard.html">Ice Hockey(W)</a></div>
                     <div><a href="coach_dashboard.html">Field Hockey</a></div>
                     <div><a href="coach_dashboard.html">Tennis</a></div>
@@ -115,7 +115,12 @@
                     <div><a href=coach_dashboard.html>Soccer (M)</a></div>
                     <div><a href="coach_dashboard.html">Soccer(W)</a></div>
                     <div><a href="coach_dashboard.html">Track and Field</a></div>
-                    <div><a href="coach_dashboard.html">Cross Country</a></div>
+                    <div><a href="coach_dashboard.html">Cross Country</a></div> -->
+
+                    {% for team in teams %}
+                      <div><a href="coach_dashboard/{{ team.id }}">{{ team.name }}</a></div>
+                    {% endfor %}
+
                   </div>
                 </div>
               </div>
