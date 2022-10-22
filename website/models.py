@@ -51,6 +51,8 @@ class Athlete(db.Model, UserMixin):
     permission_change = db.Column(db.Integer)
     status = db.Column(db.Integer)
 
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+
 class Coach(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -69,7 +71,7 @@ class Coach(db.Model, UserMixin):
     permission_change = db.Column(db.Integer)
 
 
-    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    # team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
     team = db.relationship('Team')
 
@@ -77,8 +79,8 @@ class Coach(db.Model, UserMixin):
 class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     team_name = db.Column(db.String(150), unique=True)
-    athlete_id = db.Column(db.Integer, db.ForeignKey('athlete.id'))
-    athlete = db.relationship('Athlete')
+    coach_id = db.Column(db.Integer, db.ForeignKey('coach.id'))
+    athletes = db.relationship('Athlete')
     
 
 

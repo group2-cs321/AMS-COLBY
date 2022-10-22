@@ -34,6 +34,7 @@ def login():
             if check_password_hash(athlete.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(athlete, remember=True)
+                print('In athlete')
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again.', category='error')
