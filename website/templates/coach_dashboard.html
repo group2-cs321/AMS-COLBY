@@ -507,18 +507,18 @@ const trends2 = new Chart(ctx9, {
                         <tbody>
                           <tr>
 
-                            {% for athlete in all_users %}
-                              {%if athlete.role == "athlete" and athlete.team == user.team%}
 
+                            {%for team in coach.teams%}
+                              {%for athlete in team.athletes%}
                                 <td>
                                   <a href="athleteCoachView/{{athlete.id}}">
-                                  <span class="pl-2">{{athlete.name}}</span>
+                                  <span class="pl-2">{{athlete.first_name + " " + athlete.last_name}}</span>
                                     </a>
                                 </td>
-                                <td>{{athlete.athlete_data}}</td>
-                                
-                              {%endif%}  
+                              {% endfor %}
                             {% endfor %}
+                                
+                            
                             
                             <!-- <td>
                               <a href="athleteCoachView.html">
