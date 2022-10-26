@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<!-- Top Row -->
+<div class="row">
+
+    <!-- sleep donought-->
+    <div class="col-sm-6 grid-margin">
+        <div class="card">
+            <div class="card-body">
+              <h5>Readiness Today</h5>
+              <div class="row">
+                <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                  <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <h4 class="mb-0">6.5h</h4>
+                    <p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>
+                  </div>
+                    <br>
+                    <canvas id=sleepChart width="500" height="500"></canvas>
+                    <script>
+                      const ctx4 = document.getElementById('sleepChart').getContext('2d');
+                      const sleepChart = new Chart(ctx4, {
+                          type: 'doughnut',
+                          data: {
+                              labels: ['Readiness'],
+                              datasets: [{
+                                  label: '# of Votes',
+                                  data: [70,30],
+                                  backgroundColor: [
+                                      'rgba(75, 192, 192, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 159, 64, 0.2)',
+                                  ],
+                                  borderColor: [
+                                      'rgba(75, 192, 192, 1)',
+                                      'rgba(255, 99, 132, 1)',
+                                      'rgba(255, 159, 64, 1)',
+                                  ],
+                                  hoverOffset: 1
+                              }]
+                          }
+                          ,
+                          options: {
+                              legend: {
+                                  display: true,
+                                  
+                              }
+                          }
+                      });
+                      </script>
+                </div>
+                <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+              
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+  <!-- Sleep breakdown -->
+    <div class="col-sm-6 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h5>Readiness Trend</h5>
+                <div class="row">
+            <div class="col-8 col-sm-12 col-xl-12 my-auto">
+              
+                <br>
+                    </div>
+                </div>
+                <canvas id="trendsplayer" width="500" height="500"></canvas>
+          <script>
+            const ctxplayer = document.getElementById('trendsplayer').getContext('2d');
+            const trendsplayer = new Chart(ctxplayer, {
+                type: 'line',
+                data: {
+                    labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+                    datasets: [
+                                     {
+                              label: 'Restfulness',
+                              data: [60, 70, 40, 90, 56, 70],
+                              
+                              borderColor: 
+                                    'rgba(255, 99, 132, 1)',
+                              borderWidth: 1
+                          }, 
+                          
+                                    ]
+                },
+                options: {
+                    legend: {
+                        display: true,
+                        
+                    }
+                }
+            });
+            </script>
+            </div>
+            
+        </div>
+    </div>
+
+    
+</div>
+
+<!-- notes -->
+<div class="row-12">
+    <div class="card">
+        <div class="card-body">
+            <h3>Readiness Notes</h3>
+            <br>
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h4 class="mb-0"> There was an increase of readiness today</h4>
+            </div>
+          
+        </div>
+    </div>
+ </div>
+
+
+{% endblock %}

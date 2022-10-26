@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="row"> <!--start row-->
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <input type="text" name="Search Teams.." placeholder="Search teams.." style="color: white; background-color: black;"> <!-- change style -->
+      <button type="submit" style="background-color: black; color: white;">Search</button>
+
+      <div class="card-body" style="max-height: 210px; overflow: scroll;">
+        {%for team in teams%}
+            <td>
+              <a href="coach_dashboard/{{team.coach_id}}">
+              <div>{{team.team_name}}<div>
+                </a>
+            </td>
+        {% endfor %}
+      </div>
+
+
+
+      <!-- <div class="card-body" style="max-height: 210px; overflow: scroll;">
+        <div>Squash</div>
+        <div>Ice Hockey (M)</div>
+        <div>Field Hockey</div>
+        <div>Tennis</div>
+        <div>Basketball (M)</div>
+        <div>BasketBall (W)</div>
+        <div>Crew</div>
+        <div>Lacrosse</div>
+        <div>Football</div>
+        <div>Soccer (M)</div>
+        <div>Soccer (W)</div>
+        <div>Track & Field</div>
+        <div>Cross Country</div>
+      </div> -->
+
+    </div>
+  </div>
+
+<div class="col-md-8 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <table cellpadding="10" cellspacing="20">              
+        <tr>
+          <th> Team </th>
+          <th> Sleep </th>
+          <th> Quality </th>
+          <th> Readiness </th>
+          <th> Calorie Intake </th>
+        </tr>            
+        <tr>
+          <td> Ice Hockey (M) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 68%</td>
+        </tr>
+        <tr>
+          <td> Squash (M) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 80% </td>
+        </tr> 
+        <tr>
+          <td> Squash (W) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 60% </td>
+        </tr> 
+        <tr>
+          <td> Volleyball  </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 110% </td>
+        </tr>                    
+      </table>
+    </div>
+  </div>
+</div>
+</div> <!-- end row-->
+<div class="row">
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Sleep </h6>
+      <canvas id="transaction-history" class="transaction-chart"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">   -->
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Readiness </h6>
+      <canvas id="readiness" class="readiness-score"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">  --> 
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Calorie Intake </h6>
+      <canvas id="calories" class="calorie-intake"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found"> -->  
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div> <a class="btn btn-primary">Reports</a> </div>
+      <br>
+      <div> <a class="btn btn-primary" href="/permissions">Edit Permissions</a> </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}

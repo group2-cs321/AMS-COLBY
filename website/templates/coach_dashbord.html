@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+              <div class="row">
+              <div class="col-sm-4 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Readiness</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-6 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0">80%</h4>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                        
+                      </div>
+                      <div class="col-4 col-sm-12 col-xl-12 text-center text-xl-right">
+                         <canvas id=readyChart width="500" height="500"></canvas>
+                          <script>
+const ctx5 = document.getElementById('readyChart').getContext('2d');
+const readyChart = new Chart(ctx5, {
+    type: 'doughnut',
+    data: {
+        //labels: ['Red', 'Blue'],
+        datasets: [{
+            label: '# of Votes',
+            data: [90, 10],
+            backgroundColor: [
+                //'rgba(255, 99, 132, 0.2)',
+                //'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(42, 35, 45, 0.09)'
+            ],
+            borderColor: [
+                //'rgba(255, 99, 132, 1)',
+                //'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(0, 0, 0, 0.53)'
+            ],
+            hoverOffset: 1
+        }]
+    }
+//    ,
+//    options: {
+//        scales: {
+//            y: {
+//                beginAtZero: true
+//            }
+//        }
+//    }
+});
+</script>
+                        
+                      </div>
+                        <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                      <div class="text-md-center text-xl-left">
+                        <h6 class="mb-1">Readiness is Increasing</h6>
+                        <p class="text-muted mb-0">Athletes may be able to handle harder workouts</p>
+                      </div>
+                    
+                    </div>
+                    </div>
+                    
+                      
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 grid-margin">
+                  
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Sleep</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0">6.5h</h4>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>
+                        </div>
+                          <br>
+                          <canvas id=sleepChart width="500" height="500"></canvas>
+                          <script>
+const ctx4 = document.getElementById('sleepChart').getContext('2d');
+const sleepChart = new Chart(ctx4, {
+    type: 'doughnut',
+    data: {
+        labels: ['Total', 'Light', 'Deep'],
+        datasets: [{
+            label: '# of Votes',
+            data: [6.5, 5, 1.5],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(42, 35, 45, 0.09)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 0.53)'
+            ],
+            hoverOffset: 1
+        }]
+    }
+    ,
+    options: {
+        legend: {
+            display: false,
+            labels: {
+                fontSize: 10,
+                boxWidth: 5,
+                padding: 1
+            }
+        }
+    }
+});
+</script>
+                      </div>
+                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class='row'></div>
+            <br>
+                  <div class="card">
+                <div class="card-body">
+                    <h5>Recovery</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0">90%</h4>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                        </div>
+                          <br>
+                              </div>
+                          </div>
+                    <canvas id="recChart" width="500" height="500"></canvas>
+                      <script>
+const ctx7 = document.getElementById('recChart').getContext('2d');
+const recChart = new Chart(ctx7, {
+    type: 'doughnut',
+    data: {
+        //labels: ['Red', 'Blue'],
+        datasets: [{
+            label: '# of Votes',
+            data: [90, 10],
+            backgroundColor: [
+                //'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+               // 'rgba(255, 159, 64, 0.2)',
+                'rgba(42, 35, 45, 0.09)'
+            ],
+            borderColor: [
+                //'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                //'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 0.53)'
+            ],
+            hoverOffset: 1
+        }]
+    }
+//    ,
+//    options: {
+//        scales: {
+//            y: {
+//                beginAtZero: true
+//            }
+//        }
+//    }
+});
+</script>
+                   
+                    
+                </div>
+                  </div>
+              </div>
+              <div class="col-sm-2 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Calories</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0">90%</h4>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                        </div>
+                          <br>
+                        
+                          <canvas id="calChart" width="500" height="500"></canvas>
+                      <script>
+const ctx3 = document.getElementById('calChart').getContext('2d');
+const calChart = new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+        //labels: ['Red', 'Blue'],
+        datasets: [{
+            label: '# of Votes',
+            data: [90, 10],
+            backgroundColor: [
+                //'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(42, 35, 45, 0.09)'
+            ],
+            borderColor: [
+                //'rgba(255, 99, 132, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 0.53)'
+            ],
+            hoverOffset: 1
+        }]
+    }
+//    ,
+//    options: {
+//        scales: {
+//            y: {
+//                beginAtZero: true
+//            }
+//        }
+//    }
+});
+</script>
+                          
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                  <br>
+                  <div class="card">
+                      <div class="card-body">
+                          <h5>Heart Rate</h5>
+                          <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0">90%</h4>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                        </div>
+                          <br>
+                              </div>
+                          </div>
+                          <canvas id="hrChart" width="500" height="500"></canvas>
+                      <script>
+const ctx6 = document.getElementById('hrChart').getContext('2d');
+const hrChart = new Chart(ctx6, {
+    type: 'doughnut',
+    data: {
+        //labels: ['Red', 'Blue'],
+        datasets: [{
+            label: '# of Votes',
+            data: [90, 10],
+            backgroundColor: [
+                //'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                //'rgba(255, 159, 64, 0.2)',
+                'rgba(42, 35, 45, 0.09)'
+            ],
+            borderColor: [
+                //'rgba(255, 99, 132, 1)',
+                'rgba(75, 192, 192, 1)',
+                //'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 0.53)'
+            ],
+            hoverOffset: 1
+        }]
+    }
+//    ,
+//    options: {
+//        scales: {
+//            y: {
+//                beginAtZero: true
+//            }
+//        }
+//    }
+});
+</script>
+                      </div>
+                      
+                  </div>
+              </div>
+                  <div class="col-sm-4 grid-margin">
+                      <div class=card>
+                          <div class=card-body>
+                              <h4 class="card-title">Team Trends</h4>
+                              <canvas id="trends" width="200" height="200"></canvas>
+                      <script>
+const ctx8 = document.getElementById('trends').getContext('2d');
+const trends = new Chart(ctx8, {
+    type: 'line',
+    data: {
+        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        datasets: [{
+            label: 'Recovery',
+            data: [12, 19, 3, 5, 2, 3],
+
+            borderColor:'rgba(54, 162, 235, 1)',
+
+            borderWidth: 1
+        }, 
+//                   {
+//            label: 'Sleep',
+//            data: [40, 27, 3, 80, 52, 36],
+////            
+//            borderColor: 
+//                'rgba(255, 99, 132, 1)',
+//            borderWidth: 1
+//        }, 
+                   {
+            label: 'Calories',
+            data: [70, 60, 50, 40, 30, 20],
+//            
+            borderColor:
+                'rgba(255, 206, 86, 1)',
+                
+            borderWidth: 1
+        }, 
+//                   {
+//            label: 'Heart Rate',
+//            data: [1, 15, 33, 90,50, 33],
+////            backgroundColor: [
+////                'rgba(255, 99, 132, 0.2)',
+////                'rgba(54, 162, 235, 0.2)',
+////                'rgba(255, 206, 86, 0.2)',
+////                'rgba(75, 192, 192, 0.2)',
+////                'rgba(153, 102, 255, 0.2)',
+////                'rgba(255, 159, 64, 0.2)'
+////            ],
+//            borderColor: 
+//                
+//                'rgba(75, 192, 192, 1)',
+//            borderWidth: 1
+//        }, 
+                   {
+            label: 'Readiness',
+            data: [50, 50, 50, 50, 50, 50],
+//           
+            borderColor: 
+                
+                'rgba(153, 102, 255, 1)',
+                
+            
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+                              
+                                  <canvas id="trends2" width="300" height="200"></canvas>
+                      <script>
+const ctx9 = document.getElementById('trends2').getContext('2d');
+const trends2 = new Chart(ctx9, {
+    type: 'bar',
+    data: {
+        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        datasets: [
+                   {
+            label: 'Sleep',
+            data: [40, 27, 3, 80, 52, 36],
+            
+            borderColor: 
+                'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }, 
+                   
+//                   {
+//            label: 'Heart Rate',
+//            data: [1, 15, 33, 90,50, 33],
+////            backgroundColor: [
+////                'rgba(255, 99, 132, 0.2)',
+////                'rgba(54, 162, 235, 0.2)',
+////                'rgba(255, 206, 86, 0.2)',
+////                'rgba(75, 192, 192, 0.2)',
+////                'rgba(153, 102, 255, 0.2)',
+////                'rgba(255, 159, 64, 0.2)'
+////            ],
+//            borderColor: 
+//                
+//                'rgba(75, 192, 192, 1)',
+//            borderWidth: 1
+//        }, 
+                  ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+                            
+                          </div>
+                      </div>
+                  </div>
+            </div>
+            
+            
+            
+            <div class="row ">
+              <div class="col-8 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"> Athletes</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr onclick="location.href='athleteCoachView.html'">
+                            
+                            <th> Name </th>
+                            <th> Readiness </th>
+                            <th> Sleep </th>
+                            <th> HR </th>
+                            <th> Calories </th>
+                            
+                            <th> Status </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+
+
+                            {%for team in coach.teams%}
+                              {%for athlete in team.athletes%}
+                                <td>
+                                  <a href="athleteCoachView/{{athlete.id}}">
+                                  <span class="pl-2">{{athlete.first_name + " " + athlete.last_name}}</span>
+                                    </a>
+                                </td>
+                              {% endfor %}
+                            {% endfor %}
+                                
+                            
+                            
+                            <!-- <td>
+                              <a href="athleteCoachView.html">
+                              <span class="pl-2">Henry Klein</span>
+                                </a>
+                            </td>
+                            <td>70% </td>
+                            <td> 6.25 hrs </td>
+                            <td> 45 bpm </td>
+                            <td> 103% </td>
+                            
+                            <td>
+                              <div class="badge badge-outline-success">Cleared</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            
+                            <td>
+                              
+                                <a href="athleteCoachView.html">
+                              <span class="pl-2">Estella Bryan</span>
+                                </a>
+                            </td>
+                            <td> 61% </td>
+                            <td> 5.5 hrs </td>
+                            <td> 75 bpm </td>
+                            <td> 80% </td>
+                        
+                            <td>
+                              <div class="badge badge-outline-warning">Warning</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            
+                            <td>
+                              
+                              <a href="athleteCoachView.html">
+                              <span class="pl-2">Lucy Abbot</span>
+                                </a>
+                            </td>
+                            <td> 77% </td>
+                            <td> 7 hrs </td>
+                            <td> 61 bpm </td>
+                            <td> 95% </td>
+                            
+                            <td>
+                              <div class="badge badge-outline-danger">Ineligible</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            
+                            <td>
+                              
+                              <a href="athleteCoachView.html">
+                              <span class="pl-2">Peter Gill</span>
+                                </a>
+                            </td>
+                            <td> 80% </td>
+                            <td> 9 hrs </td>
+                            <td> 52 bpm </td>
+                            <td> 110% </td>
+                            
+                            <td>
+                              <div class="badge badge-outline-success">Cleared</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            
+                            <td>
+                              
+                              <a href="athleteCoachView.html">
+                              <span class="pl-2">Sallie Reyes</span>
+                                </a>
+                            </td>
+                            <td> 75% </td>
+                            <td> 5 hrs </td>
+                            <td> 70 bpm </td>
+                            <td> 99% </td>
+                         -->
+                            <td>
+                              <div class="badge badge-outline-success">Cleared</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                      <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h4 class="mb-0 text-danger">Lucy Abbott</h4>
+                        </div>
+                          
+                              </div>
+                          </div>
+                    
+                    
+                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                      <div class="text-md-center text-xl-left">
+                        <h6 class="mb-1">Notes</h6>
+                        <p class="text-muted mb-0"> Due to stress fracture, trainer has not cleared player.</p>
+                      </div>
+                      
+                    </div>
+                      <br>
+                      <canvas id="trendsplayer" width="200" height="150"></canvas>
+                      <script>
+const ctxplayer = document.getElementById('trendsplayer').getContext('2d');
+const trendsplayer = new Chart(ctxplayer, {
+    type: 'line',
+    data: {
+        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        datasets: [{
+            label: 'Recovery',
+            data: [12, 19, 3, 5, 2, 3],
+
+            borderColor:'rgba(54, 162, 235, 1)',
+
+            borderWidth: 1
+        }, 
+//                   {
+//            label: 'Sleep',
+//            data: [40, 27, 3, 80, 52, 36],
+////            
+//            borderColor: 
+//                'rgba(255, 99, 132, 1)',
+//            borderWidth: 1
+//        }, 
+                   {
+            label: 'Calories',
+            data: [70, 60, 50, 40, 30, 20],
+//            
+            borderColor:
+                'rgba(255, 206, 86, 1)',
+                
+            borderWidth: 1
+        }, 
+//                   {
+//            label: 'Heart Rate',
+//            data: [1, 15, 33, 90,50, 33],
+////            backgroundColor: [
+////                'rgba(255, 99, 132, 0.2)',
+////                'rgba(54, 162, 235, 0.2)',
+////                'rgba(255, 206, 86, 0.2)',
+////                'rgba(75, 192, 192, 0.2)',
+////                'rgba(153, 102, 255, 0.2)',
+////                'rgba(255, 159, 64, 0.2)'
+////            ],
+//            borderColor: 
+//                
+//                'rgba(75, 192, 192, 1)',
+//            borderWidth: 1
+//        }, 
+                   {
+            label: 'Readiness',
+            data: [50, 50, 50, 50, 50, 50],
+//           
+            borderColor: 
+                
+                'rgba(153, 102, 255, 1)',
+                
+            
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: true,
+            labels: {
+                fontSize: 10,
+                boxWidth: 5,
+                padding: 1
+            }
+        }
+    }
+});
+</script>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+{% endblock %}
