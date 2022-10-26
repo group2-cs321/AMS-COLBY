@@ -13,11 +13,11 @@ def home():
     print(current_user)
     print(role)
     if int(role) == 0:
-        return render_template("admin_view.html", user=current_user, teams = Team.query.all())
+        return render_template("admin_view.html", user=current_user)
     elif int(role) == 1:
         return render_template("peak_view.html", user=current_user)
     elif int(role) == 2:
-        return render_template("coach_dashboard.html", user=current_user, coach = Coach.query.filter_by(colby_id=current_user.colby_id).first())
+        return render_template("coach_dashboard.html", user=current_user)
     elif int(role) == 3:
         return render_template("athleteView.html", user=current_user)
     else:
