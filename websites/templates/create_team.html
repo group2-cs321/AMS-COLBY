@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="page-header">
+  <h3 class="page-title"> Create Team </h3>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+    <form method="POST">
+      <div class="card-body">
+      
+        
+        <div class="form-group">
+          <label> Team Name * </label>
+          <input type="text" id="team_name" name="team_name" class="form-control p_input" style="background-color: black; color: white;">
+        </div>
+        <h3 class="card-title">Pick Athletes and coaches</h3>
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Pick Athletes</label>
+          <select multiple class="form-control" id="athletes" name="athletes" style="color: white;">
+            {% for athlete in athletes %}
+            <option>{{athlete.colby_id}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Pick Coaches</label>
+          <select class="form-control" id="coaches" name="coaches" style="color: white;">
+            {% for coach in coaches %}
+            <option>{{coach.colby_id}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+{% endblock %}

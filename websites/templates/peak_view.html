@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row"> <!--start row-->
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div class="card">
+      <input type="text" name="Search Teams.." placeholder="Search teams.." style="color: white; background-color: black;"> <!-- change style -->
+      <button type="submit" style="background-color: black; color: white;">Search</button>
+      <div class="card-body" style="max-height: 210px; overflow: scroll;">
+        <!-- <div><a href="coach_dashboard.html">Squash</a></div>
+        <div><a href="coach_dashboard.html">Ice Hockey(W)</a></div>
+        <div><a href="coach_dashboard.html">Field Hockey</a></div>
+        <div><a href="coach_dashboard.html">Tennis</a></div>
+        <div><a href="coach_dashboard.html">Basketball (m)</a></div>
+        <div><a href="coach_dashboard.html">Basketball (W)</a></div>
+        <div><a href="coach_dashboard.html">Crew</a></div>
+        <div><a href="coach_dashboard.html">Lacrosse</a></div>
+        <div><a href="coach_dashboard.html">Football</a></div>
+        <div><a href=coach_dashboard.html>Soccer (M)</a></div>
+        <div><a href="coach_dashboard.html">Soccer(W)</a></div>
+        <div><a href="coach_dashboard.html">Track and Field</a></div>
+        <div><a href="coach_dashboard.html">Cross Country</a></div> -->
+
+        {% for team in teams %}
+          <div><a href="coach_dashboard/{{ team.id }}">{{ team.name }}</a></div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+<div class="col-md-8 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <table cellpadding="10" cellspacing="20">              
+        <tr>
+          <th> Team </th>
+          <th> Sleep </th>
+          <th> Quality </th>
+          <th> Readiness </th>
+          <th> Calorie Intake </th>
+        </tr>            
+        <tr>
+          <td> Ice Hockey (M) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 68%</td>
+        </tr>
+        <tr>
+          <td> Squash (M) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 80% </td>
+        </tr> 
+        <tr>
+          <td> Squash (W) </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 60% </td>
+        </tr> 
+        <tr>
+          <td> Volleybal  </td>
+          <td>  8hs </td>
+          <td> 85% </td>
+          <td> 78% </td>
+          <td> 110% </td>
+        </tr>                    
+      </table>
+    </div>
+  </div>
+</div>
+</div> <!-- end row-->
+<div class="row">
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Sleep </h6>
+      <canvas id="transaction-history" class="transaction-chart"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">   -->
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Readiness </h6>
+      <canvas id="readiness" class="readiness-score"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">  --> 
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-title"> Calorie Intake </h6>
+      <canvas id="calories" class="calorie-intake"></canvas>
+      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found"> -->  
+    </div>
+  </div>
+</div>
+<div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div> <button style="background-color: black; color: white;"> Reports </button> </div>
+      <br>
+      <div> <button button style="background-color: black; color: white;"> Send Notes </button> </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}

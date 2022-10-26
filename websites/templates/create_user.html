@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="page-header">
+  <h3 class="page-title"> Create User </h3>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+    <form method="POST">
+      <div class="card-body">
+      
+        
+        <div class="form-group">
+          <label> Colby ID * </label>
+          <input type="text" id="colby_id" name="colby_id" class="form-control p_input" style="background-color: black; color: white;">
+        </div>
+        <div class="form-group">
+          <label> First Name * </label>
+          <input type="text" id="firsname" name="firstname" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        
+        <div class="form-group">
+          <label> Last Name * </label>
+          <input type="text" id="lastname" name="lastname" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        <div class="form-group">
+          <label> Enter Password * </label>
+          <input type="password" id="password1" name="password1" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        <div class="form-group">
+          <label> Confirm Password * </label>
+          <input type="password" id="password2" name="password2" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+
+        <div class="form-group">
+          <label> Select Role</label>
+          <select class="form-control" id="role" name="role" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+
+        <h3 class="card-title">Permissions</h3>
+        <p class="card-description"> Please modify user's permission with caution</p>
+        <p class="card-description"> 
+          0 = Full permission <br>
+          1 = Read and write <br>
+          2 = Read only <br> 
+          3 = No access </p>
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Athlete Data</label>
+          <select class="form-control" id="athlete_data" name="athlete_data" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Team Data</label>
+          <select class="form-control" id="team_data" name="team_data" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Notes</label>
+          <select class="form-control" id="notes" name="notes" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Create Account</label>
+          <select class="form-control" id="create_account" name="create_account" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Permissions Acess</label>
+          <select class="form-control" id="permssion_change" name="permission_change" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+{% endblock %}
