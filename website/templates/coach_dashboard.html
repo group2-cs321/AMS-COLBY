@@ -1,7 +1,9 @@
+
 {% extends "base.html" %}
 
 
 {% block content %}
+
 
               <div class="row">
               <div class="col-sm-4 grid-margin">
@@ -428,6 +430,7 @@ const trends2 = new Chart(ctx9, {
                           <tr>
 
 
+
                             {%for team in coach.teams%}
                               {%for athlete in team.athletes%}
                                 <td>
@@ -439,6 +442,7 @@ const trends2 = new Chart(ctx9, {
                             {% endfor %}
                                 
                             
+
                             
                             <!-- <td>
                               <a href="athleteCoachView.html">
@@ -628,4 +632,6 @@ const trendsplayer = new Chart(ctxplayer, {
             </div>
 
 
+
 {% endblock %}
+
