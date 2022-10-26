@@ -272,6 +272,7 @@
         plugins: transactionhistoryChartPlugins
       });
     }
+
     
 
     if ($("#transaction-history-arabic").length) {
