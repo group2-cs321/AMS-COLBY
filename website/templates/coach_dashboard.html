@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
 
 {% block content %}
@@ -265,14 +265,6 @@ const hrChart = new Chart(ctx6, {
             hoverOffset: 1
         }]
     }
-//    ,
-//    options: {
-//        scales: {
-//            y: {
-//                beginAtZero: true
-//            }
-//        }
-//    }
 });
 </script>
                       </div>
@@ -315,22 +307,6 @@ const trends = new Chart(ctx8, {
                 
             borderWidth: 1
         }, 
-//                   {
-//            label: 'Heart Rate',
-//            data: [1, 15, 33, 90,50, 33],
-////            backgroundColor: [
-////                'rgba(255, 99, 132, 0.2)',
-////                'rgba(54, 162, 235, 0.2)',
-////                'rgba(255, 206, 86, 0.2)',
-////                'rgba(75, 192, 192, 0.2)',
-////                'rgba(153, 102, 255, 0.2)',
-////                'rgba(255, 159, 64, 0.2)'
-////            ],
-//            borderColor: 
-//                
-//                'rgba(75, 192, 192, 1)',
-//            borderWidth: 1
-//        }, 
                    {
             label: 'Readiness',
             data: [50, 50, 50, 50, 50, 50],
@@ -370,22 +346,6 @@ const trends2 = new Chart(ctx9, {
             borderWidth: 1
         }, 
                    
-//                   {
-//            label: 'Heart Rate',
-//            data: [1, 15, 33, 90,50, 33],
-////            backgroundColor: [
-////                'rgba(255, 99, 132, 0.2)',
-////                'rgba(54, 162, 235, 0.2)',
-////                'rgba(255, 206, 86, 0.2)',
-////                'rgba(75, 192, 192, 0.2)',
-////                'rgba(153, 102, 255, 0.2)',
-////                'rgba(255, 159, 64, 0.2)'
-////            ],
-//            borderColor: 
-//                
-//                'rgba(75, 192, 192, 1)',
-//            borderWidth: 1
-//        }, 
                   ]
     },
     options: {
@@ -428,100 +388,36 @@ const trends2 = new Chart(ctx9, {
                           <tr>
 
 
-                            {%for team in coach.teams%}
-                              {%for athlete in team.athletes%}
-                                <td>
-                                  <a href="athleteCoachView/{{athlete.id}}">
-                                  <span class="pl-2">{{athlete.first_name + " " + athlete.last_name}}</span>
-                                    </a>
-                                </td>
-                              {% endfor %}
+                            {%for athlete in team.athletes%}
+                              <td>
+                                <a href="/athlete/{{ athlete.id }}">
+                                  <span class="pl-2">{{athlete.first_name}} {{athlete.last_name}}</span>
+                                </a>
+                              </td>
+                              <td>70% </td>
+                              <td> 6.25 hrs </td>
+                              <td> 45 bpm </td>
+                              <td> 103% </td>
+                              
+                              <td>
+
+                                {% if athlete.status == 0 %}    
+                                <div class="badge badge-outline-success">Cleared</div>
+                                {% endif %}
+
+                                {% if athlete.status == 1 %}    
+                                <div class="badge badge-outline-warning">Warning</div>
+                                {% endif %}
+
+                                {% if athlete.status == 2 %}    
+                                <div class="badge badge-outline-danger">Ineligible</div>
+                                {% endif %}
+
+                              </td>
+                            </tr>
+                              
                             {% endfor %}
-                                
                             
-                            
-                            <!-- <td>
-                              <a href="athleteCoachView.html">
-                              <span class="pl-2">Henry Klein</span>
-                                </a>
-                            </td>
-                            <td>70% </td>
-                            <td> 6.25 hrs </td>
-                            <td> 45 bpm </td>
-                            <td> 103% </td>
-                            
-                            <td>
-                              <div class="badge badge-outline-success">Cleared</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            
-                            <td>
-                              
-                                <a href="athleteCoachView.html">
-                              <span class="pl-2">Estella Bryan</span>
-                                </a>
-                            </td>
-                            <td> 61% </td>
-                            <td> 5.5 hrs </td>
-                            <td> 75 bpm </td>
-                            <td> 80% </td>
-                        
-                            <td>
-                              <div class="badge badge-outline-warning">Warning</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            
-                            <td>
-                              
-                              <a href="athleteCoachView.html">
-                              <span class="pl-2">Lucy Abbot</span>
-                                </a>
-                            </td>
-                            <td> 77% </td>
-                            <td> 7 hrs </td>
-                            <td> 61 bpm </td>
-                            <td> 95% </td>
-                            
-                            <td>
-                              <div class="badge badge-outline-danger">Ineligible</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            
-                            <td>
-                              
-                              <a href="athleteCoachView.html">
-                              <span class="pl-2">Peter Gill</span>
-                                </a>
-                            </td>
-                            <td> 80% </td>
-                            <td> 9 hrs </td>
-                            <td> 52 bpm </td>
-                            <td> 110% </td>
-                            
-                            <td>
-                              <div class="badge badge-outline-success">Cleared</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            
-                            <td>
-                              
-                              <a href="athleteCoachView.html">
-                              <span class="pl-2">Sallie Reyes</span>
-                                </a>
-                            </td>
-                            <td> 75% </td>
-                            <td> 5 hrs </td>
-                            <td> 70 bpm </td>
-                            <td> 99% </td>
-                         -->
-                            <td>
-                              <div class="badge badge-outline-success">Cleared</div>
-                            </td>
-                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -581,22 +477,7 @@ const trendsplayer = new Chart(ctxplayer, {
                 
             borderWidth: 1
         }, 
-//                   {
-//            label: 'Heart Rate',
-//            data: [1, 15, 33, 90,50, 33],
-////            backgroundColor: [
-////                'rgba(255, 99, 132, 0.2)',
-////                'rgba(54, 162, 235, 0.2)',
-////                'rgba(255, 206, 86, 0.2)',
-////                'rgba(75, 192, 192, 0.2)',
-////                'rgba(153, 102, 255, 0.2)',
-////                'rgba(255, 159, 64, 0.2)'
-////            ],
-//            borderColor: 
-//                
-//                'rgba(75, 192, 192, 1)',
-//            borderWidth: 1
-//        }, 
+
                    {
             label: 'Readiness',
             data: [50, 50, 50, 50, 50, 50],

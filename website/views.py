@@ -17,9 +17,12 @@ def home():
     elif int(role) == 1:
         return render_template("peak_view.html", user=current_user)
     elif int(role) == 2:
-        return render_template("coach_dashboard.html", user=current_user, coach = Coach.query.filter_by(colby_id=current_user.colby_id).first())
+        coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
+        team = Team.query.filter_by(coach_id=coach.id).first()
+        return redirect(url_for("views.coach_dashboard", id= team.id))
     elif int(role) == 3:
-        return render_template("athleteView.html", user=current_user)
+        athlete = Athlete.query.filter_by(colby_id=current_user.colby_id).first()
+        return redirect(url_for("views.athlete_dashboard", id = athlete.id))
     else:
         return render_template("login.html")
 
@@ -68,3 +71,23 @@ def create_team():
         return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
         
     return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+
+
+#coach Dasboard page
+@views.route('/team/<string:id>', methods = ['GET', 'POST'])
+def coach_dashboard(id):
+    coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
+    currentTeam = Team.query.get(id)
+
+    return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam)
+
+#Athlete page
+@views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
+def athlete_dashboard(id):
+    athlete = Athlete.query.get(id)
+    coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
+    currentTeam = Team.query.get(athlete.team_id)
+
+    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
+
+
