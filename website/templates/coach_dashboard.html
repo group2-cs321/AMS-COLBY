@@ -1,88 +1,10 @@
-  <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/css/vendor.bundle.base.css')}}">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/jvectormap/jquery-jvectormap.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="{{url_for('static', filename ='assets/css/style.css') }}">
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{url_for('static', filename='colby.svg')}}" />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg" alt="logo" /></a>
-          </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            <ul class="navbar-nav navbar-nav-left">
-              <li class="nav-item dropdown">
-                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
-                  <div class="navbar-profile">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Women's Cross Country</p>
-                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                  </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-            
-                  <a class="dropdown-item preview-item">
-                    
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Men's Cross Country</p>
-                    </div>
-                  </a>
-                  
-                
-                  
-                </div>
-              </li>
-            </ul>
-            <ul class="navbar-nav navbar-nav-right">
-              
-              
-              
-              <li class="nav-item dropdown">
-                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
-                  <div class="navbar-profile">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Coach Name</p>                 
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/logout" class="btn btn-primary">Log Out</a>
-              </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-format-line-spacing"></span>
-            </button>
-          </div>
-        </nav>
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
               <div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="card">
@@ -507,18 +429,20 @@ const trends2 = new Chart(ctx9, {
                         <tbody>
                           <tr>
 
-                            {% for athlete in all_users %}
-                              {%if athlete.role == "athlete" and athlete.team == user.team%}
 
+
+                            {%for team in coach.teams%}
+                              {%for athlete in team.athletes%}
                                 <td>
                                   <a href="athleteCoachView/{{athlete.id}}">
-                                  <span class="pl-2">{{athlete.name}}</span>
+                                  <span class="pl-2">{{athlete.first_name + " " + athlete.last_name}}</span>
                                     </a>
                                 </td>
-                                <td>{{athlete.athlete_data}}</td>
-                                
-                              {%endif%}  
+                              {% endfor %}
                             {% endfor %}
+                                
+                            
+
                             
                             <!-- <td>
                               <a href="athleteCoachView.html">
@@ -706,42 +630,8 @@ const trendsplayer = new Chart(ctxplayer, {
                 </div>
               </div>
             </div>
-            
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-            <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
-              <span class="text-muted float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-            </div>
-          </footer>
-          <!-- partial -->
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="{{url_for('static', filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="{{url_for('static', filename='assets/vendors/chart.js/Chart.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
-    <script src="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.js')}}"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="{{url_for('static', filename= 'assets/js/off-canvas.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/settings.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="{{url_for('static', filename= 'assets/js/dashboard.js')}}"></script>
-    <!-- End custom js for this page -->
-  </body>
-</html>
+
+
+
+{% endblock %}
 
