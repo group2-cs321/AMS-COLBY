@@ -48,8 +48,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
   
-                  {% for team in teamList %}
-                  <a class="dropdown-item preview-item" href="/teams/{{ team.id }}">
+                  {% for team in coach.teams %}
+                  <a class="dropdown-item preview-item" href="/team/{{ team.id }}">
                       <div class="preview-item-content">
                       </br>
                         <p class="preview-subject mb-1"  >{{ team.team_name }}</p>

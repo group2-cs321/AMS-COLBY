@@ -74,22 +74,20 @@ def create_team():
 
 
 #coach Dasboard page
-@views.route('/teams/<string:id>', methods = ['GET', 'POST'])
+@views.route('/team/<string:id>', methods = ['GET', 'POST'])
 def coach_dashboard(id):
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     currentTeam = Team.query.get(id)
-    teamList=coach.teams
 
-    return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, teamList=teamList)
+    return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam)
 
 #Athlete page
 @views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
 def athlete_dashboard(id):
     athlete = Athlete.query.get(id)
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
-    teamList=coach.teams
     currentTeam = Team.query.get(athlete.team_id)
 
-    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, teamList=teamList)
+    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
 
 
