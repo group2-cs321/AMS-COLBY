@@ -13,7 +13,7 @@ def home():
     print(current_user)
     print(role)
     if int(role) == 0:
-        return render_template("admin_view.html", user=current_user)
+        return render_template("admin_view.html", user=current_user, teams = Team.query.all())
     elif int(role) == 1:
         return render_template("peak_view.html", user=current_user)
     elif int(role) == 2:
