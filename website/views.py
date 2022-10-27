@@ -26,15 +26,6 @@ def home():
     else:
         return render_template("login.html")
 
-@views.route('/permissions', methods = ['GET'])
-def permissions():
-
-    if int(current_user.permission_change) != 0:
-        return redirect(url_for('views.home'))
-
-    else:
-        return render_template('permission.html', user=current_user)
-
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
 
@@ -90,6 +81,69 @@ def athlete_coach_dashboard(id):
 
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
 
+# Handles everything on the permissions page
+@views.route('admin/permissions', methods = ['GET', 'POST'])
+def permission_page():
+    if request.method == 'POST':
+
+        colby_id = request.form.get('user_to_change')
+        athlete_data = request.form.get('athlete_data')
+        team_data = request.form.get('team_data')
+        notes = request.form.get('notes')
+        create_account = request.form.get('create_account')
+        permission_change = request.form.get('permission_change')
+        role = request.form.get('role')
+
+        user = User.query.filter_by(colby_id=colby_id).first()
+
+
+        if int(user.role) != int(role):
+            # When user is an athlete, delete them from coach table
+            if int(user.role) == 2:
+                coach = Coach.query.filter_by(colby_id=colby_id).first()
+                team = Team.query.filter_by(coach_id=coach.id).first()
+
+                # Making sure that coach had a team
+                if team:
+                    team.coach_id = None
+                db.session.delete(coach)
+                db.session.commit()
+
+            # When user is a coach, delete them from athlete table
+            if int(user.role) == 3:
+                athlete = Athlete.query.filter_by(colby_id=colby_id).first()
+                db.session.delete(athlete)
+                db.session.commit()
+
+            # When new role is athlete add user to athlete table
+            if int(role) == 2:
+                coach = Coach(colby_id=colby_id, first_name=user.first_name, last_name = user.last_name)
+                db.session.add(coach)
+                db.session.commit()
+
+            # When new role is coach add user to coach table
+            if int(role) == 3:
+                athlete = Athlete(colby_id=colby_id, first_name=user.first_name, last_name = user.last_name)
+                db.session.add(athlete)
+                db.session.commit()
+
+
+            user.role = role
+
+        
+
+
+        user.athlete_data = athlete_data
+        user.team_data = team_data
+        user.notes = user.notes
+        user.create_account = create_account
+        user.permission_change = permission_change
+        
+
+        db.session.commit()
+
+
+    return render_template('permission.html', current_user = current_user, users = User.query.all())
 #Athlete Page
 @views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
 def athlete_dashboard(id):
