@@ -1,7 +1,7 @@
 from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import User, Athlete, Coach, Team
+from .models import User, Athlete, Coach, Team, Note
 from . import db
 
 views = Blueprint('views', __name__)
@@ -98,3 +98,22 @@ def athlete_dashboard(id):
     return render_template("athleteView.html", athlete=athlete, current_user=current_user)
 
 
+#Peak Notes
+@views.route('/new-note',methods=['GET','POST'])
+def create_note():
+    athletes = Athlete.query.all()
+    
+    if request.method == 'POST':
+        writer_id = current_user.colby_id
+        athlete_id = request.form.get('athletes')
+        content = request.form.get('content')
+        
+        athlete = Athlete.query.filter_by(colby_id=athlete_id).first()
+
+        new_note = Note (writer_id=writer_id, athlete_id=athlete.id, content=content)    
+        db.session.add(new_note)
+        db.session.commit()
+        flash('Note created!', category='success')
+        return redirect(url_for('views.create_note'))
+
+    return render_template("create_note.html", athletes=athletes)
