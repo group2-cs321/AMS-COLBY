@@ -91,3 +91,55 @@ def athlete_dashboard(id):
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
 
 
+@views.route('admin/permissions', methods = ['GET', 'POST'])
+def permission_page():
+    if request.method == 'POST':
+
+        colby_id = request.form.get('user_to_change')
+        athlete_data = request.form.get('athlete_data')
+        team_data = request.form.get('team_data')
+        notes = request.form.get('notes')
+        create_account = request.form.get('create_account')
+        permission_change = request.form.get('permission_change')
+        role = request.form.get('role')
+
+        user = User.query.filter_by(colby_id=colby_id).first()
+
+
+        if int(user.role) != int(role):
+
+            if int(user.role) == 2:
+                print("In coach")
+                coach = Coach.query.filter_by(colby_id=colby_id).first()
+                team = Team.query.filter_by(coach_id=coach.id).first()
+                team.colby_id = None
+                db.session.delete(coach)
+                db.session.commit()
+                print("after coach")
+
+            if int(user.role) == 3:
+                print("In Athlete")
+                athlete = Athlete.query.filter_by(colby_id=colby_id).first()
+                db.session.delete(athlete)
+                db.session.commit()
+                print("After Athlete")
+
+
+            user.role = role
+
+        
+
+
+        user.athlete_data = athlete_data
+        user.team_data = team_data
+        user.notes = user.notes
+        user.create_account = create_account
+        user.permission_change = permission_change
+        
+
+        db.session.commit()
+
+        return render_template('permission.html', current_user = current_user, users = User.query.all())
+
+    return render_template('permission.html', current_user = current_user, users = User.query.all())
+

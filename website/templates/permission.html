@@ -4,84 +4,104 @@
 {% block content %}
 
 <div class="page-header">
-  <h3 class="page-title"> Permissions </h3>
+  <h3 class="page-title"> Edit Permissions </h3>
 </div>
 <div class="row">
   <div class="col-12 grid-margin stretch-card">
     <div class="card">
+    <form method="POST">
       <div class="card-body">
-        <h4 class="card-title">Change Permissions</h4>
+      
+        
+        <div class="form-group">
+          <label> Pick User</label>
+            <select class="form-control" id="user_to_change" name="user_to_change">
+              {%for user in users%}
+              <option>{{user.colby_id}}</option>
+              {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label> Select Role</label>
+          <p class="card-description"> 
+            0 = Admin<br>
+            1 = Peak <br>
+            2 = Coach <br> 
+            3 = Athlete </p>
+          <select class="form-control" id="role" name="role" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
+          </select>
+        </div>
+
+        <h3 class="card-title">Permissions</h3>
         <p class="card-description"> Please modify user's permission with caution</p>
+        <p class="card-description"> 
+          0 = Full permission <br>
+          1 = Read and write <br>
+          2 = Read only <br> 
+          3 = No access </p>
+
         <div class="form-group">
-          <label for="exampleFormControlSelect2">Individual Athlete Data</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option >View</option>
-            <option>Edit</option>
-            <option>No Access</option>
+          <label for="exampleFormControlSelect2">Athlete Data</label>
+          <select class="form-control" id="athlete_data" name="athlete_data" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect2">All Athlete Data</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>View</option>
-            <option>Edit</option>
-            <option>No Access</option>
-          </select>
-        </div>
+        
         <div class="form-group">
           <label for="exampleFormControlSelect2">Team Data</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>View</option>
-            <option>Edit</option>
-            <option>No Access</option>
+          <select class="form-control" id="team_data" name="team_data" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlSelect2">Notes to Coaches</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>View</option>
-            <option>Send</option>
-            <option>No Access</option>
+          <label for="exampleFormControlSelect2">Notes</label>
+          <select class="form-control" id="notes" name="notes" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
           </select>
         </div>
+        
         <div class="form-group">
-          <label for="exampleFormControlSelect2">Athlete File</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>Edit</option>
-            <option>No Access</option>
+          <label for="exampleFormControlSelect2">Create Account</label>
+          <select class="form-control" id="create_account" name="create_account" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect2">New Account</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>Add and Edit</option>
-            <option>No Access</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect2">Delete and Update Account</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>Access Granted</option>
-            <option>No Access</option>
-          </select>
-        </div>
+    
         <div class="form-group">
           <label for="exampleFormControlSelect2">Permissions Acess</label>
-          <select class="form-control" id="exampleFormControlSelect2" style="color: white;">
-            <option>Access Granted to Change Permissions</option>
-            <option>No Access</option>
+          <select class="form-control" id="permssion_change" name="permission_change" style="color: white;">
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+            <option>0</option>
           </select>
         </div>
 
-
-        <div class="text-right" href="permission.html">
-          <a class="btn btn-primary" href="permission.html">Save</a>
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
         </div>
 
       </div>
     </div>
+  </form>
   </div>
 </div>
-
 
 {% endblock %}
