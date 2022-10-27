@@ -55,7 +55,7 @@
             </div>
               <br>
               <canvas id=sleepChart width="500" height="500"></canvas>
-          
+              
           </div>
           <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
         
@@ -80,7 +80,6 @@
                   </div>
               </div>
         <canvas id="recChart" width="500" height="500"></canvas>
-          
        
         
     </div>
@@ -103,72 +102,28 @@
               <canvas id="calChart" width="500" height="500"></canvas>
           
               
-              <div class="col-sm-3 grid-margin">
-                  
-                <!-- Sleep chart -->
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Sleep</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">6.5h</h4>
-                          <p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>
-                        </div>
-                          <br>
-                          <canvas id=sleepChart width="500" height="500"></canvas>
-                         
-                      </div>
-                      
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                    
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+      <br>
 
-                <!-- Quality chart -->
-                  <div class='row'></div>
-            <br>
-                  <div class="card">
-                <div class="card-body">
-                    <h5>Quality</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
-                        </div>
-                          <br>
-                              </div>
-                          </div>
-                    <canvas id="recChart" width="500" height="500"></canvas>
-                </div>
+      <!-- HR chart -->
+      <div class="card">
+          <div class="card-body">
+              <h6>Heart Rate</h6>
+              <div class="row">
+          <div class="col-8 col-sm-12 col-xl-12 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h4 class="mb-0">90%</h4>
+              <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+            </div>
+              <br>
                   </div>
               </div>
               <canvas id="hrChart" width="500" height="500"></canvas>
-          <script>
-            const ctx6 = document.getElementById('hrChart').getContext('2d');
-            const hrChart = new Chart(ctx6, {
-                type: 'doughnut',
-                data: {
-                    labels: ['HR'],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [90, 10],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(42, 35, 45, 0.09)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(0, 0, 0, 0.53)'
-                        ],
-                        hoverOffset: 1
-                    }]
-                }
-            });
-            </script>
+          
           </div>
           
       </div>
@@ -190,39 +145,18 @@
               
                   </div>
               </div>
-                  
-            </div>
-            
-            
-            
-            <div class="row ">
-                <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                      <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0 text-danger">{{current_user.first_name}}</h4>
-                        </div>
-                          
-                              </div>
-                          </div>
-                    
-                    
-                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                      <div class="text-md-center text-xl-left">
-                        <h6 class="mb-1">Notes</h6>
-                        <p class="text-muted mb-0"> Due to stress fracture, trainer has not cleared player.</p>
-                      </div>
-                      
-                    </div>
-                      <br>
-                      <canvas id="trendsplayer" width="200" height="150"></canvas>
-                      
-                    
-                        
-            </script>
         
+        
+        <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+          <div class="text-md-center text-xl-left">
+            <h6 class="mb-1">Notes</h6>
+            <p class="text-muted mb-0"> Due to stress fracture, trainer has not cleared player.</p>
+          </div>
+          
+        </div>
+          <br>
+          <canvas id="trendsplayer" width="200" height="150"></canvas>
+          
       </div>
     </div>
   </div>
