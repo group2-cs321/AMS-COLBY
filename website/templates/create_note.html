@@ -17,6 +17,8 @@
           <label> Content * </label>
           <input type="text" id="content" name="content" class="form-control p_input" style="background-color: black; color: white;">
         </div>
+        
+      </br>
 
         <div class="form-group">
             <label for="exampleFormControlSelect2">Pick Athlete</label>
@@ -24,6 +26,16 @@
               {% for athlete in athletes %}
               <option>{{athlete.colby_id}}</option>
               {% endfor %}
+            </select>
+          </div>
+
+        </br>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Choose Athlete Status</label>
+            <select class="form-control" id="clearance" name="clearance" style="color: white;">
+              <option>Cleared</option>
+              <option>Warning</option>
+              <option>Ineligible</option>
             </select>
           </div>
         
