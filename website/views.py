@@ -21,8 +21,7 @@ def home():
         team = Team.query.filter_by(coach_id=coach.id).first()
         return redirect(url_for("views.coach_dashboard", id= team.id))
     elif int(role) == 3:
-        athlete = Athlete.query.filter_by(colby_id=current_user.colby_id).first()
-        return redirect(url_for("views.athlete_dashboard", id = athlete.id))
+        return redirect(url_for("views.athlete_dashboard"))
     else:
         return render_template("login.html")
 
@@ -145,10 +144,9 @@ def permission_page():
 
     return render_template('permission.html', current_user = current_user, users = User.query.all())
 #Athlete Page
-@views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
-def athlete_dashboard(id):
-    athlete = Athlete.query.get(id)
-
+@views.route('/athlete', methods = ['GET', 'POST'])
+def athlete_dashboard():
+    athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     return render_template("athleteView.html", athlete=athlete, current_user=current_user)
 
 
