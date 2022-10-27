@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<h1>{{ athlete.first_name }} {{ athlete.last_name }}</h1>
+</br>
+
 <!-- Top Row -->
 <div class="row">
 
@@ -143,41 +146,48 @@
                 </div>
                   </div>
               </div>
-              <div class="col-sm-3 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <!-- Caloroes chart -->
-                    <h5>Calories</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
-                        </div>
-                          <br>
-                          <canvas id="calChart" width="500" height="500"></canvas>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                  <br>
-                  <!-- HR chart -->
-                  <div class="card">
-                      <div class="card-body">
-                          <h6>Heart Rate</h6>
-                          <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-12 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
-                        </div>
-                          <br>
-                              </div>
-                          </div>
-                          <canvas id="hrChart" width="500" height="500"></canvas>
-                      
-                      </div>
-                      
+              <canvas id="hrChart" width="500" height="500"></canvas>
+          <script>
+            const ctx6 = document.getElementById('hrChart').getContext('2d');
+            const hrChart = new Chart(ctx6, {
+                type: 'doughnut',
+                data: {
+                    labels: ['HR'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [90, 10],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(42, 35, 45, 0.09)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(0, 0, 0, 0.53)'
+                        ],
+                        hoverOffset: 1
+                    }]
+                }
+            });
+            </script>
+          </div>
+          
+      </div>
+  </div>
+      
+</div>
+
+
+
+<div class="row ">
+    <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+          <div class="row">
+          <div class="col-8 col-sm-12 col-xl-12 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h4 class="mb-0 text-danger">{{ athlete.first_name }} {{ athlete.last_name }}</h4>
+            </div>
+              
                   </div>
               </div>
                   

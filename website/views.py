@@ -81,13 +81,20 @@ def coach_dashboard(id):
 
     return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam)
 
-#Athlete page
-@views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
-def athlete_dashboard(id):
+#Coach Athlete Page
+@views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+def athlete_coach_dashboard(id):
     athlete = Athlete.query.get(id)
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     currentTeam = Team.query.get(athlete.team_id)
 
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
+
+#Athlete Page
+@views.route('/athlete/<string:id>', methods = ['GET', 'POST'])
+def athlete_dashboard(id):
+    athlete = Athlete.query.get(id)
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user)
 
 

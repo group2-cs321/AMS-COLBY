@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<h1>{{ team.team_name }}</h1>
+</br>
+
               <div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="card">
@@ -157,7 +160,7 @@
 
                             {%for athlete in team.athletes%}
                               <td>
-                                <a href="/athlete/{{ athlete.id }}">
+                                <a href="/coach/athlete/{{ athlete.id }}">
                                   <span class="pl-2">{{athlete.first_name}} {{athlete.last_name}}</span>
                                 </a>
                               </td>
