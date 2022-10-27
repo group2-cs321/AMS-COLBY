@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="page-header">
+  <h3 class="page-title"> Create User </h3>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+    <form method="POST">
+      <div class="card-body">
+      
+        
+        <div class="form-group">
+          <label> Content * </label>
+          <input type="text" id="content" name="content" class="form-control p_input" style="background-color: black; color: white;">
+        </div>
+        
+      </br>
+
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Pick Athlete</label>
+            <select class="form-control" id="athletes" name="athletes" style="color: white;">
+              {% for athlete in athletes %}
+              <option>{{athlete.colby_id}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+        </br>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Choose Athlete Status</label>
+            <select class="form-control" id="clearance" name="clearance" style="color: white;">
+              <option>Cleared</option>
+              <option>Warning</option>
+              <option>Ineligible</option>
+            </select>
+          </div>
+        
+
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+{% endblock %}

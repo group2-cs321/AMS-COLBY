@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login: Colby Athlete Management System</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/vendors/css/vendor.bundle.base.css')}}">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/css/style.css')}}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="colby.svg" />
+    <link rel="shortcut icon" href="{{url_for('static', filename = 'colby.svg')}}" />
   </head>
   <body>
     <div class="container-scroller">
@@ -25,17 +25,17 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <img src="assets/images/mule.jpg" alt="Colby Mule Icon" style="float:right;width:90px;height:60px;">
+                <img src="{{url_for('static', filename = 'assets/images/mule.jpg')}}" alt="Colby Mule Icon" style="float:right;width:90px;height:60px;">
                 <!-- <h4 class="card-title text-left mb-3">Colby Athlete Management System</h4> -->
                 <h3 class="card-title text-left mb-3">Login</h3>
-                <form>
+                <form method="POST">
                   <div class="form-group">
-                    <label>Username or email *</label>
-                    <input type="text" class="form-control p_input" style="color: white;">
+                    <label>Colby ID *</label>
+                    <input type="text" name = "colby_id" id = "colby_id"class="form-control p_input" style="color: white;">
                   </div>
                   <div class="form-group">
                     <label>Password *</label>
-                    <input type="password" class="form-control p_input" style="color:white;">
+                    <input type="password" name ="password" id="password" class="form-control p_input" style="color:white;">
                   </div>
                   <!-- <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
@@ -45,8 +45,8 @@
                     <a href="#" class="forgot-pass">Forgot password</a>
                   </div> -->
                   <br>
-                  <div class="text-center" href="coach_dashboard.html">
-                    <a class="btn btn-primary btn-block enter-btn" href="coach_dashboard.html">Login</a>
+                  <div class="text-center" href="{{url_for('static', filename = 'coach_dashboard.html')}}">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                   </div>
                   <!-- <div class="d-flex">
                     <button class="btn btn-facebook mr-2 col">
@@ -67,16 +67,16 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="{{url_for('static', filename='assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
+    <script src="{{url_for('static', filename='assets/js/off-canvas.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/hoverable-collapse.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/settings.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
     <!-- endinject -->
   </body>
 </html>

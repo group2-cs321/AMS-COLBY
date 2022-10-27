@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="page-header">
-  <h3 class="page-title"> Edit Permissions </h3>
+  <h3 class="page-title"> Create User </h3>
 </div>
 <div class="row">
   <div class="col-12 grid-margin stretch-card">
@@ -14,21 +14,29 @@
       
         
         <div class="form-group">
-          <label> Pick User</label>
-            <select class="form-control" id="user_to_change" name="user_to_change">
-              {%for user in users%}
-              <option>{{user.colby_id}}</option>
-              {% endfor %}
-            </select>
+          <label> Colby ID * </label>
+          <input type="text" id="colby_id" name="colby_id" class="form-control p_input" style="background-color: black; color: white;">
+        </div>
+        <div class="form-group">
+          <label> First Name * </label>
+          <input type="text" id="firsname" name="firstname" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        
+        <div class="form-group">
+          <label> Last Name * </label>
+          <input type="text" id="lastname" name="lastname" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        <div class="form-group">
+          <label> Enter Password * </label>
+          <input type="password" id="password1" name="password1" class="form-control p_input" style="background: black;, color: white;">
+        </div>
+        <div class="form-group">
+          <label> Confirm Password * </label>
+          <input type="password" id="password2" name="password2" class="form-control p_input" style="background: black;, color: white;">
         </div>
 
         <div class="form-group">
           <label> Select Role</label>
-          <p class="card-description"> 
-            0 = Admin<br>
-            1 = Peak <br>
-            2 = Coach <br> 
-            3 = Athlete </p>
           <select class="form-control" id="role" name="role" style="color: white;">
             <option>3</option>
             <option>2</option>
@@ -103,5 +111,6 @@
   </form>
   </div>
 </div>
+
 
 {% endblock %}
