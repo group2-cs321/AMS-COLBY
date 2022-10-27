@@ -19,6 +19,8 @@ def home():
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
+        if not team:
+            return "<h1>NO ACCESS</h1>"
         return redirect(url_for("views.coach_dashboard", id= team.id))
     elif int(role) == 3:
         return redirect(url_for("views.athlete_dashboard"))
@@ -143,6 +145,7 @@ def permission_page():
 
 
     return render_template('permission.html', current_user = current_user, users = User.query.all())
+    
 #Athlete Page
 @views.route('/athlete', methods = ['GET', 'POST'])
 def athlete_dashboard():
