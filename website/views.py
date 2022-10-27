@@ -1,10 +1,36 @@
+from tkinter import W
 from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import User, Athlete, Coach, Team, Note
 from . import db
+import json
+from csv import DictReader
 
 views = Blueprint('views', __name__)
+
+def parse_CSV():
+    watchData=[[],[],[],[],[],[],[],[],[],[]]
+
+    with open("website/static/assets/testdata/watchData.csv", 'r') as f:
+         
+        dict_reader = DictReader(f)
+         
+        list_of_dict = list(dict_reader)
+        for i in range(5):
+            watchData[0].append(list_of_dict[i]["date"])
+            watchData[1].append(float(list_of_dict[i]["Restfulness Score"]))
+            watchData[2].append(float(list_of_dict[i]["Total Sleep Duration"])/60**2)
+            watchData[3].append(float(list_of_dict[i]["REM Sleep Duration"])/60**2)
+            watchData[4].append(float(list_of_dict[i]["Light Sleep Duration"])/60**2)
+            watchData[5].append(float(list_of_dict[i]["Deep Sleep Duration"])/60**2)
+            watchData[6].append(float(list_of_dict[i]["Average Resting Heart Rate"]))
+            watchData[7].append(float(list_of_dict[i]["Lowest Resting Heart Rate"]))
+            watchData[8].append(float(list_of_dict[i]["Steps"]))
+            watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
+    return watchData
+
+
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -12,10 +38,11 @@ def home():
     role = current_user.role
     print(current_user)
     print(role)
+    watchData=parse_CSV()
     if int(role) == 0:
-        return render_template("admin_view.html", user=current_user, teams = Team.query.all())
+        return render_template("admin_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 1:
-        return render_template("peak_view.html", user=current_user)
+        return render_template("peak_view.html", user=current_user, watchData=watchData)
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
@@ -27,8 +54,11 @@ def home():
     else:
         return render_template("login.html")
 
+
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
+
+    watchData=parse_CSV()
 
     if request.method == 'POST':
         # TODO:
@@ -44,11 +74,11 @@ def create_team():
 
         if team:
             flash('Team Already exists', category = 'error')
-            return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+            return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
 
         if len(team_name) < 1 or len(athletes) < 1:
              flash('Please input a valid team name', category = 'error')
-             return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+             return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
         else:
             new_team = Team(team_name=team_name, coach_id = coach.id)
             db.session.add(new_team)
@@ -60,9 +90,9 @@ def create_team():
                 db.session.commit()
 
         flash('Team created Succesfully', category='success')
-        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
         
-    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
 
 
 #coach Dasboard page
@@ -70,22 +100,37 @@ def create_team():
 def coach_dashboard(id):
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     currentTeam = Team.query.get(id)
+    watchData=parse_CSV()
 
-    return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam)
+    return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Coach Athlete Page
 @views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 def athlete_coach_dashboard(id):
     athlete = Athlete.query.get(id)
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
+    watchData=parse_CSV()
     currentTeam = Team.query.get(athlete.team_id)
 
-    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
+
+    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
+
+#Athlete Page
+@views.route('/athlete', methods = ['GET', 'POST'])
+def athlete_dashboard():
+    athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
+    watchData=parse_CSV()
+
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
+
 
 # Handles everything on the permissions page
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 def permission_page():
     if request.method == 'POST':
+
+        watchData=parse_CSV()
 
         colby_id = request.form.get('user_to_change')
         athlete_data = request.form.get('athlete_data')
@@ -136,7 +181,7 @@ def permission_page():
 
         user.athlete_data = athlete_data
         user.team_data = team_data
-        user.notes = user.notes
+        user.notes = notes
         user.create_account = create_account
         user.permission_change = permission_change
         
@@ -144,20 +189,15 @@ def permission_page():
         db.session.commit()
 
 
-    return render_template('permission.html', current_user = current_user, users = User.query.all())
+    return render_template('permission.html', current_user = current_user, users = User.query.all(), watchData=watchData)
     
-#Athlete Page
-@views.route('/athlete', methods = ['GET', 'POST'])
-def athlete_dashboard():
-    athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
-    return render_template("athleteView.html", athlete=athlete, current_user=current_user)
 
 
 #Peak Notes
 @views.route('/new-note',methods=['GET','POST'])
 def create_note():
-    athletes = Athlete.query.all()
-    
+    athletes = Athlete.query.all() #TODO: add watchData
+    watchData=parse_CSV()
     if request.method == 'POST':
         writer_id = current_user.colby_id
         athlete_id = request.form.get('athletes')
@@ -179,4 +219,4 @@ def create_note():
         flash('Note created!', category='success')
         return redirect(url_for('views.create_note'))
 
-    return render_template("create_note.html", athletes=athletes)
+    return render_template("create_note.html", athletes=athletes, watchData=watchData)
