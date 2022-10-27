@@ -58,6 +58,25 @@ def permissions():
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
 
+    watchData=[[],[],[],[],[],[],[],[],[],[]]
+
+    with open("website/static/assets/testdata/watchData.csv", 'r') as f:
+         
+        dict_reader = DictReader(f)
+         
+        list_of_dict = list(dict_reader)
+        for i in range(5):
+            watchData[0].append(list_of_dict[i]["date"])
+            watchData[1].append(float(list_of_dict[i]["Restfulness Score"]))
+            watchData[2].append(float(list_of_dict[i]["Total Sleep Duration"])/60**2)
+            watchData[3].append(float(list_of_dict[i]["REM Sleep Duration"])/60**2)
+            watchData[4].append(float(list_of_dict[i]["Light Sleep Duration"])/60**2)
+            watchData[5].append(float(list_of_dict[i]["Deep Sleep Duration"])/60**2)
+            watchData[6].append(float(list_of_dict[i]["Average Resting Heart Rate"]))
+            watchData[7].append(float(list_of_dict[i]["Lowest Resting Heart Rate"]))
+            watchData[8].append(float(list_of_dict[i]["Steps"]))
+            watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
+
     if request.method == 'POST':
         # TODO:
         # Create a team with the given name
@@ -72,11 +91,11 @@ def create_team():
 
         if team:
             flash('Team Already exists', category = 'error')
-            return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+            return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
 
         if len(team_name) < 1 or len(athletes) < 1:
              flash('Please input a valid team name', category = 'error')
-             return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+             return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
         else:
             new_team = Team(team_name=team_name, coach_id = coach.id)
             db.session.add(new_team)
@@ -88,9 +107,9 @@ def create_team():
                 db.session.commit()
 
         flash('Team created Succesfully', category='success')
-        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
         
-    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all())
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
 
 
 #coach Dasboard page
