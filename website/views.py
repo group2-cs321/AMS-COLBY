@@ -56,6 +56,7 @@ def home():
 
 
 @views.route('/create-team', methods = ['GET', 'POST'])
+@login_required
 def create_team():
 
     watchData=parse_CSV()
@@ -97,6 +98,7 @@ def create_team():
 
 #coach Dasboard page
 @views.route('/team/<string:id>', methods = ['GET', 'POST'])
+@login_required
 def coach_dashboard(id):
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     currentTeam = Team.query.get(id)
@@ -106,6 +108,7 @@ def coach_dashboard(id):
 
 #Coach Athlete Page
 @views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+@login_required
 def athlete_coach_dashboard(id):
     athlete = Athlete.query.get(id)
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
@@ -117,6 +120,7 @@ def athlete_coach_dashboard(id):
 
 #Athlete Page
 @views.route('/athlete', methods = ['GET', 'POST'])
+@login_required
 def athlete_dashboard():
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
@@ -127,6 +131,7 @@ def athlete_dashboard():
 
 # Handles everything on the permissions page
 @views.route('admin/permissions', methods = ['GET', 'POST'])
+@login_required
 def permission_page():
     if request.method == 'POST':
 
@@ -195,6 +200,7 @@ def permission_page():
 
 #Peak Notes
 @views.route('/new-note',methods=['GET','POST'])
+@login_required
 def create_note():
     athletes = Athlete.query.all() #TODO: add watchData
     watchData=parse_CSV()
