@@ -133,9 +133,10 @@ def athlete_dashboard():
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 @login_required
 def permission_page():
+    watchData=parse_CSV()
     if request.method == 'POST':
 
-        watchData=parse_CSV()
+        
 
         colby_id = request.form.get('user_to_change')
         athlete_data = request.form.get('athlete_data')
