@@ -3,11 +3,14 @@ from .models import User, Coach, Athlete
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from csv import DictReader
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods= ['GET', 'POST'])
 def login():
+
+    
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -99,8 +102,25 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
             flash('Account created!', category='success')
             return redirect(url_for('auth.login'))
 
+    watchData=[[],[],[],[],[],[],[],[],[],[]]
+    with open("website/static/assets/testdata/watchData.csv", 'r') as f:
+         
+        dict_reader = DictReader(f)
+         
+        list_of_dict = list(dict_reader)
+        for i in range(5):
+            watchData[0].append(list_of_dict[i]["date"])
+            watchData[1].append(float(list_of_dict[i]["Restfulness Score"]))
+            watchData[2].append(float(list_of_dict[i]["Total Sleep Duration"])/60**2)
+            watchData[3].append(float(list_of_dict[i]["REM Sleep Duration"])/60**2)
+            watchData[4].append(float(list_of_dict[i]["Light Sleep Duration"])/60**2)
+            watchData[5].append(float(list_of_dict[i]["Deep Sleep Duration"])/60**2)
+            watchData[6].append(float(list_of_dict[i]["Average Resting Heart Rate"]))
+            watchData[7].append(float(list_of_dict[i]["Lowest Resting Heart Rate"]))
+            watchData[8].append(float(list_of_dict[i]["Steps"]))
+            watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
         
 
-    return render_template("create_user.html")
+    return render_template("create_user.html", watchData=watchData)
 
 

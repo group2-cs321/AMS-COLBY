@@ -10,18 +10,18 @@
               <div class="col-sm-4 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h5>Readiness</h5>
+                    <h5 class="text-success {{'text-danger' if watchData[1][4]<80}}">Readiness</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-6 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">80%</h4>
-                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                          <h4 class="mb-0">{{watchData[1][4]}}%</h4>
+                          <!--<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>-->
                         </div>
                         
                       </div>
                       <div class="col-4 col-sm-12 col-xl-12 text-center text-xl-right">
                          <canvas id=readyChart width="500" height="500"></canvas>
-                          
+                        
                         
                       </div>
                         <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -41,16 +41,16 @@
                   
                 <div class="card">
                   <div class="card-body">
-                    <h5>Sleep</h5>
+                    <h5 class="text-success {{'text-danger' if watchData[2][4]<8}}">Sleep</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-12 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">6.5h</h4>
-                          <p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>
+                          <h4 class="mb-0">{{watchData[2][4]}}h</h4>
+                          
                         </div>
                           <br>
                           <canvas id=sleepChart width="500" height="500"></canvas>
-                         
+                          
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                     
@@ -62,18 +62,17 @@
             <br>
                   <div class="card">
                 <div class="card-body">
-                    <h5>Recovery</h5>
+                    <h5 class="text-success {{'text-danger' if watchData[9][4]<80}}">Sleep Score</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-12 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                          <h4 class="mb-0">{{watchData[9][4]}}%</h4>
+                          
                         </div>
                           <br>
                               </div>
                           </div>
                     <canvas id="recChart" width="500" height="500"></canvas>
-                      
                    
                     
                 </div>
@@ -82,17 +81,16 @@
               <div class="col-sm-2 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h5>Calories</h5>
+                    <h4 class="text-success {{'text-danger' if watchData[8][4]<10000}}">Steps</h4>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-12 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                          <h6 class="mb-0">{{watchData[8][4]}}/10,000</h6>
+                          
                         </div>
                           <br>
                         
-                          <canvas id="calChart" width="500" height="500"></canvas>
-                      
+                          <canvas id="stepChart" width="500" height="500"></canvas>
                           
                       </div>
                       
@@ -102,12 +100,12 @@
                   <br>
                   <div class="card">
                       <div class="card-body">
-                          <h5>Heart Rate</h5>
+                          <h6 class="text-success {{'text-danger' if watchData[6][4]>75}}">Resting Heart Rate</h6>
                           <div class="row">
                       <div class="col-8 col-sm-12 col-xl-12 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h4 class="mb-0">90%</h4>
-                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+                          <h4 class="mb-0">{{watchData[6][4]}}</h4>
+                          
                         </div>
                           <br>
                               </div>
@@ -122,11 +120,36 @@
                       <div class=card>
                           <div class=card-body>
                               <h4 class="card-title">Team Trends</h4>
-                              <canvas id="trends" width="200" height="200"></canvas>
-                      
-                              
+                              <canvas id="trendsplayer" width="200" height="120"></canvas>
+                              <br>
                                   <canvas id="trends2" width="300" height="200"></canvas>
-                      <
+                      <script>
+const ctx9 = document.getElementById('trends2').getContext('2d');
+const trends2 = new Chart(ctx9, {
+    type: 'bar',
+    data: {
+        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        datasets: [
+                   {
+            label: 'Sleep',
+            data: [40, 27, 3, 80, 52, 36],
+            
+            borderColor: 
+                'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }, 
+                   
+                  ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
                             
                           </div>
                       </div>

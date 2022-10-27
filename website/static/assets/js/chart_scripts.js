@@ -1,54 +1,22 @@
 
-// d3.csv("/data/employees.csv", function(id) {
-//     for (var i = 0; i < data.length; i++) {
-//         console.log(data[i].Name);
-//         console.log(data[i].Age);
-//     }
-// });
 
-
-
-
-// const data = {
-//     'React': 185134,
-//     'Vue': 195514,
-//     'Angular': 80460,
-//     'Svelte': 57022,
-//     'Ember.js': 22165,
-//     'Backbone.js': 27862
-// };
-
-// const ctx = document.getElementById('testChart').getContext('2d');
-
-// const testChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: Object.keys(data),
-//         datasets: [
-//             {
-//                 label: 'Number of GitHub Stars',
-//                 data: Object.values(data),
-//             },
-//         ],
-//     },
-// });
-
-function uponStartup(name){
-
-
+function uponStartup(id, watchData, hawkinData){
+    console.log(watchData)
+    console.log(hawkinData)
     
-    console.log(name);
 
 
 
-const ctx5 = document.getElementById('readyChart').getContext('2d');
-const readyChart = new Chart(ctx5, {
+
+
+const ctxRestful = document.getElementById('readyChart').getContext('2d');
+const readyChart = new Chart(ctxRestful, {
     type: 'doughnut',
     data: {
-        labels: ['Readiness'],
+        labels: ['Restfulness'],
         datasets: [{
-            label: '# of Votes',
-            data: [90, 10],
+            label: 'Restfulness Score',
+            data: [watchData[1][4], 100-watchData[1][4]],
             backgroundColor: [
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(42, 35, 45, 0.09)'
@@ -64,14 +32,15 @@ const readyChart = new Chart(ctx5, {
 
 
 
-const ctx4 = document.getElementById('sleepChart').getContext('2d');
-const sleepChart = new Chart(ctx4, {
+
+const ctxSleep = document.getElementById('sleepChart').getContext('2d');
+const sleepChart = new Chart(ctxSleep, {
     type: 'doughnut',
     data: {
         labels: ['REM', 'Light', 'Deep'],
         datasets: [{
             label: '# of Votes',
-            data: [6.5, 5, 1.5],
+            data: [watchData[3][4], watchData[4][4], watchData[5][4]],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
@@ -98,14 +67,15 @@ const sleepChart = new Chart(ctx4, {
     }
 });
 
-const ctx3 = document.getElementById('calChart').getContext('2d');
-const calChart = new Chart(ctx3, {
+
+const ctxSteps = document.getElementById('stepChart').getContext('2d');
+const stepChart = new Chart(ctxSteps, {
     type: 'doughnut',
     data: {
-        labels: ['Cal'],
+        //labels: ['Steps'],
         datasets: [{
-            label: '# of Votes',
-            data: [90, 10],
+            label: 'Steps',
+            data: [watchData[8][4], Math.max(0, 10000-watchData[8][4])],
             backgroundColor: [
                 'rgba(255, 159, 64, 0.2)',
                 'rgba(42, 35, 45, 0.09)'
@@ -120,24 +90,30 @@ const calChart = new Chart(ctx3, {
 });
 
 
-const ctx6 = document.getElementById('hrChart').getContext('2d');
-const hrChart = new Chart(ctx6, {
-    type: 'doughnut',
+const ctxHR = document.getElementById('hrChart').getContext('2d');
+const hrChart = new Chart(ctxHR, {
+    type: 'bar',
     data: {
-        labels: ['HR'],
-        datasets: [{
-            label: '# of Votes',
-            data: [90, 10],
-            backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(42, 35, 45, 0.09)'
-            ],
-            borderColor: [
-                'rgba(75, 192, 192, 1)',
-                'rgba(0, 0, 0, 0.53)'
-            ],
-            hoverOffset: 1
+        labels: ["Average", "Lowest"],
+        datasets: [
+                   {
+            label: 'HR',
+            data: [watchData[6][4], watchData[7][4]],
+            
+            borderColor: 
+                'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }, 
+                  ]
+    },
+    options: {
+        scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
         }]
+    }
     }
 });
 
@@ -146,26 +122,26 @@ const ctxplayer = document.getElementById('trendsplayer').getContext('2d');
 const trendsplayer = new Chart(ctxplayer, {
     type: 'line',
     data: {
-        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        labels: watchData[0],
         datasets: [{
-            label: 'Recovery',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Restfulness',
+            data: watchData[1],
 
             borderColor:'rgba(54, 162, 235, 1)',
 
             borderWidth: 1
         }, 
                    {
-            label: 'Calories',
-            data: [70, 60, 50, 40, 30, 20],           
+            label: 'Sleep Score',
+            data: watchData[9],           
             borderColor:
                 'rgba(255, 206, 86, 1)',
                 
             borderWidth: 1
         }, 
                    {
-            label: 'Readiness',
-            data: [50, 50, 50, 50, 50, 50],
+            label: 'Resting HR Avg',
+            data: watchData[6],
         
             borderColor: 
                 
@@ -188,15 +164,16 @@ const trendsplayer = new Chart(ctxplayer, {
 });
 
 
+
 const ctx9 = document.getElementById('trends2').getContext('2d');
 const trends2 = new Chart(ctx9, {
     type: 'bar',
     data: {
-        labels: ['9/4', '9/11', '9/18', '9/25', '10/2', '10/9'],
+        labels: watchData[0],
         datasets: [
                    {
             label: 'Sleep',
-            data: [40, 27, 30, 80, 52, 36],
+            data: watchData[2],
             
             borderColor: 
                 'rgba(255, 99, 132, 1)',
@@ -206,24 +183,26 @@ const trends2 = new Chart(ctx9, {
     },
     options: {
         scales: {
-            y: {
+        yAxes: [{
+            ticks: {
                 beginAtZero: true
             }
-        }
+        }]
     }
+    }
+
 });
 
 
 
 
-const ctx7 = document.getElementById('recChart').getContext('2d');
-const recChart = new Chart(ctx7, {
+const ctxSleepScore = document.getElementById('recChart').getContext('2d');
+const recChart = new Chart(ctxSleepScore, {
     type: 'doughnut',
     data: {
-        labels: ['Qual'],
         datasets: [{
             label: '# of Votes',
-            data: [90, 10],
+            data: [watchData[9][4], 100-watchData[9][4]],
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(42, 35, 45, 0.09)'

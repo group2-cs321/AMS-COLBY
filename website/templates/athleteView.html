@@ -13,12 +13,12 @@
   <div class="col-sm-6 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h5>Readiness</h5>
+        <h5 class="text-success {{'text-danger' if watchData[1][4]<80}}">Readiness</h5>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-6 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0">80%</h4>
-              <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+              <h4 class="mb-0">{{watchData[1][4]}}%</h4>
+              <!--<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>-->
             </div>
             
           </div>
@@ -46,12 +46,12 @@
     <!-- Sleep chart -->
     <div class="card">
       <div class="card-body">
-        <h5>Sleep</h5>
+        <h5 class="text-success {{'text-danger' if watchData[2][4]<8}}">Sleep</h5>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-12 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0">6.5h</h4>
-              <p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>
+              <h4 class="mb-0">{{watchData[2][4]}}h</h4>
+              <!--<p class="text-success ml-2 mb-0 font-weight-medium">+0.3%</p>-->
             </div>
               <br>
               <canvas id=sleepChart width="500" height="500"></canvas>
@@ -69,20 +69,19 @@
 <br>
       <div class="card">
     <div class="card-body">
-        <h5>Quality</h5>
+        <h5 class="text-success {{'text-danger' if watchData[9][4]<80}}">Sleep Score</h5>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-12 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0">90%</h4>
-              <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+              <h4 class="mb-0">{{watchData[9][4]}}%</h4>
+              <!--<p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>-->
             </div>
               <br>
                   </div>
               </div>
         <canvas id="recChart" width="500" height="500"></canvas>
        
-        
-    </div>
+      </div>
       </div>
   </div>
   <div class="col-sm-3 grid-margin">
@@ -90,16 +89,16 @@
       <div class="card-body">
 
         <!-- Caloroes chart -->
-        <h5>Calories</h5>
+        <h5 class="text-success {{'text-danger' if watchData[8][4]<10000}}">Steps</h5>
         <div class="row">
           <div class="col-8 col-sm-12 col-xl-12 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0">90%</h4>
-              <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+              <h4 class="mb-0">{{watchData[8][4]}}/10,000</h4>
+              <!--<p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>-->
             </div>
               <br>
             
-              <canvas id="calChart" width="500" height="500"></canvas>
+              <canvas id="stepChart" width="500" height="500"></canvas>
           
               
           </div>
@@ -112,12 +111,12 @@
       <!-- HR chart -->
       <div class="card">
           <div class="card-body">
-              <h6>Heart Rate</h6>
+              <h6 class="text-success {{'text-danger' if watchData[6][4]>75}}">Resting Heart Rate</h6>
               <div class="row">
           <div class="col-8 col-sm-12 col-xl-12 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0">90%</h4>
-              <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+              <h4 class="mb-0">{{watchData[6][4]}}</h4>
+              <!--<p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>-->
             </div>
               <br>
                   </div>
@@ -164,12 +163,11 @@
   <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-          <h5>Sleep</h5>
+          <h5>Sleep Trends</h5>
           <div class="row">
       <div class="col-8 col-sm-12 col-xl-12 my-auto">
         <div class="d-flex d-sm-block d-md-flex align-items-center">
-          <h4 class="mb-0">90%</h4>
-          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>
+          
         </div>
           <br>
               </div>
