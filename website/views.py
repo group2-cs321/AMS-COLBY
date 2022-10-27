@@ -162,8 +162,16 @@ def create_note():
         writer_id = current_user.colby_id
         athlete_id = request.form.get('athletes')
         content = request.form.get('content')
+        clearance = request.form.get('clearance')
         
         athlete = Athlete.query.filter_by(colby_id=athlete_id).first()
+
+        if clearance == "Cleared":
+            athlete.status=0
+        elif clearance == "Warning":
+            athlete.status=1
+        elif clearance == "Ineligible":
+            athlete.status=2
 
         new_note = Note (writer_id=writer_id, athlete_id=athlete.id, content=content)    
         db.session.add(new_note)
