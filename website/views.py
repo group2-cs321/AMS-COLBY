@@ -48,7 +48,7 @@ def home():
         team = Team.query.filter_by(coach_id=coach.id).first()
         if not team:
             return "<h1>NO ACCESS</h1>"
-        return redirect(url_for("views.coach_dashboard", id= team.id))
+        return redirect(url_for("views.coach_dashboard", id = team.id))
     elif int(role) == 3:
         return redirect(url_for("views.athlete_dashboard"))
     else:
