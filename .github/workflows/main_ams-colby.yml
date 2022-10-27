@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'AMS-colby'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D1143B15D0404A53984B100D10B939C8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_33A701CED2D8428F99E02D52B1BD2102 }}
