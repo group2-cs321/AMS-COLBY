@@ -122,7 +122,7 @@ def permission_page():
                 db.session.commit()
 
             # When new role is coach add user to coach table
-            if int(role) == 1:
+            if int(role) == 3:
                 athlete = Athlete(colby_id=colby_id, first_name=user.first_name, last_name = user.last_name)
                 db.session.add(athlete)
                 db.session.commit()
