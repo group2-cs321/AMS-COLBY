@@ -26,15 +26,6 @@ def home():
     else:
         return render_template("login.html")
 
-@views.route('/permissions', methods = ['GET'])
-def permissions():
-
-    if int(current_user.permission_change) != 0:
-        return redirect(url_for('views.home'))
-
-    else:
-        return render_template('permission.html', user=current_user)
-
 @views.route('/create-team', methods = ['GET', 'POST'])
 def create_team():
 
