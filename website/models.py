@@ -59,6 +59,7 @@ class Athlete(db.Model, UserMixin):
     status = db.Column(db.Integer)
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    peakNotes = db.relationship('Note')
     # password = db.Column(db.String(150))
 
     # role = db.Column(db.String(150))
@@ -104,3 +105,8 @@ class Team(db.Model):
 
 
     
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True) #id of the note
+    writer_id = db.Column(db.Integer) #the person writing the note, either peak or super admin
+    athlete_id = db.Column(db.Integer, db.ForeignKey('athlete.id')) #athlete the note is for
+    content = db.Column(db.String(1500)) #the actual note content
