@@ -78,6 +78,9 @@ def logout():
 
 @auth.route('/create-user', methods= ['GET', 'POST'])
 def create_user(): #TODO: We need to add a way to handle the permissions form
+    watchData=parse_CSV()
+    
+    dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -125,10 +128,10 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
             flash('Account created!', category='success')
             return redirect(url_for('auth.login'))
 
-    watchData=parse_CSV()
+    
 
         
 
-    return render_template("create_user.html", watchData=watchData)
+    return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
 
 
