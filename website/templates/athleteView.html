@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<h1>{{ athlete.first_name }} {{ athlete.last_name }}</h1>
+</br>
+
 <!-- Top Row -->
 <div class="row">
 
@@ -256,7 +259,7 @@
           <div class="row">
           <div class="col-8 col-sm-12 col-xl-12 my-auto">
             <div class="d-flex d-sm-block d-md-flex align-items-center">
-              <h4 class="mb-0 text-danger">Lucy Abbott</h4>
+              <h4 class="mb-0 text-danger">{{ athlete.first_name }} {{ athlete.last_name }}</h4>
             </div>
               
                   </div>
