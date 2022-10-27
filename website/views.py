@@ -90,7 +90,7 @@ def athlete_dashboard(id):
 
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam)
 
-
+# Handles everything on the permissions page
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 def permission_page():
     if request.method == 'POST':
@@ -107,22 +107,34 @@ def permission_page():
 
 
         if int(user.role) != int(role):
-
+            # When user is an athlete, delete them from coach table
             if int(user.role) == 2:
-                print("In coach")
                 coach = Coach.query.filter_by(colby_id=colby_id).first()
                 team = Team.query.filter_by(coach_id=coach.id).first()
-                team.colby_id = None
+
+                # Making sure that coach had a team
+                if team:
+                    team.coach_id = None
                 db.session.delete(coach)
                 db.session.commit()
-                print("after coach")
 
+            # When user is a coach, delete them from athlete table
             if int(user.role) == 3:
-                print("In Athlete")
                 athlete = Athlete.query.filter_by(colby_id=colby_id).first()
                 db.session.delete(athlete)
                 db.session.commit()
-                print("After Athlete")
+
+            # When new role is athlete add user to athlete table
+            if int(role) == 2:
+                coach = Coach(colby_id=colby_id, first_name=user.first_name, last_name = user.last_name)
+                db.session.add(coach)
+                db.session.commit()
+
+            # When new role is coach add user to coach table
+            if int(role) == 1:
+                athlete = Athlete(colby_id=colby_id, first_name=user.first_name, last_name = user.last_name)
+                db.session.add(athlete)
+                db.session.commit()
 
 
             user.role = role
@@ -139,7 +151,6 @@ def permission_page():
 
         db.session.commit()
 
-        return render_template('permission.html', current_user = current_user, users = User.query.all())
 
     return render_template('permission.html', current_user = current_user, users = User.query.all())
 
