@@ -147,7 +147,7 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    <script src="../static/assets/js/chart_scripts.js"> </script>
+    <script src="{{url_for('static', filename = 'assets/js/chart_scripts.js')}}"> </script>
     <script type="text/javascript">
               uponStartup({{current_user.first_name|tojson}}, {{watchData|tojson}});            
     </script>
