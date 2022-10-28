@@ -94,7 +94,6 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         create_account = request.form.get('create_account')
         permission_change = request.form.get('permission_change')
         role = request.form.get('role')
-        print(role)
 
         
         user = User.query.filter_by(colby_id=colby_id).first()
