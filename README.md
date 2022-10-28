@@ -37,7 +37,7 @@ In this milestone, we were improving in our ability to use git and resolve any m
 1. Implement additional features from your backlog.
 - Dylan used Azure to deploy our website, and even though we didn’t get to show it in class presentation, we are able to access our website online.
 - We used the json graphs. And our visuals adjust its size automatically, so our website still looks great when viewing from a device with a different proportion, such as a mobile phone. 
-2. Burndown chart of your project. 
+2. Burndown chart of your project. <br>
 A burndown chart, one of the most common and useful Agile metrics, is created using Excel and is shown below. It demonstrates our daily efforts in comparison to the ideal burndown, as well as actual and planned hours working every day.
 ![extension 2](/website/static/assets/report_images/extension2.png)
 3. Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content. <br>
