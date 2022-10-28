@@ -7,7 +7,7 @@ For this project, we had to collaborate within our teams using git and GitHub, i
 
 ### Sprint Backlog
 High Priority
-Restructure repository to match Flask requirement (Completed)
+- Restructure repository to match Flask requirement (Completed)
 - As a coach, I want to view my athlete's information page when I click on their hyperlinked name (completed)
 - As a user, I want to access all webpages that I have access to (completed)
 - As a user I want to see relevant graphs from my stats so that Have useful information (completed)
