@@ -32,12 +32,12 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini"><img src="{{url_for('static', filename = 'assets/images/logo-mini.svg')}}" alt="logo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+<!--             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
               <span class="mdi mdi-menu"></span>
-            </button>
+            </button> -->
             <ul class="navbar-nav w-100">
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
@@ -77,7 +77,7 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="../assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
+                      <img src="{{url_for('static', filename = 'assets/images/faces/face4.jpg')}}" alt="image" class="rounded-circle profile-pic">
                     </div>
                     <div class="preview-item-content">
                       <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
@@ -87,7 +87,7 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="../assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
+                      <img src="{{url_for('static', filename = 'assets/images/faces/face4.jpg')}}" alt="image" class="rounded-circle profile-pic">
                     </div>
                     <div class="preview-item-content">
                       <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
@@ -97,7 +97,7 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="../assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
+                      <img src="{{url_for('static', filename = 'assets/images/faces/face4.jpg')}}" alt="image" class="rounded-circle profile-pic">
                     </div>
                     <div class="preview-item-content">
                       <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
@@ -178,9 +178,9 @@
                 </div>
               </li>
             </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+<!--             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
               <span class="mdi mdi-format-line-spacing"></span>
-            </button>
+            </button> -->
           </div>
         </nav>
         <!-- partial -->
@@ -209,9 +209,9 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="../static/assets/js/chart_scripts.js"> </script>
+    <script src="{{url_for('static', filename = 'assets/js/chart_scripts.js')}}"> </script>
     <script type="text/javascript">
-              uponStartup({{current_user.first_name|tojson}}, {{watchData|tojson}})          
+              uponStartup({{current_user.first_name|tojson}}, {{watchData|tojson}});          
     </script>
     <script src="{{url_for('static', filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
     <!-- endinject -->

@@ -13,8 +13,8 @@
       <div class="card-body" style="max-height: 210px; overflow: scroll;">
         {%for team in teams%}
             <td>
-              <a href="coach_dashboard/{{team.coach_id}}">
-              <div>{{team.team_name}}<div>
+              <a href="coach/athlete/{{team.coach_id}}">
+              <p>{{team.team_name}}<p>
                 </a>
             </td>
         {% endfor %}
@@ -91,7 +91,7 @@
     <div class="card-body">
       <h6 class="card-title"> Sleep </h6>
       <canvas id="transaction-history" class="transaction-chart"></canvas>
-      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">   -->
+  
     </div>
   </div>
 </div>
@@ -100,7 +100,7 @@
     <div class="card-body">
       <h6 class="card-title"> Readiness </h6>
       <canvas id="readiness" class="readiness-score"></canvas>
-      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found">  --> 
+      
     </div>
   </div>
 </div>
@@ -109,7 +109,7 @@
     <div class="card-body">
       <h6 class="card-title"> Calorie Intake </h6>
       <canvas id="calories" class="calorie-intake"></canvas>
-      <!-- <img src="assets/images/sleepquality_ring.png" alt="Not Found"> -->  
+       
     </div>
   </div>
 </div>
