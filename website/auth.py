@@ -134,7 +134,7 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
     return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
 
 
-views.route('/create-admin')
+auth.route('/create-admin')
 @login_required
 def create_admin():
 
