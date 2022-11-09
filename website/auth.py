@@ -136,7 +136,5 @@ def create_user():
     
 
         
-
     return render_template("create_user.html", watchData=watchData, current_user = current_user)
-
 
