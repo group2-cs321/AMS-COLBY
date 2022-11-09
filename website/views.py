@@ -248,3 +248,42 @@ def create_note():
         return redirect(url_for('views.create_note'))
 
     return render_template("create_note.html", athletes=athletes, watchData=watchData)
+
+
+#Edit team
+@views.route('/edit-team',methods=['GET','POST'])
+@login_required
+def edit_team():
+    watchData=parse_CSV()
+    if request.method == 'POST':
+        team = request.form.get('team')
+        athletes_add = request.form.getlist('athletes_add')
+        athletes_del = request.form.getlist('athletes_del')
+ 
+        coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
+
+
+        teamdb = Team.query.filter_by(team_name=team).first()
+
+        if teamdb.coach_id != coachnew.id:
+            teamdb.coach_id=coachnew.id
+            db.session.commit()
+        for athlete in athletes_add:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id!=teamdb.id:
+                ath.team_id=teamdb.id
+                db.session.commit()
+        for athlete in athletes_del:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id==teamdb.id:
+                ath.team_id=None
+                db.session.commit()
+    
+
+         
+
+        flash('Changes successful', category='success')
+        return redirect(url_for('views.edit_team'))
+
+
+    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
