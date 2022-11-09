@@ -251,7 +251,7 @@ def create_note():
 
 
 #Edit team
-@views.route('/edit',methods=['GET','POST'])
+@views.route('/edit-team',methods=['GET','POST'])
 @login_required
 def edit_team():
     watchData=parse_CSV()
