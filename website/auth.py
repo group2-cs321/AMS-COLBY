@@ -134,3 +134,14 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
     return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
 
 
+views.route('/create-admin')
+@login_required
+def create_admin():
+
+    new_user = User(colby_id='admin', first_name='admin', last_name = 'admin',
+                 password=generate_password_hash('12345678', method='sha256'),
+                 role = 0, athlete_data = 0, team_data = 0, notes = 0,
+                 account_create = 0, permission_change = 0)
+
+    db.session.add(new_user)
+    
