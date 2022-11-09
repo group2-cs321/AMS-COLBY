@@ -144,4 +144,5 @@ def create_admin():
                  account_create = 0, permission_change = 0)
 
     db.session.add(new_user)
+    db.session.commit()
     
