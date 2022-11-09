@@ -3,6 +3,15 @@
 
 {% block content %}
 
+
+
+<a href="{{url_for('static', filename='assets/testdata/hawkins.csv')}}" download>
+  <h1>Download Hawkins data</h1>
+</a>
+<a href="{{url_for('static', filename='assets/testdata/watchData.csv')}}" download>
+  <h1>Download watch data</h1>
+</a>
+
 <div class="row"> <!--start row-->
   <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
     <div class="card">
