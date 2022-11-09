@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="page-header">
-  <h3 class="page-title"> Create User </h3>
+  <h3 class="page-title"> Write An Athlete Note </h3>
 </div>
 <div class="row">
   <div class="col-12 grid-margin stretch-card">
@@ -21,7 +21,7 @@
       </br>
 
         <div class="form-group">
-            <label for="exampleFormControlSelect2">Pick Athlete</label>
+            <label for="exampleFormControlSelect2">Select Athlete</label>
             <select class="form-control" id="athletes" name="athletes" style="color: white;">
               {% for athlete in athletes %}
               <option>{{athlete.colby_id}}</option>

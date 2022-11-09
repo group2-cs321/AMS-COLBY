@@ -248,3 +248,33 @@ def create_note():
         return redirect(url_for('views.create_note'))
 
     return render_template("create_note.html", athletes=athletes, watchData=watchData)
+
+
+
+@views.route('/generate-report', methods = ['GET', 'POST'])
+@login_required
+def generate_report():
+
+    #Deny access if athlete
+    if int(current_user.permission_change) == 3:
+        return "<h1>No Access</h1>"
+
+    teams = Team.query.all()
+   
+    if request.method == 'POST':
+        #have user select what team they want to get report on
+        #query athlete_data from all athletes on requested team
+        #display that data on front end by rendering a report html
+        
+        team_name = request.form.get('team')
+        team_id = Team.query.filter_by(team_name=team_name).first()
+        team_players = Athlete.query.filter_by(team_id=team_id).all()
+        
+        report_data = {}
+        
+        for athlete in team_players:
+            #the line below I believe returns the athlete id. We need to return the athlete's jump data but it isnt in db
+            athlete_data = Athlete.query.filter_by(colby_id=athlete).first()
+            report_data[athlete] = athlete_data
+            
+    return render_template('generate_report.html', teams=teams)
