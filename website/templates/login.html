@@ -19,6 +19,31 @@
     <link rel="shortcut icon" href="{{url_for('static', filename = 'colby.svg')}}" />
   </head>
   <body>
+
+    <!-- Flash Log-in Notification -->
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+      {% if messages %} 
+          {% for category, message in messages %} 
+              {% if category == 'error' %}
+                  <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+              {% else %}
+                  <div class="alert alert-success alter-dismissable fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+              {% endif %} 
+          {% endfor %} 
+        {% endif %} 
+    {% endwith %}
+    <!-- Flash Log-in Notification-->
+
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="row w-100 m-0">
