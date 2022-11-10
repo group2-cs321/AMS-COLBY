@@ -1,4 +1,3 @@
-from tkinter import W
 from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
@@ -48,7 +47,7 @@ def home():
         team = Team.query.filter_by(coach_id=coach.id).first()
         if not team:
             return "<h1>NO ACCESS</h1>"
-        return redirect(url_for("views.coach_dashboard", id= team.id))
+        return redirect(url_for("views.coach_dashboard", id = team.id))
     elif int(role) == 3:
         return redirect(url_for("views.athlete_dashboard"))
     else:
@@ -58,6 +57,9 @@ def home():
 @views.route('/create-team', methods = ['GET', 'POST'])
 @login_required
 def create_team():
+
+    if int(current_user.team_data) != 0:
+        return "<h1>No Access</h1>"
 
     watchData=parse_CSV()
 
@@ -100,6 +102,10 @@ def create_team():
 @views.route('/team/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def coach_dashboard(id):
+    role = int(current_user.role)
+    if role > 2:
+        return "<h1>No Access</h1>"
+
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     currentTeam = Team.query.get(id)
     watchData=parse_CSV()
@@ -110,6 +116,11 @@ def coach_dashboard(id):
 @views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
+
+    role = int(current_user.role)
+    if role > 2:
+        return "<h1>No Access</h1>"
+
     athlete = Athlete.query.get(id)
     coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
     watchData=parse_CSV()
@@ -122,6 +133,9 @@ def athlete_coach_dashboard(id):
 @views.route('/athlete', methods = ['GET', 'POST'])
 @login_required
 def athlete_dashboard():
+    role = int(current_user.role)
+    if role == 2:
+        return "<h1>No Access</h1>"
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
@@ -133,6 +147,9 @@ def athlete_dashboard():
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 @login_required
 def permission_page():
+    if int(current_user.permission_change) != 0:
+        return "<h1>No Access</h1>"
+
     watchData=parse_CSV()
     if request.method == 'POST':
 
@@ -203,6 +220,10 @@ def permission_page():
 @views.route('/new-note',methods=['GET','POST'])
 @login_required
 def create_note():
+    role = int(current_user.role)
+    if role > 1:
+        return "<h1>No Access</h1>"
+
     athletes = Athlete.query.all() #TODO: add watchData
     watchData=parse_CSV()
     if request.method == 'POST':
@@ -227,3 +248,42 @@ def create_note():
         return redirect(url_for('views.create_note'))
 
     return render_template("create_note.html", athletes=athletes, watchData=watchData)
+
+
+#Edit team
+@views.route('/edit-team',methods=['GET','POST'])
+@login_required
+def edit_team():
+    watchData=parse_CSV()
+    if request.method == 'POST':
+        team = request.form.get('team')
+        athletes_add = request.form.getlist('athletes_add')
+        athletes_del = request.form.getlist('athletes_del')
+ 
+        coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
+
+
+        teamdb = Team.query.filter_by(team_name=team).first()
+
+        if teamdb.coach_id != coachnew.id:
+            teamdb.coach_id=coachnew.id
+            db.session.commit()
+        for athlete in athletes_add:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id!=teamdb.id:
+                ath.team_id=teamdb.id
+                db.session.commit()
+        for athlete in athletes_del:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id==teamdb.id:
+                ath.team_id=None
+                db.session.commit()
+    
+
+         
+
+        flash('Changes successful', category='success')
+        return redirect(url_for('views.edit_team'))
+
+
+    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
