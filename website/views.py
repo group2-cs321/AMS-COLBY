@@ -9,6 +9,16 @@ from csv import DictReader
 views = Blueprint('views', __name__)
 
 def parse_CSV():
+
+    """parse CSV file
+    
+    Reads an athelete data csv file
+ 
+    Returns
+    -------
+    watchData: nested list of strings and floats
+    """
+
     watchData=[[],[],[],[],[],[],[],[],[],[]]
 
     with open("website/static/assets/testdata/watchData.csv", 'r') as f:
@@ -34,6 +44,14 @@ def parse_CSV():
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+
+    """redirect to user's home page
+ 
+    Returns
+    -------
+    .html: corresponding home page according to user type
+    """
+    
     role = current_user.role
     print(current_user)
     print(role)
@@ -58,16 +76,25 @@ def home():
 @login_required
 def create_team():
 
+    """create team and post team data to database
+    notify user of creation status (error/sucess)
+ 
+    Returns
+    -------
+    .html: create team page
+    """
+
     if int(current_user.team_data) != 0:
         return "<h1>No Access</h1>"
 
     watchData=parse_CSV()
 
     if request.method == 'POST':
-        # TODO:
+
         # Create a team with the given name
         # Get the list of athletes from the form and add them to the team
         # For each coach, add the team to the coach field team_id
+
         team_name = request.form.get('team_name')
 
         athletes = request.form.getlist('athletes')
@@ -102,6 +129,14 @@ def create_team():
 @views.route('/team/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def coach_dashboard(id):
+
+    """redirect to coach dashboard if user has access
+ 
+    Returns
+    -------
+    .html: coach's dashboard
+    """
+
     role = int(current_user.role)
     if role > 2:
         return "<h1>No Access</h1>"
@@ -116,6 +151,14 @@ def coach_dashboard(id):
 @views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
+
+    """redirect to coach's view of athlete if user has access
+ 
+    Returns
+    -------
+    .html: coach's view page of athletes
+    """
+
 
     role = int(current_user.role)
     if role > 2:
@@ -133,6 +176,14 @@ def athlete_coach_dashboard(id):
 @views.route('/athlete', methods = ['GET', 'POST'])
 @login_required
 def athlete_dashboard():
+
+    """redirect to athlete dashboard if user has access
+ 
+    Returns
+    -------
+    .html: athlete's dashboard
+    """
+
     role = int(current_user.role)
     if role == 2:
         return "<h1>No Access</h1>"
@@ -147,6 +198,15 @@ def athlete_dashboard():
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 @login_required
 def permission_page():
+        
+    """redirect to the permission edit page if user has access
+    post edits of permission settings to database
+ 
+    Returns
+    -------
+    .html: permission page
+    """
+
     if int(current_user.permission_change) != 0:
         return "<h1>No Access</h1>"
 
@@ -220,6 +280,15 @@ def permission_page():
 @views.route('/new-note',methods=['GET','POST'])
 @login_required
 def create_note():
+
+    """create notes and post athlete's note data to database
+    notify user of creation status (sucess)
+ 
+    Returns
+    -------
+    .html: create note page
+    """
+
     role = int(current_user.role)
     if role > 1:
         return "<h1>No Access</h1>"
@@ -254,6 +323,16 @@ def create_note():
 @views.route('/edit-team',methods=['GET','POST'])
 @login_required
 def edit_team():
+
+    """redirect to the team edit page if user has access
+    post edits of team information to database
+    notify user of edit status (sucess)
+ 
+    Returns
+    -------
+    .html: edit team page
+    """
+
     watchData=parse_CSV()
     if request.method == 'POST':
         team = request.form.get('team')

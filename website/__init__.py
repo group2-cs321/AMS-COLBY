@@ -11,6 +11,7 @@ load_dotenv()
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
+#creation of the Flash app object
 def create_app():
     app = Flask(__name__)
 
@@ -57,7 +58,7 @@ def create_app():
 
     return app
 
-
+#create a database when no existing database is in place
 def create_database(app):
     if not path.exists('instance/' + DB_NAME):
         with app.app_context():
