@@ -41,7 +41,7 @@ def home():
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 1:
-        return render_template("peak_view.html", user=current_user, watchData=watchData)
+        return render_template("peak_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
