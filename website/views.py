@@ -272,14 +272,14 @@ def generate_report():
         #display that data on front end by rendering a report html
         
         team_name = request.form.get('team')
-        team_id = Team.query.filter_by(team_name=team_name).first()
-        team_players = Athlete.query.filter_by(team_id=team_id).all()
+        team = Team.query.filter_by(team_name=team_name).first()
+        team_players = Athlete.query.filter_by(team_id=team.id).all()
         
         report_data = {}
         
         #get the athlete data for all players on the team and put it in report_data
         for athlete in team_players:
-            athlete_id = Athlete.query.filter_by(colby_id=athlete).first()
+            athlete_id = Athlete.query.filter_by(colby_id=athlete.id).first()
             report_data[athlete_id] = None #need to put whatever data we want. I'd assume we want name, timestamp, and relevant metrics like jump height
             
         #if the file already exists, delete it
