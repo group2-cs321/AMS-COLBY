@@ -76,11 +76,17 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+
 @auth.route('/create-user', methods= ['GET', 'POST'])
-def create_user(): #TODO: We need to add a way to handle the permissions form
+@login_required
+def create_user(): 
+
+    if not int(current_user.account_create) == 0:
+        return "<h1>No Access</h1>"
+
     watchData=parse_CSV()
     
-    dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
+    # dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -94,10 +100,10 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
         create_account = request.form.get('create_account')
         permission_change = request.form.get('permission_change')
         role = request.form.get('role')
-
         
         user = User.query.filter_by(colby_id=colby_id).first()
-        if user: #TODO: Find better checks
+        
+        if user:
             flash('User already exists.', category='error')
         elif len(colby_id) < 4:
             flash('Email must be greater than 3 characters.', category='error')
@@ -130,7 +136,5 @@ def create_user(): #TODO: We need to add a way to handle the permissions form
     
 
         
-
-    return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
-
+    return render_template("create_user.html", watchData=watchData, current_user = current_user)
 
