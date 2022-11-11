@@ -35,7 +35,7 @@ Finally, we added some small improvements like adding a create team button to co
 
 
 ### Contribution List
-In this project, Dylan worked on finishing setting up the permissions for each user and creating and connecting a SQL server to the website. Max worked on the generate report functionality. Isabella worked on Flash notifications, code comments and burn-down chart. Jonna worked on the grind on the front end for both the PEAK and Admin pages, still working on being able to create users from a CSV files. Rosie worked on creating the edit teams page and functionality. Phil worked on the csv download functionality.
+In this project, Dylan worked on finishing setting up the permissions for each user and creating and connecting a SQL server to the website. Max worked on the generate report functionality. Isabella worked on Flash notifications, nav bar error, code comments and burn-down chart. Jonna worked on the grind on the front end for both the PEAK and Admin pages, still working on being able to create users from a CSV files. Rosie worked on creating the edit teams page and functionality. Phil worked on the csv download functionality.
 
 ### Team Reflection
 In this milestone, we learned a lot about deployment and SQL servers. Deploying the website with a SQL server was a challenge as Azure does not have very detailed instructions on how to do it. On top of that, we ran into a lot of problems when trying to import the necessary libraries in order to connect to the database. We also got a lot better at assigning issues and getting things done more efficiently.
