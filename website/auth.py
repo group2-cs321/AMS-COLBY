@@ -10,6 +10,15 @@ auth = Blueprint('auth', __name__)
 
 
 def parse_CSV():
+    """parse CSV file
+    
+    Reads an athelete data csv file
+ 
+    Returns
+    -------
+    watchData: nested list of strings and floats
+    """
+
     watchData=[[],[],[],[],[],[],[],[],[],[]]
 
     with open("website/static/assets/testdata/watchData.csv", 'r') as f:
@@ -33,7 +42,15 @@ def parse_CSV():
 @auth.route('/login', methods= ['GET', 'POST'])
 def login():
 
-    
+    """login page
+    verify login information and log in user
+    notify user of login status (success / error)
+ 
+    Returns
+    -------
+    .html: corresponding home page according to user type
+        OR login page
+    """
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -73,6 +90,14 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+
+    """log out user
+
+    Returns
+    -------
+    .html: login page
+    """
+
     logout_user()
     return redirect(url_for('auth.login'))
 
@@ -80,6 +105,15 @@ def logout():
 @auth.route('/create-user', methods= ['GET', 'POST'])
 @login_required
 def create_user(): 
+
+    """create user and post user data to database
+    notify creation status (error/sucess)
+
+    Returns
+    -------
+    .html: login page 
+        OR user creation page
+    """
 
     if not int(current_user.account_create) == 0:
         return "<h1>No Access</h1>"
