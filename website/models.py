@@ -21,6 +21,10 @@ class User(db.Model, UserMixin):
     account_create = db.Column(db.Integer)
     permission_change = db.Column(db.Integer)
 
+    #Tokens
+    oura_token = db.Column(db.String(150))
+    whoop_token = db.Column(db.String(150))
+
 # Athlete data class
 class Athlete(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,14 +1,18 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, request
 from .models import User, Coach, Athlete
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from csv import DictReader
+from . import oauth
+import flask
+import flow
+import api_tool
 
 
 auth = Blueprint('auth', __name__)
 
-
+# TODO: Move this to a different file
 def parse_CSV():
     """parse CSV file
     
@@ -171,4 +175,17 @@ def create_user():
 
         
     return render_template("create_user.html", watchData=watchData, current_user = current_user)
+
+@auth.route('/authorize')
+def authorize():
+    token = oauth.oura.authorize_access_token()
+    print(token) # This gives a dic with the token, the type, refresh token etc. TODO: Think about how to handle token refreshing
+    return redirect('/')
+
+@auth.route('auth/<string:name>')
+def ask_auth(name):
+    if name == 'oura':
+        redirect_uri = url_for('auth.authorize', _external = True)
+        return oauth.oura.authorize_redirect(redirect_uri)
+
 
