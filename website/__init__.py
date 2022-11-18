@@ -73,6 +73,24 @@ def create_app():
         api_base_url = "https://api.ouraring.com/v2/",
         access_token_url = "https://api.ouraring.com/oauth/token"
         )
+
+    from authlib.integrations.flask_client import token_update
+
+    @token_update.connect_via(app)
+    def on_token_update(sender, name, token, refresh_token=None, access_token=None):
+        if refresh_token:
+            item = OAuth2Token.query.filter_by(name=name, refresh_token=refresh_token).first()
+        elif access_token:
+            item = OAuth2Token.find.query.filter_by(name=name, access_token=access_token).first()
+        else:
+            return
+
+        # update old token
+        item.access_token = token['access_token']
+        item.refresh_token = token.get('refresh_token')
+        item.expires_at = token['expires_at']
+        db.session.commit()
+
     
     return app
 
@@ -94,6 +112,8 @@ def register_app(app, name, client_id, client_secret, auth_url, api_base_url, ac
             name='oura',
             user=current_user.id,
         ).first()
+
+
         return token.to_token()
 
     oauth.init_app(app)
@@ -107,3 +127,4 @@ def register_app(app, name, client_id, client_secret, auth_url, api_base_url, ac
         fetch_token = fetch_token
         )
     return oauth
+

@@ -1,8 +1,6 @@
 from urllib import request
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
-def authorize():
-	pass
 
 def get_recovery(start_date, end_date, token = None):
 	if not token:
@@ -23,8 +21,3 @@ def get_recovery(start_date, end_date, token = None):
 def get_sleep():
 	pass
 
-def get_token(url):
-	parsed_url = urlparse(url)
-	captured_value = parse_qs(parsed_url.query)['access_token'][0]
-
-	return captured_value

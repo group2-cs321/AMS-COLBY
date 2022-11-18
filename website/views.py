@@ -192,10 +192,15 @@ def athlete_dashboard():
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
+    #Move this to a helper function
     if len(current_user.tokens) != 0:
 
-        res = oauth.oura.get('usercollection/daily_activity' ,params = {'start_date': '2022-11-10', 
-        'end_date': '2022-11-17' })
+        res = oauth.oura.get(
+            'usercollection/daily_activity',
+            params = {'start_date': '2022-11-10', 
+            'end_date': '2022-11-17' }
+            )
+
         print(res.json())
 
 
