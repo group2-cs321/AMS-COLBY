@@ -39,8 +39,6 @@ def parse_CSV():
             watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
     return watchData
 
-
-
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -120,9 +118,9 @@ def create_team():
                 db.session.commit()
 
         flash('Team created Succesfully', category='success')
-        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
         
-    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
 
 
 #coach Dasboard page
@@ -170,7 +168,16 @@ def athlete_coach_dashboard(id):
     currentTeam = Team.query.get(athlete.team_id)
 
 
-    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
+    return render_template(
+        "athleteCoachView.html",
+        athlete=athlete,
+        coach=coach,
+        current_user=current_user,
+        team=currentTeam,
+        watchData=watchData
+        )
+
+    
 
 #Athlete Page
 @views.route('/athlete', methods = ['GET', 'POST'])
@@ -320,9 +327,9 @@ def create_note():
 
 
 #Edit team
-@views.route('/edit-team',methods=['GET','POST'])
+@views.route('/edit-team/<string:team_id>',methods=['GET','POST'])
 @login_required
-def edit_team():
+def edit_team(team_id):
 
     """redirect to the team edit page if user has access
     post edits of team information to database
@@ -332,10 +339,10 @@ def edit_team():
     -------
     .html: edit team page
     """
+    team = Team.query.get(int(team_id))
 
     watchData=parse_CSV()
     if request.method == 'POST':
-        team = request.form.get('team')
         athletes_add = request.form.getlist('athletes_add')
         athletes_del = request.form.getlist('athletes_del')
  
@@ -365,4 +372,17 @@ def edit_team():
         return redirect(url_for('views.edit_team'))
 
 
-    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template(
+        "edit_team.html",
+        team = team, 
+        user=current_user,
+        athletes_add = Athlete.query.filter_by(team_id = None),
+        athletes_remove = Athlete.query.filter_by(team_id = team.id),
+        coaches = Coach.query.all(), watchData=watchData
+        )
+
+@views.route('/team-select', methods = ['GET'])
+def team_select():
+    watchData = parse_CSV()
+    return render_template('team_selection.html', teams = Team.query.all(), watchData = watchData)
+
