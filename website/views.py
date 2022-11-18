@@ -5,6 +5,7 @@ from .models import User, Athlete, Coach, Team, Note
 from . import db
 import json
 from csv import DictReader
+from . import oauth
 
 views = Blueprint('views', __name__)
 
@@ -170,6 +171,7 @@ def athlete_coach_dashboard(id):
     currentTeam = Team.query.get(athlete.team_id)
 
 
+
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Athlete Page
@@ -189,6 +191,12 @@ def athlete_dashboard():
         return "<h1>No Access</h1>"
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
+
+    if len(current_user.tokens) != 0:
+
+        res = oauth.oura.get('usercollection/daily_activity' ,params = {'start_date': '2022-11-10', 
+        'end_date': '2022-11-17' })
+        print(res.json())
 
 
     return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)

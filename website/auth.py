@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, request
-from .models import User, Coach, Athlete
+from .models import User, Coach, Athlete, OAuth2Token
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -119,12 +119,12 @@ def create_user():
         OR user creation page
     """
 
-    if not int(current_user.account_create) == 0:
-        return "<h1>No Access</h1>"
+    # if not int(current_user.account_create) == 0:
+    #     return "<h1>No Access</h1>"
 
     watchData=parse_CSV()
     
-    # dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
+    dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -174,21 +174,39 @@ def create_user():
     
 
         
-    return render_template("create_user.html", watchData=watchData, current_user = current_user)
+    return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
+
+
 
 @auth.route('/authorize/<string:name>')
 def authorize(name):
-    response = oauth.oura.authorize_access_token() # This gives a dic with the token, the type, refresh token etc. TODO: Think about how to handle token refreshing
-    if name == 'oura':
-        current_user.oura_token = response['access_token']
-        db.session.commit()
+    # TODO: Think about how to handle token refreshing
+    # TODO: Handle when the user rejects to share access
+    
+    token = oauth.oura.authorize_access_token()
+
+    access_token = token['access_token']
+    token_type = token['token_type']
+    refresh_token = token['refresh_token']
+    expires_at = token['expires_at']
+
+    curr = OAuth2Token(
+        name = name,
+        access_token = access_token,
+        token_type = token_type,
+        refresh_token = refresh_token,
+        expires_at = expires_at,
+        user = current_user.id
+        )
+
+    db.session.add(curr)
+    db.session.commit()
 
     return redirect('/')
 
 @auth.route('auth/<string:name>')
 def ask_auth(name):
-    if name == 'oura':
-        redirect_uri = url_for('auth.authorize',name = name, _external = True)
-        return oauth.oura.authorize_redirect(redirect_uri)
+    redirect_uri = url_for('auth.authorize', name = name, _external = True)
+    return oauth.oura.authorize_redirect(redirect_uri)
 
 

@@ -74,7 +74,6 @@ def create_app():
         access_token_url = "https://api.ouraring.com/oauth/token"
         )
     
-
     return app
 
 #create a database when no existing database is in place
@@ -86,6 +85,17 @@ def create_database(app):
 
 
 def register_app(app, name, client_id, client_secret, auth_url, api_base_url, access_token_url):
+    from .models import OAuth2Token
+    from flask_login import current_user
+    def fetch_token():
+        model = OAuth2Token
+
+        token = model.query.filter_by(
+            name='oura',
+            user=current_user.id,
+        ).first()
+        return token.to_token()
+
     oauth.init_app(app)
     oauth.register( 
         name = name,
@@ -94,5 +104,6 @@ def register_app(app, name, client_id, client_secret, auth_url, api_base_url, ac
         authorize_url = auth_url,
         api_base_url = api_base_url,
         access_token_url = access_token_url,
+        fetch_token = fetch_token
         )
     return oauth

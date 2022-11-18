@@ -22,9 +22,8 @@ class User(db.Model, UserMixin):
     permission_change = db.Column(db.Integer)
 
     #Tokens
-    oura_token = db.Column(db.String(150))
-    whoop_token = db.Column(db.String(150))
-
+    tokens = db.relationship('OAuth2Token')
+    
 # Athlete data class
 class Athlete(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,3 +67,23 @@ class Note(db.Model):
     #athlete_id: connection to Athlete
     athlete_id = db.Column(db.Integer, db.ForeignKey('athlete.id')) #athlete the note is for
     content = db.Column(db.String(1500)) #the actual note content
+
+class OAuth2Token(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(length=40))
+    token_type = db.Column(db.String(length=40))
+    access_token = db.Column(db.String(length=200))
+    refresh_token = db.Column(db.String(length=200))
+    expires_at = db.Column(db.Integer)
+    user = db.Column(db.ForeignKey('user.id'))
+
+    def to_token(self):
+        return dict(
+            access_token = self.access_token,
+            token_type = self.token_type,
+            refresh_token = self.refresh_token,
+            expires_at = self.expires_at,
+        )
+
+
+
