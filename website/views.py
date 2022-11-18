@@ -5,6 +5,7 @@ from .models import User, Athlete, Coach, Team, Note
 from . import db
 import json
 from csv import DictReader
+from . import oauth
 
 views = Blueprint('views', __name__)
 
@@ -59,7 +60,7 @@ def home():
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 1:
-        return render_template("peak_view.html", user=current_user, watchData=watchData)
+        return render_template("peak_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
@@ -170,6 +171,7 @@ def athlete_coach_dashboard(id):
     currentTeam = Team.query.get(athlete.team_id)
 
 
+
     return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Athlete Page
@@ -190,7 +192,10 @@ def athlete_dashboard():
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
+    res = get_oura_recovery('2022-11-10', '2022-11-17')
 
+    print(res.json())
+    
     return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
 
 
@@ -365,4 +370,20 @@ def edit_team():
         return redirect(url_for('views.edit_team'))
 
 
-    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template("edit_team.html", teams = Team.query.all(), user=current_user,
+     athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+
+def get_oura_recovery(start_date, end_date):
+
+    if len(current_user.tokens) == 0:
+        return 'No token found'
+
+    res = oauth.oura.get(
+        'usercollection/daily_activity',
+        params = {'start_date': start_date, 
+        'end_date': end_date }
+        )
+
+    return res
+
+    

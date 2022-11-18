@@ -1,48 +1,52 @@
 ## CS321 - Software Engineering
-*Milestone_4*<br>
-*Group 2: Max Duchesne, Rosie Ingmann, Jonna Sosa, Isabella Feng, Dylan Tymkiw*
+*Milestone_5*<br>
+*Group 2: Max Duchesne, Rosie Ingmann, Jonna Sosa, Isabella Feng, Dylan Tymkiw, Philipp Bogatyrev, Chloe Zhang*
 
 ### Abstract
-For this project, we had to collaborate within our teams using git and GitHub, in order to peopare an interactive version of the Athletic Management System (AMS) using Flask. For this project we have to coordinate and conduct a full Agile Sprint implementing the backlog. The tasks included creating a database, pulling real data into our application to display, creating login/logout functionality along with permissions, and creating the ability to add new users and teams. 
+In this assignment, we worked on developing a dynamic version of our Athletic Management System to the cloud.  Our Flask website was built on top of the previous milestone, and added new functional features from your backlog such as using real data, dynamically creating plots, changing some of the front end, and deploying your app to the cloud.  
 
 ### Sprint Backlog
 High Priority
-- Restructure repository to match Flask requirement (Completed)
-- As a coach, I want to view my athlete's information page when I click on their hyperlinked name (completed)
-- As a user, I want to access all webpages that I have access to (completed)
-- As a user I want to see relevant graphs from my stats so that Have useful information (completed)
-- As a user I want to see relevant graphs from my stats so that Have useful information (completed)
-- As a user, I want to access my account when I input the correct username and password (completed)
-- As a super admin, I want to be able to access and modify the permissions for all users (Peak, coaches, players) (completed)
+- Finish setting up permissions for each user
+- Connect the create team page to the front end
+- Create comments for our code
+- Create an edit team page
 
 Medium Priority
-- As a PEAK member, I want to be able to set the ready-to-play status of players (completed)
-- As a PEAK team member, I want to be able to add notes to a player's file so that the coach and the player is aware of any other factors impacting a player's performance (completed)
-- As a coach, I want to be able to access my team's sleep and recovery data to be able to plan out practices (completed)
-- As a coach, I want to be able to access my team's sleep and recovery data to be able to plan out practices (completed)
+- Fix issue with the navigation bar on mobile
+- Remodel peak and admin views such that both pages share the same aesthetic
+- Create a download button that downloads a csv file with relevant athlete/team data
+- Change the edit team page so that it updates dynamically
+- Change the position of the download csv buttons
 
-We actually ended up completing all of our user stories, even though some might need more work/improvements in the next sprint.
+Low Priority
+- Create an athlete search bar
 
 
 ### Results
-The result of this milestone was a working flask app that is connected to a database. Our database holds users, teams, and athletes and is added to when a new user or team is created. We also implemented permissions and the admin ability to change the permissions of other users. 
+In this milestone, we were able to further improve the functionality and appearance of our athlete management system. 
+First of all, we remodeled the peak and admin views to look cleaner and more similar to the aesthetic of the other pages. 
+
+We also created a page accessible from the admin view that allowed for editing teams (adding players, deleting players, and changing the coach). 
+
+We also added the ability for users to download data in the form of csv files from the dashboard. For now, this was just the static hawkins and watch data but in the future this data will be specific to each player.
+
+Finally, we added some small improvements like adding a create team button to connect that page to the front end, finalizing permissions for users, fine-tuning the navigation bar, and adding comments into our code.
+
 
 ### Contribution List
-In this project, Dylan worked on creating the database along with the auth, login, create_user, create_team functionalities, and deploying the website as extension. Max worked on the functionality of peak members being able to create and send notes. Isabella worked on the HTML inheritance, frontend lists that connect to backend, and Agile charts as extensions. Jonna worked on passing database information into the current webpages. Rosie worked on parsing csv files to display real data in the website and connecting javascript to flask. 
+In this project, Dylan worked on finishing setting up the permissions for each user and creating and connecting a SQL server to the website. Max worked on the generate report functionality. Isabella worked on Flash notifications, nav bar error, code comments and burn-down chart. Jonna worked on the grind on the front end for both the PEAK and Admin pages, still working on being able to create users from a CSV files. Rosie worked on creating the edit teams page and functionality. Phil worked on the csv download functionality.
 
 ### Team Reflection
-In this milestone, we were improving in our ability to use git and resolve any merge conflicts that came up, however git still challenged us at times. The biggest hurdle in this milestone was probably the learning curve of flask as well as the task of choosing how to structure the database. There were many different directions we could have gone in and we had to make a lot of decisions. In the end, this project helped us understand how to connect a database and backend to our previously static website.
+In this milestone, we learned a lot about deployment and SQL servers. Deploying the website with a SQL server was a challenge as Azure does not have very detailed instructions on how to do it. On top of that, we ran into a lot of problems when trying to import the necessary libraries in order to connect to the database. We also got a lot better at assigning issues and getting things done more efficiently.
 
 ### Extensions
 1. Implement additional features from your backlog.
-- Dylan used Azure to deploy our website, and even though we didn’t get to show it in class presentation, we are able to access our website online.
-- We used the json graphs. And our visuals adjust its size automatically, so our website still looks great when viewing from a device with a different proportion, such as a mobile phone. 
+- We were able to access our website online, and since our visuals adjust its size automatically, our website still looks great when viewing from a device with a different proportion, such as a mobile phone. 
 2. Burndown chart of your project. <br>
 A burndown chart, one of the most common and useful Agile metrics, is created using Excel and is shown below. It demonstrates our daily efforts in comparison to the ideal burndown, as well as actual and planned hours working every day.
-![extension 2](/website/static/assets/report_images/extension2.png)
+![extension 2](/website/static/assets/report_images/Picture1.png)
 3. Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content. <br>
 Done.
-4. Suggest your own creative extensions. <br>
-We created an auto-assign workflow that auto-assigns people to issues and pull requests.
 
 
