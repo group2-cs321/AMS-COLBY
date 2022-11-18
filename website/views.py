@@ -192,18 +192,10 @@ def athlete_dashboard():
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
-    #Move this to a helper function
-    if len(current_user.tokens) != 0:
+    res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-        res = oauth.oura.get(
-            'usercollection/daily_activity',
-            params = {'start_date': '2022-11-10', 
-            'end_date': '2022-11-17' }
-            )
-
-        print(res.json())
-
-
+    print(res.json())
+    
     return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
 
 
@@ -380,4 +372,18 @@ def edit_team():
 
     return render_template("edit_team.html", teams = Team.query.all(), user=current_user,
      athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+
+def get_oura_recovery(start_date, end_date):
+
+    if len(current_user.tokens) == 0:
+        return 'No token found'
+
+    res = oauth.oura.get(
+        'usercollection/daily_activity',
+        params = {'start_date': start_date, 
+        'end_date': end_date }
+        )
+
+    return res
+
     
