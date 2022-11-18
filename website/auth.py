@@ -107,7 +107,7 @@ def logout():
 
 
 @auth.route('/create-user', methods= ['GET', 'POST'])
-@login_required
+# @login_required
 def create_user(): 
 
     """create user and post user data to database
@@ -176,16 +176,19 @@ def create_user():
         
     return render_template("create_user.html", watchData=watchData, current_user = current_user)
 
-@auth.route('/authorize')
-def authorize():
-    token = oauth.oura.authorize_access_token()
-    print(token) # This gives a dic with the token, the type, refresh token etc. TODO: Think about how to handle token refreshing
+@auth.route('/authorize/<string:name>')
+def authorize(name):
+    response = oauth.oura.authorize_access_token() # This gives a dic with the token, the type, refresh token etc. TODO: Think about how to handle token refreshing
+    if name == 'oura':
+        current_user.oura_token = response['access_token']
+        db.session.commit()
+
     return redirect('/')
 
 @auth.route('auth/<string:name>')
 def ask_auth(name):
     if name == 'oura':
-        redirect_uri = url_for('auth.authorize', _external = True)
+        redirect_uri = url_for('auth.authorize',name = name, _external = True)
         return oauth.oura.authorize_redirect(redirect_uri)
 
 
