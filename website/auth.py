@@ -180,8 +180,18 @@ def create_user():
 
 @auth.route('/authorize/<string:name>')
 def authorize(name):
+    """handle the authorization and redirect to home page
+
+    Params
+    ______
+    name: the name of the api app
+
+    """
+
     # TODO: Think about how to handle token refreshing
     # TODO: Handle when the user rejects to share access
+
+
     
     token = oauth.oura.authorize_access_token()
 
@@ -206,6 +216,14 @@ def authorize(name):
 
 @auth.route('auth/<string:name>')
 def ask_auth(name):
+    """request to authorize an api app
+        
+       params
+       ______
+       name: name of the api app
+            
+    """
+
     redirect_uri = url_for('auth.authorize', name = name, _external = True)
     return oauth.oura.authorize_redirect(redirect_uri)
 

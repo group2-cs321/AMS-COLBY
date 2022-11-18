@@ -68,6 +68,7 @@ class Note(db.Model):
     athlete_id = db.Column(db.Integer, db.ForeignKey('athlete.id')) #athlete the note is for
     content = db.Column(db.String(1500)) #the actual note content
 
+#Tokens table
 class OAuth2Token(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(length=40))

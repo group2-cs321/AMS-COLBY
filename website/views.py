@@ -378,4 +378,6 @@ def edit_team():
         return redirect(url_for('views.edit_team'))
 
 
-    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template("edit_team.html", teams = Team.query.all(), user=current_user,
+     athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    
