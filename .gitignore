@@ -111,10 +111,7 @@ env.bak/
 venv.bak/
 myvenv/
 myenv/
-<<<<<<< HEAD
-=======
 
->>>>>>> ce83feb (updated gitignore)
 # Spyder project settings
 .spyderproject
 .spyproject
