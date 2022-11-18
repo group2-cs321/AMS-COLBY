@@ -126,5 +126,6 @@ def register_app(app, name, client_id, client_secret, auth_url, api_base_url, ac
         access_token_url = access_token_url,
         fetch_token = fetch_token
         )
+    
     return oauth
 
