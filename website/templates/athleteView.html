@@ -6,15 +6,6 @@
 <h1>{{ athlete.first_name }} {{ athlete.last_name }}</h1>
 </br>
 
-
-  <a href="{{url_for('static', filename='assets/testdata/hawkins.csv')}}" download>
-    <h1>Download Hawkins data</h1>
-  </a>
-  <a href="{{url_for('static', filename='assets/testdata/watchData.csv')}}" download>
-    <h1>Download watch data</h1>
-  </a>
-
-
 <!-- Top Row -->
 <div class="row">
 
@@ -194,6 +185,17 @@
     
   </div>
   
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <a class="btn btn-primary btn-block" href="{{url_for('static', filename='assets/testdata/hawkins.csv')}}" download>Download Hawkins data</a>
+      <br>
+      <a class="btn btn-primary btn-block" href="{{url_for('static', filename='assets/testdata/watchData.csv')}}" download>Download watch data</a>
+    </div>
+  </div>
+
 </div>
 
 

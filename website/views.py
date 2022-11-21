@@ -2,9 +2,12 @@ from urllib import request
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import User, Athlete, Coach, Team, Note
+from werkzeug.security import generate_password_hash
 from . import db
 import json
 from csv import DictReader
+import pandas as pd
+
 
 views = Blueprint('views', __name__)
 
@@ -39,7 +42,64 @@ def parse_CSV():
             watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
     return watchData
 
+def importCSV (fileAdress):
+    '''
+    ImportCSV will read a csv file and create the set of users, CSV should follow the next format: [Colby ID, Name, Last Name]
 
+    Parameters:
+    -----------
+    filepath: string. location of the data 
+
+    Output:
+    ------------
+    repeatUsers: list. a list of Colby_IDs
+    ''' 
+
+    #reads the data and converts it to numpy
+    data = pd.read_csv(fileAdress)
+    data = data.to_numpy()
+
+    repeatUsers=[]
+
+    #goes though the data an obtains the information from teh CSV
+    for athlete in data:
+        colby_id = data[0]
+        first_name = data[1]
+        last_name = data[2]
+        password1 = 12345678
+        athlete_data = 3
+        team_data = 3
+        notes = 3
+        create_account = 3
+        permission_change = 3
+        role = 3
+
+        user = User.query.filter_by(colby_id=colby_id).first()
+
+        if user:
+            repeatUsers.append(colby_id)
+        else:
+            #add user to database
+            new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
+                 password=generate_password_hash(password1, method='sha256'),
+                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
+                 account_create = create_account, permission_change = permission_change)
+            if int(role) == 3:
+                athlete = Athlete(colby_id=colby_id, first_name=first_name, last_name = last_name)
+                db.session.add(athlete)
+            
+            db.session.add(new_user)
+            db.session.commit()
+    
+    if len(repeatUsers) != 0:
+        flash("These students have already an account: " + repeatUsers + ". The rest of the users have been created", category='error')
+
+    elif len(repeatUsers) == 0:
+        flash("All users have been succesfully created", category='success')
+
+    return repeatUsers
+
+    
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -72,6 +132,7 @@ def home():
         return render_template("login.html")
 
 
+#creates team page
 @views.route('/create-team', methods = ['GET', 'POST'])
 @login_required
 def create_team():
@@ -366,3 +427,30 @@ def edit_team():
 
 
     return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+
+
+#Create Users from CSV or Excel files Page
+@views.route('/users-CSV', methods = ['GET', 'POST'])
+@login_required
+def users_csv():
+
+    """redirect to Create Users from CSV or Excel files Page if user has access
+ 
+    Returns
+    -------
+    .html: Create Users from CSV or Excel files Page
+    """
+
+    role = int(current_user.role)
+
+    if role != 0 :
+        return "<h1>No Access</h1>"
+    
+    if request.method == 'POST':
+        csvFile = request.files['file']
+        repeat = importCSV(csvFile)
+
+        print(repeat)
+
+    return render_template("<h1> Access</h1>",current_user=current_user)
+
