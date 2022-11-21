@@ -14,14 +14,35 @@
     <link rel="stylesheet" href="{{url_for('static', filename='assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename = 'assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
+    
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{url_for('static', filename ='assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename ='assets/css/coach_dashboard.css') }}">
+
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{url_for('static', filename='colby.svg')}}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <!-- <script type="text/javascript">
+      jQuery.noConflict();
+      (function($) {
+        document
+    .querySelectorAll('[role="alert"]')
+    .delay(4000)
+    .slideUp(200, function () {
+      $(this).alert("close");
+    });
+
+  $(".alert alert-success alter-dismissable fade show")
+    .fadeTo(2000, 500)
+    .slideUp(500, function () {
+      $(".alert alert-success alter-dismissable fade show").alert("close");
+    });
+      })(jQuery);
+  </script> -->
     </head>
   <body>
 
@@ -41,12 +62,24 @@
             </button> -->
             <ul class="navbar-nav w-100">
               <li class="nav-item dropdown">
-                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                <!-- <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ team.team_name }}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
-                </a>
+                </a> -->
+
+                <!-- <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                  <div class="navbar-profile">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ team.team_name }}</p>
+                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                  </div>
+                  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </a> -->
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
   
                   {% for team in coach.teams %}
@@ -257,12 +290,12 @@
     <!-- inject:js -->
     <script src="{{url_for('static', filename= 'assets/js/off-canvas.js')}}"></script>
     <script src="{{url_for('static', filename='assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
     <script src="{{url_for('static', filename='assets/js/settings.js')}}"></script>
     <script src="{{url_for('static', filename='assets/js/todolist.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{{url_for('static', filename='assets/js/dashboard.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/misc.js')}}"></script>
     <!-- End custom js for this page -->
   </body>
 </html>
