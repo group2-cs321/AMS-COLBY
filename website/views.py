@@ -275,8 +275,7 @@ def generate_report():
         team = Team.query.filter_by(team_name=team_name).first()
         team_players = Athlete.query.filter_by(team_id=team.id).all()
         
-        report_data = {}
-        
+        report_data = {}  
         #get the athlete data for all players on the team and put it in report_data
         for athlete in team_players:
             athlete_id = Athlete.query.filter_by(colby_id=athlete.id).first()
@@ -301,5 +300,35 @@ def generate_report():
         report_html = report.to_html()
         #report_html is an html output, need to figure out how to render it on front end
         
+    return render_template('generate_report.html', team=team)
+
+
+
+@views.route('/generate-report', methods = ['GET', 'POST'])
+@login_required
+def generate_report():
+
+    #Deny access if athlete
+    if int(current_user.role) == 3:
+        return "<h1>No Access</h1>"
+
+    team = Team.query.all()
+   
+    if request.method == 'POST':
+        #have user select what team they want to get report on
+        #query athlete_data from all athletes on requested team
+        #display that data on front end by rendering a report html
+        
+        team_name = request.form.get('team')
+        team = Team.query.filter_by(team_name=team_name).first()
+        team_players = Athlete.query.filter_by(team_id=team.id).all()
+        
+        report = pd.read_csv("report.csv")
+        new_report = pd.DataFrame()
+        for player in team_players:
+            player_report = report.query("Name == @player")
+            new_report = pd.concat([new_report, player_report])
+            
+    #need to use phil's download button to download new_report.csv
         
     return render_template('generate_report.html', team=team)
