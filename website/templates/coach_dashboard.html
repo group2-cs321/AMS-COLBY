@@ -8,13 +8,13 @@
 
 
 <h1>{{ team.team_name }}</h1>
-<a class="nav-link1" id="profileDropdown1" href="#" data-toggle="dropdown">
-  <div class="navbar-profile1">
+<a class="nav-link" id="profileDropdown1" href="#" data-toggle="dropdown">
+  <div class="navbar-profile">
     <!-- <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ team.team_name }}</p> -->
-    <p class="mb-01 d-none1 d-sm-block1 navbar-profile-name1">{{ team.team_name }}</p>
-    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+    <p class="mb-01 d-none1 d-sm-block1 navbar-profile-name">{{ team.team_name }}</p>
+    <i id = "profileDropdownArrow" class="mdi mdi-menu-down d-none d-sm-block"></i>
   </div>
-  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+  <div class="dropdown-menu" aria-labelledby="profileDropdown1">
     <a class="dropdown-item" href="#">Action</a>
     <a class="dropdown-item" href="#">Another action</a>
     <a class="dropdown-item" href="#">Something else here</a>
