@@ -109,7 +109,7 @@ def register_app(app, name, client_id, client_secret, auth_url, api_base_url, ac
         model = OAuth2Token
 
         token = model.query.filter_by(
-            name='oura',
+            name=name,
             user=current_user.id,
         ).first()
 
