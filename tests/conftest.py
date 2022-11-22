@@ -1,9 +1,9 @@
 import pytest
-from website import create_app, drop_database
+from website import create_test_app, drop_test_database
 
 @pytest.fixture()
 def app():
-    app = create_app()
+    app = create_test_app()
     app.config.update({
         "TESTING": True,
     })
@@ -13,7 +13,7 @@ def app():
     yield app
 
     # clean up / reset resources here
-    drop_database(app)
+    drop_test_database(app)
 
 
 @pytest.fixture()

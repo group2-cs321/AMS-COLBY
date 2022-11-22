@@ -353,7 +353,8 @@ def edit_team(team_id):
         coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
 
 
-        teamdb = Team.query.filter_by(team_name=team).first()
+        teamdb = Team.query.filter_by(team_name=team.team_name).first()
+        #teamdb = Team.query.filter_by(id=team.id).first()
 
         if teamdb.coach_id != coachnew.id:
             teamdb.coach_id=coachnew.id
@@ -373,7 +374,7 @@ def edit_team(team_id):
          
 
         flash('Changes successful', category='success')
-        return redirect(url_for('views.edit_team'))
+        #return redirect(url_for('views.edit_team'))
 
 
 
