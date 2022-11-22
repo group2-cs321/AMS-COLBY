@@ -124,7 +124,7 @@ def test_create_athlete(client):
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data 
 
-def test_success_login(client):
+def test_success_ath_login(client):
 
     response = client.get('/login')
     assert response.status_code == 200
@@ -150,6 +150,34 @@ def test_success_login(client):
                                       "password": "12345678"})
 
         print("\n\n", response.data)
+        assert response.status_code == 302 # redirect to home page
+        assert b'Redirecting' in response.data 
+
+def test_success_coach_login(client):
+
+    response = client.get('/login')
+    assert response.status_code == 200
+    assert b'colby_id' in response.data
+    assert b'password' in response.data
+
+    with client:
+        response = client.post("/create-user", 
+                    data={"colby_id": "testCoach2",
+                              "firstname": "Coach2",
+                              "lastname": "Test",
+                              "athlete_data": "2",
+                              "team_data": "2",
+                              "notes": "2",
+                              "create_account": "2",
+                              "permission_change": "2",
+                              "role": "2",
+                              "password1": "12345678",
+                              "password2": "12345678"})
+
+        response = client.post("/login", 
+                                data={"colby_id": "testCoach2",
+                                      "password": "12345678"})
+
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data 
 

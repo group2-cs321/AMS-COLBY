@@ -120,6 +120,7 @@ def create_team():
                 ath.team_id = new_team.id
                 db.session.commit()
 
+
         flash('Team created Succesfully', category='success')
         return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
         
