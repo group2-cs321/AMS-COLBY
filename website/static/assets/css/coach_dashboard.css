@@ -1,0 +1,11 @@
+#profileDropdown1 {
+  position: absolute;
+  left: 140px;
+  top: 0px;
+}
+
+#profileDropdownArrow {
+  position: relative;
+  left: 40px;
+  top: -36px;
+}
