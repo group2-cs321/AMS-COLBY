@@ -199,7 +199,7 @@ def athlete_dashboard():
 
     res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-    print(res.json())
+    print(res)
     
     return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
 
