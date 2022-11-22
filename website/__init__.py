@@ -7,10 +7,15 @@ from flask_migrate import Migrate
 import os
 from dotenv import load_dotenv
 from authlib.integrations.flask_client import OAuth
+
+
 load_dotenv()
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+
+
 oauth = OAuth()
 
 #creation of the Flash app object
@@ -49,6 +54,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     from .models import User
+    from .models import OAuth2Token
     if not 'WEBSITE_HOSTNAME' in os.environ:
         create_database(app)
 
@@ -64,14 +70,31 @@ def create_app():
     # Register remote app
     # Initialize app
 
-    oauth = register_app(
-        app = app,
+    
+    from flask_login import current_user
+    
+
+    oauth.init_app(app)
+
+    def fetch_token():
+        model = OAuth2Token
+
+        token = model.query.filter_by(
+            name='oura',
+            user=current_user.id,
+        ).first()
+
+
+        return token.to_token()
+
+    oauth.register( 
         name = 'oura',
         client_id = "5QNUWHYTUNUEBPHK",
         client_secret = "QVACKSMIU2QX5JYGW6I6OFXXF2A3D6KG",
-        auth_url = "https://cloud.ouraring.com/oauth/authorize",
+        authorize_url = "https://cloud.ouraring.com/oauth/authorize",
         api_base_url = "https://api.ouraring.com/v2/",
-        access_token_url = "https://api.ouraring.com/oauth/token"
+        access_token_url = "https://api.ouraring.com/oauth/token",
+        fetch_token = fetch_token
         )
 
     from authlib.integrations.flask_client import token_update
@@ -108,30 +131,4 @@ def drop_database(app):
             db.drop_all()
         print('Dropped Database!')
 
-def register_app(app, name, client_id, client_secret, auth_url, api_base_url, access_token_url):
-    from .models import OAuth2Token
-    from flask_login import current_user
-    def fetch_token():
-        model = OAuth2Token
-
-        token = model.query.filter_by(
-            name='oura',
-            user=current_user.id,
-        ).first()
-
-
-        return token.to_token()
-
-    oauth.init_app(app)
-    oauth.register( 
-        name = name,
-        client_id = client_id,
-        client_secret = client_secret,
-        authorize_url = auth_url,
-        api_base_url = api_base_url,
-        access_token_url = access_token_url,
-        fetch_token = fetch_token
-        )
-    
-    return oauth
 
