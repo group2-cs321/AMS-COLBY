@@ -4,27 +4,17 @@
 {% block content %}
 
 <div class="page-header">
-  <h3 class="page-title"> Edit Team </h3>
+  <h3 class="page-title"> Edit {{team.team_name}}</h3>
 </div>
 <div class="row">
   <div class="col-12 grid-margin stretch-card">
     <div class="card">
     <form method="POST">
       <div class="card-body">
-      
-        
-        <div class="form-group">
-          <label for="exampleFormControlSelect2">Pick Team</label>
-          <select class="form-control" id="team" name="team" style="color: white;">
-            {% for team in teams %}
-            <option>{{team.team_name}}</option>
-            {% endfor %}
-          </select>
-        </div>
         <div class="form-group">
           <label for="exampleFormControlSelect2">Add Athletes</label>
           <select multiple class="form-control" id="athletes_add" name="athletes_add" style="color: white;">
-            {% for athlete in athletes %}
+            {% for athlete in athletes_add %}
             <option>{{athlete.colby_id}}</option>
             {% endfor %}
           </select>
@@ -32,7 +22,7 @@
         <div class="form-group">
           <label for="exampleFormControlSelect2">Remove Athletes</label>
           <select multiple class="form-control" id="athletes_del" name="athletes_del" style="color: white;">
-            {% for athlete in athletes %}
+            {% for athlete in athletes_remove %}
             <option>{{athlete.colby_id}}</option>
             {% endfor %}
           </select>

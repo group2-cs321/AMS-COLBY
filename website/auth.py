@@ -187,8 +187,6 @@ def authorize(name):
     name: the name of the api app
 
     """
-
-    # TODO: Think about how to handle token refreshing
     # TODO: Handle when the user rejects to share access
 
 
@@ -200,14 +198,23 @@ def authorize(name):
     refresh_token = token['refresh_token']
     expires_at = token['expires_at']
 
-    curr = OAuth2Token(
-        name = name,
-        access_token = access_token,
-        token_type = token_type,
-        refresh_token = refresh_token,
-        expires_at = expires_at,
-        user = current_user.id
-        )
+    curr = OAuth2Token.query.filter_by(name = name, user = current_user.id).first()
+
+    if curr !=  None:
+        curr.access_token = access_token
+        curr.token_type = token_type
+        curr.refresh_token = refresh_token
+        curr.expires_at = expires_at
+
+    else:
+        curr = OAuth2Token(
+            name = name,
+            access_token = access_token,
+            token_type = token_type,
+            refresh_token = refresh_token,
+            expires_at = expires_at,
+            user = current_user.id
+            )
 
     db.session.add(curr)
     db.session.commit()
