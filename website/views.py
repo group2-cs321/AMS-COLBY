@@ -5,6 +5,11 @@ from .models import User, Athlete, Coach, Team, Note
 from . import db
 import json
 from csv import DictReader
+from os.path import exists as file_exists
+import os
+import csv
+from pathlib import Path
+import pandas as pd
 from . import oauth
 
 views = Blueprint('views', __name__)
@@ -329,6 +334,84 @@ def create_note():
 
     return render_template("create_note.html", athletes=athletes, watchData=watchData)
 
+#This commented funtion can be used if we have the hawkins data in the database
+
+# @views.route('/generate-report', methods = ['GET', 'POST'])
+# @login_required
+# def generate_report():
+
+#     #Deny access if athlete
+#     if int(current_user.role) == 3:
+#         return "<h1>No Access</h1>"
+
+#     team = Team.query.all()
+   
+#     if request.method == 'POST':
+#         #have user select what team they want to get report on
+#         #query athlete_data from all athletes on requested team
+#         #display that data on front end by rendering a report html
+        
+#         team_name = request.form.get('team')
+#         team = Team.query.filter_by(team_name=team_name).first()
+#         team_players = Athlete.query.filter_by(team_id=team.id).all()
+        
+#         report_data = {}  
+#         #get the athlete data for all players on the team and put it in report_data
+#         for athlete in team_players:
+#             athlete_id = Athlete.query.filter_by(colby_id=athlete.id).first()
+#             report_data[athlete_id] = None #need to put whatever data we want. I'd assume we want name, timestamp, and relevant metrics like jump height
+            
+#         #if the file already exists, delete it
+#         if file_exists('report.csv'):
+#             os.remove('report.csv')
+        
+#         #this code snippet found here: https://dev.to/bowmanjd/flexible-csv-handling-in-python-with-dictreader-and-dictwriter-3hae
+#         outpath = Path("AMS-COLBY/report.csv")  #not sure if this is correct path
+#         outpath.parent.mkdir(exist_ok=True)  #ensure the "out" directory exists
+
+#         with outpath.open("w", newline="", encoding="utf-8-sig") as outfile:
+#             writer = csv.DictWriter(outfile, ["COLUMN1", "COLUMN2","ETC"]) #need to change to whatever columns we want
+#             writer.writeheader()
+#             new_row = report_data
+#             writer.writerow(new_row)
+               
+#         report = pd.read_csv("report.csv")
+#         report.to_html("Table.htm")
+#         report_html = report.to_html()
+#         #report_html is an html output, need to figure out how to render it on front end
+        
+#     return render_template('generate_report.html', team=team)
+
+
+
+@views.route('/generate-report', methods = ['GET', 'POST'])
+@login_required
+def generate_report():
+
+    #Deny access if athlete
+    if int(current_user.role) == 3:
+        return "<h1>No Access</h1>"
+
+    team = Team.query.all()
+   
+    if request.method == 'POST':
+        
+        if file_exists('new_report.csv'):
+            os.remove('new_report.csv')
+        
+        team_name = request.form.get('team')
+        team = Team.query.filter_by(team_name=team_name).first()
+        team_players = Athlete.query.filter_by(team_id=team.id).all()
+        
+        report = pd.read_csv("report.csv") # Where is this comign from?
+        new_report = pd.DataFrame()
+        for player in team_players:
+            player_report = report.query("Name == @player")
+            new_report = pd.concat([new_report, player_report])
+            
+        new_report.to_csv('new_report.csv')
+        
+    return render_template('generate_report.html', team=team, watchData = {})
 
 #Edit team
 @views.route('/edit-team/<string:team_id>',methods=['GET','POST'])

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="page-header">
+  <h3 class="page-title"> Generate Report </h3>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+    <form method="POST">
+      <div class="card-body">
+
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Select Team</label>
+            <select class="form-control" id="team" name="team" style="color: white;">
+              {% for t in team %}
+              <option>{{t.team_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+{% endblock %}
