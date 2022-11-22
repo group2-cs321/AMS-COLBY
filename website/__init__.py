@@ -119,8 +119,16 @@ def create_app():
 
 #create a database when no existing database is in place
 def create_database(app):
-    if not path.exists('instance/' + DB_NAME):
+    with app.app_context():
+        db.create_all()
+    print('Created Database!')
+
+# clean up / reset resources 
+def drop_database(app):
+    if path.exists('instance/' + DB_NAME):
         with app.app_context():
-            db.create_all()
-        print('Created Database!')
+            db.session.remove()
+            db.drop_all()
+        print('Dropped Database!')
+
 
