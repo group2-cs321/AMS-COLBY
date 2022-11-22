@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="page-header">
+  <h3 class="page-title"> Edit {{team.team_name}}</h3>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+    <form method="POST">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Add Athletes</label>
+          <select multiple class="form-control" id="athletes_add" name="athletes_add" style="color: white;">
+            {% for athlete in athletes_add %}
+            <option>{{athlete.colby_id}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Remove Athletes</label>
+          <select multiple class="form-control" id="athletes_del" name="athletes_del" style="color: white;">
+            {% for athlete in athletes_remove %}
+            <option>{{athlete.colby_id}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect2">Set Coach</label>
+          <select class="form-control" id="coaches" name="coaches" style="color: white;">
+            {% for coach in coaches %}
+            <option>{{coach.colby_id}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div align="right">
+          <button class="btn btn-primary" type="submit"> Submit </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+{% endblock %}

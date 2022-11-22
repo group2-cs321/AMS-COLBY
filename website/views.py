@@ -10,10 +10,21 @@ import os
 import csv
 from pathlib import Path
 import pandas as pd
+from . import oauth
 
 views = Blueprint('views', __name__)
 
 def parse_CSV():
+
+    """parse CSV file
+    
+    Reads an athelete data csv file
+ 
+    Returns
+    -------
+    watchData: nested list of strings and floats
+    """
+
     watchData=[[],[],[],[],[],[],[],[],[],[]]
 
     with open("website/static/assets/testdata/watchData.csv", 'r') as f:
@@ -34,11 +45,17 @@ def parse_CSV():
             watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
     return watchData
 
-
-
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+
+    """redirect to user's home page
+ 
+    Returns
+    -------
+    .html: corresponding home page according to user type
+    """
+    
     role = current_user.role
     print(current_user)
     print(role)
@@ -46,7 +63,7 @@ def home():
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 1:
-        return render_template("peak_view.html", user=current_user, watchData=watchData)
+        return render_template("peak_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
@@ -63,16 +80,25 @@ def home():
 @login_required
 def create_team():
 
+    """create team and post team data to database
+    notify user of creation status (error/sucess)
+ 
+    Returns
+    -------
+    .html: create team page
+    """
+
     if int(current_user.team_data) != 0:
         return "<h1>No Access</h1>"
 
     watchData=parse_CSV()
 
     if request.method == 'POST':
-        # TODO:
+
         # Create a team with the given name
         # Get the list of athletes from the form and add them to the team
         # For each coach, add the team to the coach field team_id
+
         team_name = request.form.get('team_name')
 
         athletes = request.form.getlist('athletes')
@@ -97,16 +123,25 @@ def create_team():
                 ath.team_id = new_team.id
                 db.session.commit()
 
+
         flash('Team created Succesfully', category='success')
-        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
         
-    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
 
 
 #coach Dasboard page
 @views.route('/team/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def coach_dashboard(id):
+
+    """redirect to coach dashboard if user has access
+ 
+    Returns
+    -------
+    .html: coach's dashboard
+    """
+
     role = int(current_user.role)
     if role > 2:
         return "<h1>No Access</h1>"
@@ -122,6 +157,14 @@ def coach_dashboard(id):
 @login_required
 def athlete_coach_dashboard(id):
 
+    """redirect to coach's view of athlete if user has access
+ 
+    Returns
+    -------
+    .html: coach's view page of athletes
+    """
+
+
     role = int(current_user.role)
     if role > 2:
         return "<h1>No Access</h1>"
@@ -132,19 +175,38 @@ def athlete_coach_dashboard(id):
     currentTeam = Team.query.get(athlete.team_id)
 
 
-    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
+    return render_template(
+        "athleteCoachView.html",
+        athlete=athlete,
+        coach=coach,
+        current_user=current_user,
+        team=currentTeam,
+        watchData=watchData
+        )
+
 
 #Athlete Page
 @views.route('/athlete', methods = ['GET', 'POST'])
 @login_required
 def athlete_dashboard():
+
+    """redirect to athlete dashboard if user has access
+ 
+    Returns
+    -------
+    .html: athlete's dashboard
+    """
+
     role = int(current_user.role)
     if role == 2:
         return "<h1>No Access</h1>"
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
+    res = get_oura_recovery('2022-11-10', '2022-11-17')
 
+    print(res)
+    
     return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
 
 
@@ -152,6 +214,15 @@ def athlete_dashboard():
 @views.route('admin/permissions', methods = ['GET', 'POST'])
 @login_required
 def permission_page():
+        
+    """redirect to the permission edit page if user has access
+    post edits of permission settings to database
+ 
+    Returns
+    -------
+    .html: permission page
+    """
+
     if int(current_user.permission_change) != 0:
         return "<h1>No Access</h1>"
 
@@ -225,6 +296,15 @@ def permission_page():
 @views.route('/new-note',methods=['GET','POST'])
 @login_required
 def create_note():
+
+    """create notes and post athlete's note data to database
+    notify user of creation status (sucess)
+ 
+    Returns
+    -------
+    .html: create note page
+    """
+
     role = int(current_user.role)
     if role > 1:
         return "<h1>No Access</h1>"
@@ -323,7 +403,7 @@ def generate_report():
         team = Team.query.filter_by(team_name=team_name).first()
         team_players = Athlete.query.filter_by(team_id=team.id).all()
         
-        report = pd.read_csv("report.csv")
+        report = pd.read_csv("report.csv") # Where is this comign from?
         new_report = pd.DataFrame()
         for player in team_players:
             player_report = report.query("Name == @player")
@@ -331,4 +411,81 @@ def generate_report():
             
         new_report.to_csv('new_report.csv')
         
-    return render_template('generate_report.html', team=team)
+    return render_template('generate_report.html', team=team, watchData = {})
+
+#Edit team
+@views.route('/edit-team/<string:team_id>',methods=['GET','POST'])
+@login_required
+def edit_team(team_id):
+
+    """redirect to the team edit page if user has access
+    post edits of team information to database
+    notify user of edit status (sucess)
+ 
+    Returns
+    -------
+    .html: edit team page
+    """
+    team = Team.query.get(int(team_id))
+
+    watchData=parse_CSV()
+    if request.method == 'POST':
+        athletes_add = request.form.getlist('athletes_add')
+        athletes_del = request.form.getlist('athletes_del')
+ 
+        coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
+
+
+        teamdb = Team.query.filter_by(team_name=team).first()
+
+        if teamdb.coach_id != coachnew.id:
+            teamdb.coach_id=coachnew.id
+            db.session.commit()
+        for athlete in athletes_add:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id!=teamdb.id:
+                ath.team_id=teamdb.id
+                db.session.commit()
+        for athlete in athletes_del:
+            ath = Athlete.query.filter_by(colby_id=athlete).first()
+            if ath.team_id==teamdb.id:
+                ath.team_id=None
+                db.session.commit()
+    
+
+         
+
+        flash('Changes successful', category='success')
+        return redirect(url_for('views.edit_team'))
+
+
+
+    return render_template(
+        "edit_team.html",
+        team = team, 
+        user=current_user,
+        athletes_add = Athlete.query.filter_by(team_id = None),
+        athletes_remove = Athlete.query.filter_by(team_id = team.id),
+        coaches = Coach.query.all(),
+        watchData=watchData
+        )
+
+@views.route('/team-select', methods = ['GET'])
+def team_select():
+    watchData = parse_CSV()
+    return render_template('team_selection.html', teams = Team.query.all(), watchData = watchData)
+
+def get_oura_recovery(start_date, end_date):
+
+    if len(current_user.tokens) == 0:
+        return 'No token found'
+
+    res = oauth.oura.get(
+        'usercollection/daily_activity',
+        params = {'start_date': start_date, 
+        'end_date': end_date }
+        )
+
+    return res
+
+    

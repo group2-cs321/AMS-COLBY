@@ -24,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     </head>
   <body>
+    
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       
@@ -123,8 +124,35 @@
           </div>
         </nav>
 
+        
+
         <!-- partial -->
         <div class="main-panel">
+
+          <!-- Flash Log-in Notification -->
+          {% with messages = get_flashed_messages(with_categories=true) %} 
+            {% if messages %} 
+                {% for category, message in messages %} 
+                    {% if category == 'error' %}
+                        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success alter-dismissable fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endif %} 
+                {% endfor %} 
+              {% endif %} 
+          {% endwith %}
+        <!-- Flash Log-in Notification-->
+        
           <div class="content-wrapper">
 
             {% block content %}
@@ -134,6 +162,7 @@
 
             
           <!-- content-wrapper ends -->
+
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
