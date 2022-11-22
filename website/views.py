@@ -1,5 +1,5 @@
 from urllib import request
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import User, Athlete, Coach, Team, Note
 from . import db
@@ -385,5 +385,21 @@ def get_oura_recovery(start_date, end_date):
         )
 
     return res
+
+@views.route("/livesearch",methods=["POST","GET"])
+@login_required
+def livesearch():
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    teams = Team.query
+    teams= teams.filter(Team.team_name.like('%' + searchbox + '%'))
+    teams = teams.order_by(Team.team_name).all()
+    print(teams[0].team_name)
+    res = {}
+    for team in teams:
+        res[team.id] = team.team_name
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
+    #return "hello world"
 
     
