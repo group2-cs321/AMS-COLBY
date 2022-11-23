@@ -7,19 +7,19 @@ The goal of this milestone was to deploy our web app to the cloud, implement mor
 
 ### Sprint Backlog
 High Priority  
--Create test files (done)  
+- Create test files (done)  
 
 Medium Priority   
--Fix bootstrap on front-end  
--Implement live search bar (done)  
--Make report files (done)  
--Create multiple users and teams by uploading csv files (done)  
--Connect to APIs (done)  
+- Fix bootstrap on front-end  
+- Implement live search bar (done)  
+- Make report files (done)  
+- Create multiple users and teams by uploading csv files (done)  
+- Connect to APIs (done)  
 
 
 Low Priority
--Make notifications disappear automatically after 5 seconds (done)  
--Front end for specific sleep, readiness, etc. pages  
+- Make notifications disappear automatically after 5 seconds (done)  
+- Front end for specific sleep, readiness, etc. pages  
 
 
 
@@ -39,8 +39,8 @@ In this project, Dylan worked on exploring and connecting the oura API, filterin
 The main goal of this milestone was to get more experience with testing flask apps. This was challenging, especially because testing databases is super complicated. In the end we got something functional but still far from ideal. In addition to testing, we worked on a few extra features like linking APIs that will surely help in the upcoming milestones.
 
 ### Extensions
--Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring.   
--Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
+- Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring.   
+- Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
 
 
 
