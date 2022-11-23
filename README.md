@@ -6,10 +6,10 @@
 The goal of this milestone was to deploy our web app to the cloud, implement more features from our sprint backlog, and most importantly start testing our code using pytest. We had already deployed our web app in a previous milestone, so we mostly focused on adding features and increasing code coverage. In the end, we were able to test most of our code and also add in a couple new and exciting features
 
 ### Sprint Backlog
-High Priority
--Create test files (done)
+High Priority  
+*Create test files (done)  
 
-Medium Priority
+Medium Priority   
 -Fix bootstrap on front-end
 -Implement live search bar (done)
 -Make report files (done)
