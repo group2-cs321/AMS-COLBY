@@ -39,7 +39,7 @@ In this project, Dylan worked on exploring and connecting the oura API, filterin
 The main goal of this milestone was to get more experience with testing flask apps. This was challenging, especially because testing databases is super complicated. In the end we got something functional but still far from ideal. In addition to testing, we worked on a few extra features like linking APIs that will surely help in the upcoming milestones.
 
 ### Extensions
--Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring. 
+-Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring.   
 -Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
 
 
