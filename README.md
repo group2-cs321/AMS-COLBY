@@ -24,7 +24,9 @@ Low Priority
 
 
 ### Results
-In this milestone we were able to accomplish a lot in terms of testing code coverage. We were able to achieve over 70% code coverage, which is a great start. 
+In this milestone we were able to accomplish a lot in terms of testing code coverage. We were able to achieve a code coverage of 74%, which is a great start. 
+
+
 
 In terms of features, we were able to implement some of the features in our backlog. We created a live search on the admin home page that queries the backend for team names that match what was typed. We were also able to connect the oura API to a user’s page using token authentication, but we did not yet use the data for any visuals on the front end. 
 
