@@ -33,14 +33,16 @@ There were also a couple features that we implemented but didn’t merge yet bec
 
 
 ### Contribution List
-In this project, Dylan worked on exploring and connecting the oura API, filtering the athletes in the edit team page and helped Rosie with the search bar. Max worked on generating report files. Isabella worked the testing. Jonna worked on creating multiple users at once with a csv file . Rosie worked on the live search bar. Phil worked on making sure that the success notifications went away.
+In this project, Dylan worked on exploring and connecting the oura API, filtering the athletes in the edit team page and helped Rosie with the search bar. Max worked on generating report files. Isabella worked on writing the testing codes. Jonna worked on creating multiple users at once with a csv file . Rosie worked on the live search bar. Phil worked on making sure that the success notifications went away.
 
 ### Team Reflection
 The main goal of this milestone was to get more experience with testing flask apps. This was challenging, especially because testing databases is super complicated. In the end we got something functional but still far from ideal. In addition to testing, we worked on a few extra features like linking APIs that will surely help in the upcoming milestones.
 
 ### Extensions
 - Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring.   
+  - We were able to connect the oura API to a user’s page using token authentication.
 - Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
+  - Done.
 
 
 
