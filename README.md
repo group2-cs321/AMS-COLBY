@@ -25,9 +25,7 @@ Low Priority
 
 ### Results
 In this milestone we were able to accomplish a lot in terms of testing code coverage. We were able to achieve a code coverage of 74%, which is a great start. 
-
 ![testing coverage](/website/static/assets/report_images/6_image.png "testing coverage")
-
 In terms of features, we were able to implement some of the features in our backlog. We created a live search on the admin home page that queries the backend for team names that match what was typed. We were also able to connect the oura API to a user’s page using token authentication, but we did not yet use the data for any visuals on the front end. 
 
 There were also a couple features that we implemented but didn’t merge yet because of merge conflicts. We made sure that success notifications went away after 5 seconds. We also created a feature that allowed the creation of multiple users at once by uploading a csv file. Finally, we created a functionality for generating reports into a pdf file. 
