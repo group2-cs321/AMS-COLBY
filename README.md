@@ -7,19 +7,19 @@ The goal of this milestone was to deploy our web app to the cloud, implement mor
 
 ### Sprint Backlog
 High Priority  
-*Create test files (done)  
+-Create test files (done)  
 
 Medium Priority   
--Fix bootstrap on front-end
--Implement live search bar (done)
--Make report files (done)
--Create multiple users and teams by uploading csv files (done)
--Connect to APIs (done)
+-Fix bootstrap on front-end  
+-Implement live search bar (done)  
+-Make report files (done)  
+-Create multiple users and teams by uploading csv files (done)  
+-Connect to APIs (done)  
 
 
 Low Priority
--Make notifications disappear automatically after 5 seconds (done)
--Front end for specific sleep, readiness, etc. pages
+-Make notifications disappear automatically after 5 seconds (done)  
+-Front end for specific sleep, readiness, etc. pages  
 
 
 
