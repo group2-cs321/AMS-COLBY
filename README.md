@@ -3,50 +3,47 @@
 *Group 2: Max Duchesne, Rosie Ingmann, Jonna Sosa, Isabella Feng, Dylan Tymkiw, Philipp Bogatyrev, Chloe Zhang*
 
 ### Abstract
-In this assignment, we worked on developing a dynamic version of our Athletic Management System to the cloud.  Our Flask website was built on top of the previous milestone, and added new functional features from your backlog such as using real data, dynamically creating plots, changing some of the front end, and deploying your app to the cloud.  
+The goal of this milestone was to deploy our web app to the cloud, implement more features from our sprint backlog, and most importantly start testing our code using pytest. We had already deployed our web app in a previous milestone, so we mostly focused on adding features and increasing code coverage. In the end, we were able to test most of our code and also add in a couple new and exciting features
 
 ### Sprint Backlog
-High Priority
-- Finish setting up permissions for each user
-- Connect the create team page to the front end
-- Create comments for our code
-- Create an edit team page
+High Priority  
+- Create test files (done)  
 
-Medium Priority
-- Fix issue with the navigation bar on mobile
-- Remodel peak and admin views such that both pages share the same aesthetic
-- Create a download button that downloads a csv file with relevant athlete/team data
-- Change the edit team page so that it updates dynamically
-- Change the position of the download csv buttons
+Medium Priority   
+- Fix bootstrap on front-end  
+- Implement live search bar (done)  
+- Make report files (done)  
+- Create multiple users and teams by uploading csv files (done)  
+- Connect to APIs (done)  
+
 
 Low Priority
-- Create an athlete search bar
+- Make notifications disappear automatically after 5 seconds (done)  
+- Front end for specific sleep, readiness, etc. pages  
+
 
 
 ### Results
-In this milestone, we were able to further improve the functionality and appearance of our athlete management system. 
-First of all, we remodeled the peak and admin views to look cleaner and more similar to the aesthetic of the other pages. 
+In this milestone we were able to accomplish a lot in terms of testing code coverage. We were able to achieve a code coverage of 74%, which is a great start. 
+![testing coverage](/website/static/assets/report_images/6_image.png "testing coverage")
+In terms of features, we were able to implement some of the features in our backlog. We created a live search on the admin home page that queries the backend for team names that match what was typed. We were also able to connect the oura API to a user’s page using token authentication, but we did not yet use the data for any visuals on the front end. 
 
-We also created a page accessible from the admin view that allowed for editing teams (adding players, deleting players, and changing the coach). 
+There were also a couple features that we implemented but didn’t merge yet because of merge conflicts. We made sure that success notifications went away after 5 seconds. We also created a feature that allowed the creation of multiple users at once by uploading a csv file. Finally, we created a functionality for generating reports into a pdf file. 
 
-We also added the ability for users to download data in the form of csv files from the dashboard. For now, this was just the static hawkins and watch data but in the future this data will be specific to each player.
-
-Finally, we added some small improvements like adding a create team button to connect that page to the front end, finalizing permissions for users, fine-tuning the navigation bar, and adding comments into our code.
 
 
 ### Contribution List
-In this project, Dylan worked on finishing setting up the permissions for each user and creating and connecting a SQL server to the website. Max worked on the generate report functionality. Isabella worked on Flash notifications, nav bar error, code comments and burn-down chart. Jonna worked on the grind on the front end for both the PEAK and Admin pages, still working on being able to create users from a CSV files. Rosie worked on creating the edit teams page and functionality. Phil worked on the csv download functionality.
+In this project, Dylan worked on exploring and connecting the oura API, filtering the athletes in the edit team page and helped Rosie with the search bar. Max worked on generating report files. Isabella worked on writing the testing codes. Jonna worked on creating multiple users at once with a csv file . Rosie worked on the live search bar. Phil worked on making sure that the success notifications went away.
 
 ### Team Reflection
-In this milestone, we learned a lot about deployment and SQL servers. Deploying the website with a SQL server was a challenge as Azure does not have very detailed instructions on how to do it. On top of that, we ran into a lot of problems when trying to import the necessary libraries in order to connect to the database. We also got a lot better at assigning issues and getting things done more efficiently.
+The main goal of this milestone was to get more experience with testing flask apps. This was challenging, especially because testing databases is super complicated. In the end we got something functional but still far from ideal. In addition to testing, we worked on a few extra features like linking APIs that will surely help in the upcoming milestones.
 
 ### Extensions
-1. Implement additional features from your backlog.
-- We were able to access our website online, and since our visuals adjust its size automatically, our website still looks great when viewing from a device with a different proportion, such as a mobile phone. 
-2. Burndown chart of your project. <br>
-A burndown chart, one of the most common and useful Agile metrics, is created using Excel and is shown below. It demonstrates our daily efforts in comparison to the ideal burndown, as well as actual and planned hours working every day.
-![extension 2](/website/static/assets/report_images/Picture1.png)
-3. Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content. <br>
-Done.
+- Learn and use one of the API that are needed for this project, i.e. Hawkings Dynamics, MyFitnessPal, and sleep monitoring.   
+  - We were able to connect the oura API to a user’s page using token authentication.
+- Write your report in Markdown as a readme file in your repository, including table images and appropriate tags and content.
+  - Done.
+
+
 
 

@@ -396,12 +396,14 @@ def get_oura_recovery(start_date, end_date):
 
     if len(current_user.tokens) == 0:
         return 'No token found'
-
-    res = oauth.oura.get(
+    try:
+        res = oauth.oura.get(
         'usercollection/daily_activity',
         params = {'start_date': start_date, 
         'end_date': end_date }
         )
+    except:
+        res = "Please re-authorize"
 
     return res
 
