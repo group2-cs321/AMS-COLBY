@@ -119,16 +119,72 @@ def create_app():
 
 #create a database when no existing database is in place
 def create_database(app):
+    if not path.exists('instance/' + DB_NAME):
+        with app.app_context():
+            db.create_all()
+        print('Created Database!')
+
+#create a database when no existing database is in place
+def create_test_database(app):
+    DB_NAME = "test.db"
     with app.app_context():
         db.create_all()
     print('Created Database!')
 
 # clean up / reset resources 
-def drop_database(app):
+def drop_test_database(app):
+    DB_NAME = "test.db"
     if path.exists('instance/' + DB_NAME):
         with app.app_context():
             db.session.remove()
             db.drop_all()
         print('Dropped Database!')
+
+
+#creation of the Flash app object
+def create_test_app():
+    DB_NAME = "test.db"
+    app = Flask(__name__)
+
+    # TODO: Move this to a config file
+
+   # local development, where we'll use environment variables
+    print("Loading config.development and environment variables from .env file.")
+    app.config['SECRET_KEY'] = 'secret-key-goes-here'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
+    
+    db.init_app(app)
+
+    migrate = Migrate(app, db)
+
+    from .views import views
+    from .auth import auth
+
+    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(auth, url_prefix='/')
+
+    from .models import User
+    from .models import OAuth2Token
+    create_test_database(app)
+
+    
+    loging_manager = LoginManager()
+    loging_manager.login_view = 'auth.login'
+    loging_manager.init_app(app)
+
+    @loging_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
+
+    # Register remote app
+    # Initialize app
+
+    
+    from flask_login import current_user
+    
+    return app
+
+
 
 
