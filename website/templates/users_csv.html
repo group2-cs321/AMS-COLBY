@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h5>Create Users from a CSV</h5>
+
+<div class="row-12">
+    <div class="card">
+        <div class="card-body">
+            
+            <h1>Upload your CSV file</h1>
+            <form method="POST" action="" enctype="multipart/form-data">
+              <p><input type="file" name="file"></p>
+              <p><input type="submit" value="Submit"></p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
