@@ -201,8 +201,15 @@ def athlete_dashboard():
     res = get_oura_recovery('2022-11-10', '2022-11-17')
 
     print(res.json())
-    
-    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
+    print("SCORE AFTER THIS")
+    print(res.json()['data'][0]['score'])
+
+    sleepScore = res.json()['data'][0]['score']
+
+
+    #print(res)
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData, sleepScore = sleepScore)
 
 
 # Handles everything on the permissions page
@@ -399,7 +406,7 @@ def get_oura_recovery(start_date, end_date):
         return 'No token found'
     try:
         res = oauth.oura.get(
-        'usercollection/daily_activity',
+        'usercollection/daily_sleep',
         params = {'start_date': start_date, 
         'end_date': end_date }
         )
