@@ -157,7 +157,7 @@ def test_athlete_coach_dashboard(client):
         data={"colby_id": "testCoach3", 
               "password": "12345678"})
 
-    response = client.get('/coach/athlete/1', follow_redirects=True)
+    response = client.get('team/coach/athlete/1', follow_redirects=True)
 
     print(response.data)
     assert response.status_code == 200 # redirect to home page
@@ -221,7 +221,7 @@ def test_create_note(client):
         data={"colby_id": "testCoach3",
               "password": "12345678"})
 
-    response = client.get('/coach/athlete/1', follow_redirects=True)
+    response = client.get('team/coach/athlete/1', follow_redirects=True)
 
     print(response.data)
     assert response.status_code == 200 # redirect to home page

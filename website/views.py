@@ -521,6 +521,6 @@ def users_csv():
         csvFile = request.files['file']
         importCSV(csvFile)
 
-    return render_template("users_csv.html",current_user=current_user)
+    return render_template("users_csv.html",current_user=current_user, watchData = {})
 
     
