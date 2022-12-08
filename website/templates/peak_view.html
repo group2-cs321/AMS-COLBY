@@ -18,7 +18,7 @@
       <div class="card-body">
 
         <div class="input-group rounded" style="width: 99%;">
-          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="margin: 0px;" />
+          <input type="text" id="livebox" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="margin: 0px;" />
           <span class="input-group-text border-0" id="search-addon" style="width: 10%;">
             <i class="fas fa-search"></i>
           </span>
@@ -26,18 +26,50 @@
         
         <div class="card-body" style="max-height: 500px; overflow: scroll; padding-bottom: 10px; padding-top: 5px;">
           <div class="table-responsive">
+            <script>
+            function searchResults(data){
+              $.ajax({
+              method:"post",
+              url: "/livesearch",
+              data: data,
+              success:function(res){
+                  console.log(res);
+                    var data = "";
+                    $.each(res,function(index,value){
+                        console.log()
+                        href = 'team/' + index
+                        data += "<div style='border-top: solid 1px white;'> <a href=" + href + '>' + value +"</a></div>";
+                    });
+                  
+                    $("#datalist").html(data);
+              }
+          })
+
+            }
+        $(document).ready(function(){
+          searchResults({text:""})
+
+        $("#livebox").on("input",function(e){
+          textinbox=$("#livebox").val();
+          console.log(textinbox);
+          searchResults({text:textinbox})
+        });
+    });
+
+</script>
             <table class="table">
               <thead>
                   Team Name
               </thead>
-              <tbody>
+              <p id = "datalist"></p>
+              <!-- <tbody>
                 <tr>
 
                 {% for team in teams %}
                   <div style="border-top: solid 1px white;"><a href="team/{{ team.id }}">{{ team.team_name }}</a></div>
                 {% endfor %}
 
-              </tbody>
+              </tbody> -->
             </table>
           </div>
         </div>

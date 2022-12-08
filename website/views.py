@@ -148,7 +148,7 @@ def coach_dashboard(id):
     return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Coach Athlete Page
-@views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+@views.route('team/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
 
@@ -200,9 +200,16 @@ def athlete_dashboard():
 
     res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-    print(res)
-    
-    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
+
+    if type(res) != str and res.status_code == 200:
+        sleepScore = res.json()['data'][0]['score']
+    else:
+        sleepScore = "N/A"
+
+
+    #print(res)
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData, sleepScore = sleepScore)
 
 
 # Handles everything on the permissions page
@@ -353,7 +360,8 @@ def edit_team(team_id):
         coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
 
 
-        teamdb = Team.query.filter_by(team_name=team).first()
+        teamdb = Team.query.filter_by(team_name=team.team_name).first()
+        #teamdb = Team.query.filter_by(id=team.id).first()
 
         if teamdb.coach_id != coachnew.id:
             teamdb.coach_id=coachnew.id
@@ -373,7 +381,7 @@ def edit_team(team_id):
          
 
         flash('Changes successful', category='success')
-        return redirect(url_for('views.edit_team'))
+        #return redirect(url_for('views.edit_team'))
 
 
 
@@ -394,15 +402,18 @@ def team_select():
 
 def get_oura_recovery(start_date, end_date):
 
+    data = {}
+
     if len(current_user.tokens) == 0:
         return 'No token found'
     try:
         res = oauth.oura.get(
-        'usercollection/daily_activity',
+        'usercollection/daily_sleep',
         params = {'start_date': start_date, 
         'end_date': end_date }
         )
     except:
+        #Todo: Maybe redirect to authorize
         res = "Please re-authorize"
 
     return res
@@ -422,5 +433,23 @@ def livesearch():
     #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
     return res
     #return "hello world"
+
+
+@views.route("/livesearchathletes/<string:team_id>",methods=["POST","GET"])
+@login_required
+def livesearchathletes(team_id):
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    athletes = Athlete.query
+    #filter by both text and also team _id
+    athletes=athletes.filter_by(team_id=team_id)
+    athletes= athletes.filter(Athlete.first_name.like('%' + searchbox + '%'))
+    athletes = athletes.order_by(Athlete.first_name).all()
+    print(athletes[0].id)
+    res = {}
+    for athlete in athletes:
+        res[athlete.id] = [athlete.first_name, athlete.last_name, athlete.status]
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
 
     
