@@ -424,4 +424,22 @@ def livesearch():
     return res
     #return "hello world"
 
+
+@views.route("/livesearchathletes/<string:team_id>",methods=["POST","GET"])
+@login_required
+def livesearchathletes(team_id):
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    athletes = Athlete.query
+    #filter by both text and also team _id
+    athletes=athletes.filter_by(team_id=team_id)
+    athletes= athletes.filter(Athlete.first_name.like('%' + searchbox + '%'))
+    athletes = athletes.order_by(Athlete.first_name).all()
+    print(athletes[0].id)
+    res = {}
+    for athlete in athletes:
+        res[athlete.id] = [athlete.first_name, athlete.last_name, athlete.status]
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
+
     
