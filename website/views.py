@@ -148,7 +148,7 @@ def coach_dashboard(id):
     return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Coach Athlete Page
-@views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+@views.route('team/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
 
@@ -200,9 +200,16 @@ def athlete_dashboard():
 
     res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-    print(res.json())
-    
-    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
+
+    if type(res) != str and res.status_code == 200:
+        sleepScore = res.json()['data'][0]['score']
+    else:
+        sleepScore = "N/A"
+
+
+    #print(res)
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData, sleepScore = sleepScore)
 
 
 # Handles everything on the permissions page
@@ -395,15 +402,18 @@ def team_select():
 
 def get_oura_recovery(start_date, end_date):
 
+    data = {}
+
     if len(current_user.tokens) == 0:
         return 'No token found'
     try:
         res = oauth.oura.get(
-        'usercollection/daily_activity',
+        'usercollection/daily_sleep',
         params = {'start_date': start_date, 
         'end_date': end_date }
         )
     except:
+        #Todo: Maybe redirect to authorize
         res = "Please re-authorize"
 
     return res

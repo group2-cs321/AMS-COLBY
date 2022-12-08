@@ -199,7 +199,8 @@ const trends2 = new Chart(ctx9, {
                   console.log(res);
                     var data = "";
                     $.each(res,function(index,value){
-                        href = 'coach/athlete' + index;
+                        href = 'coach/athlete/' + index;
+                        console.log(href)
                         data +="<tr><td><a href="+href+'> <span class="pl-2">'+value[0]+" "+value[1]+"</span>"+"</a></td><td>70% </td><td> 6.25 hrs </td><td> 45 bpm </td><td> 103% </td> <td>";
                         if (value[2]==0){
                           data+="<div class='badge badge-outline-success'>Cleared</div>";
