@@ -1,16 +1,31 @@
-{% extends "base2.html" %}
+{% extends "base2.html" %} 
 
 
 {% block content %}
 
+<link rel="stylesheet" href="{{url_for('static', filename = 'assets/css/coach_dashbord.css')}}">
+<link rel="stylesheet" href="static/assets/css/coach_dashboard.css">
+
 
 <h1>{{ team.team_name }}</h1>
+<!-- <a class="nav-link" id="profileDropdown1" href="#" data-toggle="dropdown">
+  <div class="navbar-profile">
+     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ team.team_name }}</p> 
+    <p class="mb-01 d-none1 d-sm-block1 navbar-profile-name">{{ team.team_name }}</p>
+    <i id = "profileDropdownArrow" class="mdi mdi-menu-down d-none d-sm-block"></i>
+  </div>
+  <div class="dropdown-menu" aria-labelledby="profileDropdown1">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</a> -->
 
 </br>
 
               <div class="row">
               <div class="col-sm-4 grid-margin">
-                <div class="card">
+                <div class="card h-100">
                   <div class="card-body">
                     <h5 class="text-success {{'text-danger' if watchData[1][4]<80}}">Readiness</h5>
                     <div class="row">
@@ -38,7 +53,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-2 grid-margin">
+              <div class="col-sm-2">
                   
                 <div class="card">
                   <div class="card-body">
@@ -59,7 +74,6 @@
                     </div>
                   </div>
                 </div>
-                  <div class='row'></div>
             <br>
                   <div class="card">
                 <div class="card-body">
@@ -162,9 +176,61 @@ const trends2 = new Chart(ctx9, {
             <div class="row ">
               <div class="col-8 grid-margin">
                 <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title"> Athletes</h4>
+                  <div class="card-body w-100">
+                    <!-- <div class="input-group rounded" style="width: 99%;"> -->
+                      <div class="d-flex justify-content-between w-100 align-items-center pb-2">
+                      <h4 class="card-title m-0"> Athletes</h4>
+                      
+                      <input type="text" id="livebox" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="margin: 0px;max-width: 200px;" />
+                      </div>
+
+                      <!-- <span class="input-group-text border-0" id="search-addon" style="width: 10%;">
+                        <i class="fas fa-search"></i>
+                      </span> -->
+                    <!-- </div> -->
                     <div class="table-responsive">
+                    <script>
+            function searchResults(data){
+              $.ajax({
+              method:"post",
+              url: "/livesearchathletes/{{team.id}}",
+              data: data,
+              success:function(res){
+                  console.log(res);
+                    var data = "";
+                    $.each(res,function(index,value){
+                        href = 'coach/athlete/' + index;
+                        console.log(href)
+                        data +="<tr><td><a href="+href+'> <span class="pl-2">'+value[0]+" "+value[1]+"</span>"+"</a></td><td>70% </td><td> 6.25 hrs </td><td> 45 bpm </td><td> 103% </td> <td>";
+                        if (value[2]==0){
+                          data+="<div class='badge badge-outline-success'>Cleared</div>";
+                        } else if(value[2]==1){
+                          data+="<div class='badge badge-outline-warning'>Warning</div>";
+                        }else if(value[2]==2){
+                          data+="<div class='badge badge-outline-danger'>Ineligible</div>";
+                        }
+                        data+="</td></tr>";
+
+                    });
+                  
+                    $("#datalist").html(data);
+              }
+          })
+
+            }
+
+              
+        $(document).ready(function(){
+          searchResults({text:""})
+
+        $("#livebox").on("input",function(e){
+          textinbox=$("#livebox").val();
+          console.log(textinbox);
+          searchResults({text:textinbox})
+        });
+    });
+
+</script>
                       <table class="table">
                         <thead>
                             
@@ -177,11 +243,11 @@ const trends2 = new Chart(ctx9, {
                             <th> Status </th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
+                       <!--  <tbody>
+                          <tr> -->
+                            <tbody id = "datalist"></tbody>
 
-
-                            {%for athlete in team.athletes%}
+                            <!-- {%for athlete in team.athletes%}
                               <td>
                                 <a href="/coach/athlete/{{ athlete.id }}">
                                   <span class="pl-2">{{athlete.first_name}} {{athlete.last_name}}</span>
@@ -209,9 +275,9 @@ const trends2 = new Chart(ctx9, {
                               </td>
                             </tr>
                               
-                            {% endfor %}
+                            {% endfor %} -->
                             
-                        </tbody>
+                        <!-- </tbody> -->
                       </table>
                     </div>
                   </div>

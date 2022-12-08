@@ -1,14 +1,18 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User, Coach, Athlete
+from flask import Blueprint, render_template, request, flash, redirect, url_for, request
+from .models import User, Coach, Athlete, OAuth2Token
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from csv import DictReader
+from . import oauth
+import flask
+#import flow
+import api_tool
 
 
 auth = Blueprint('auth', __name__)
 
-
+# TODO: Move this to a different file
 def parse_CSV():
     """parse CSV file
     
@@ -103,7 +107,7 @@ def logout():
 
 
 @auth.route('/create-user', methods= ['GET', 'POST'])
-@login_required
+# @login_required
 def create_user(): 
 
     """create user and post user data to database
@@ -115,12 +119,12 @@ def create_user():
         OR user creation page
     """
 
-    if not int(current_user.account_create) == 0:
-        return "<h1>No Access</h1>"
+    # if not int(current_user.account_create) == 0:
+    #     return "<h1>No Access</h1>"
 
     watchData=parse_CSV()
     
-    # dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
+    dummy_user = User(colby_id="colby_id", first_name="first_name", last_name = "last_name")
 
     if request.method == 'POST':
         colby_id = request.form.get('colby_id')
@@ -170,5 +174,64 @@ def create_user():
     
 
         
-    return render_template("create_user.html", watchData=watchData, current_user = current_user)
+    return render_template("create_user.html", watchData=watchData, current_user = dummy_user)
+
+
+
+@auth.route('/authorize/<string:name>')
+def authorize(name):
+    """handle the authorization and redirect to home page
+
+    Params
+    ______
+    name: the name of the api app
+
+    """
+    # TODO: Handle when the user rejects to share access
+
+
+    
+    token = oauth.oura.authorize_access_token()
+
+    access_token = token['access_token']
+    token_type = token['token_type']
+    refresh_token = token['refresh_token']
+    expires_at = token['expires_at']
+
+    curr = OAuth2Token.query.filter_by(name = name, user = current_user.id).first()
+
+    if curr !=  None:
+        curr.access_token = access_token
+        curr.token_type = token_type
+        curr.refresh_token = refresh_token
+        curr.expires_at = expires_at
+
+    else:
+        curr = OAuth2Token(
+            name = name,
+            access_token = access_token,
+            token_type = token_type,
+            refresh_token = refresh_token,
+            expires_at = expires_at,
+            user = current_user.id
+            )
+
+    db.session.add(curr)
+    db.session.commit()
+
+    return redirect('/')
+
+@auth.route('auth/<string:name>')
+def ask_auth(name):
+    """request to authorize an api app
+        
+       params
+       ______
+       name: name of the api app
+            
+    """
+
+    redirect_uri = url_for('auth.authorize', name = name, _external = True)
+    return oauth.oura.authorize_redirect(redirect_uri)
+
 

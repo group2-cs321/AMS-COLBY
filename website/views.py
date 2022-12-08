@@ -1,11 +1,12 @@
 from urllib import request
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import User, Athlete, Coach, Team, Note
 from . import db
 import json
 from csv import DictReader
 import pandas as pd
+from . import oauth
 
 
 views = Blueprint('views', __name__)
@@ -41,8 +42,6 @@ def parse_CSV():
             watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
     return watchData
 
-
-
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -61,7 +60,7 @@ def home():
     if int(role) == 0:
         return render_template("admin_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 1:
-        return render_template("peak_view.html", user=current_user, watchData=watchData)
+        return render_template("peak_view.html", user=current_user, teams = Team.query.all(), watchData=watchData)
     elif int(role) == 2:
         coach = Coach.query.filter_by(colby_id=current_user.colby_id).first()
         team = Team.query.filter_by(coach_id=coach.id).first()
@@ -122,10 +121,11 @@ def create_team():
                 ath.team_id = new_team.id
                 db.session.commit()
 
+
         flash('Team created Succesfully', category='success')
-        return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+        return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
         
-    return render_template('create_team.html', user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+    return render_template('create_team.html', user=current_user, athletes = Athlete.query.filter_by(team_id = None), coaches = Coach.query.all(), watchData=watchData)
 
 
 #coach Dasboard page
@@ -151,7 +151,7 @@ def coach_dashboard(id):
     return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Coach Athlete Page
-@views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+@views.route('team/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
 
@@ -173,7 +173,15 @@ def athlete_coach_dashboard(id):
     currentTeam = Team.query.get(athlete.team_id)
 
 
-    return render_template("athleteCoachView.html", athlete=athlete, coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
+    return render_template(
+        "athleteCoachView.html",
+        athlete=athlete,
+        coach=coach,
+        current_user=current_user,
+        team=currentTeam,
+        watchData=watchData
+        )
+
 
 #Athlete Page
 @views.route('/athlete', methods = ['GET', 'POST'])
@@ -193,8 +201,18 @@ def athlete_dashboard():
     athlete = Athlete.query.filter_by(colby_id = current_user.colby_id).first()
     watchData=parse_CSV()
 
+    res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData)
+
+    if type(res) != str and res.status_code == 200:
+        sleepScore = res.json()['data'][0]['score']
+    else:
+        sleepScore = "N/A"
+
+
+    #print(res)
+
+    return render_template("athleteView.html", athlete=athlete, current_user=current_user, watchData=watchData, sleepScore = sleepScore)
 
 
 # Handles everything on the permissions page
@@ -323,9 +341,9 @@ def create_note():
 
 
 #Edit team
-@views.route('/edit-team',methods=['GET','POST'])
+@views.route('/edit-team/<string:team_id>',methods=['GET','POST'])
 @login_required
-def edit_team():
+def edit_team(team_id):
 
     """redirect to the team edit page if user has access
     post edits of team information to database
@@ -335,17 +353,18 @@ def edit_team():
     -------
     .html: edit team page
     """
+    team = Team.query.get(int(team_id))
 
     watchData=parse_CSV()
     if request.method == 'POST':
-        team = request.form.get('team')
         athletes_add = request.form.getlist('athletes_add')
         athletes_del = request.form.getlist('athletes_del')
  
         coachnew = Coach.query.filter_by(colby_id=request.form.get('coaches')).first()
 
 
-        teamdb = Team.query.filter_by(team_name=team).first()
+        teamdb = Team.query.filter_by(team_name=team.team_name).first()
+        #teamdb = Team.query.filter_by(id=team.id).first()
 
         if teamdb.coach_id != coachnew.id:
             teamdb.coach_id=coachnew.id
@@ -365,7 +384,75 @@ def edit_team():
          
 
         flash('Changes successful', category='success')
-        return redirect(url_for('views.edit_team'))
+        #return redirect(url_for('views.edit_team'))
 
 
-    return render_template("edit_team.html", teams = Team.query.all(), user=current_user, athletes = Athlete.query.all(), coaches = Coach.query.all(), watchData=watchData)
+
+    return render_template(
+        "edit_team.html",
+        team = team, 
+        user=current_user,
+        athletes_add = Athlete.query.filter_by(team_id = None),
+        athletes_remove = Athlete.query.filter_by(team_id = team.id),
+        coaches = Coach.query.all(),
+        watchData=watchData
+        )
+
+@views.route('/team-select', methods = ['GET'])
+def team_select():
+    watchData = parse_CSV()
+    return render_template('team_selection.html', teams = Team.query.all(), watchData = watchData)
+
+def get_oura_recovery(start_date, end_date):
+
+    data = {}
+
+    if len(current_user.tokens) == 0:
+        return 'No token found'
+    try:
+        res = oauth.oura.get(
+        'usercollection/daily_sleep',
+        params = {'start_date': start_date, 
+        'end_date': end_date }
+        )
+    except:
+        #Todo: Maybe redirect to authorize
+        res = "Please re-authorize"
+
+    return res
+
+@views.route("/livesearch",methods=["POST","GET"])
+@login_required
+def livesearch():
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    teams = Team.query
+    teams= teams.filter(Team.team_name.like('%' + searchbox + '%'))
+    teams = teams.order_by(Team.team_name).all()
+    print(teams[0].team_name)
+    res = {}
+    for team in teams:
+        res[team.id] = team.team_name
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
+    #return "hello world"
+
+
+@views.route("/livesearchathletes/<string:team_id>",methods=["POST","GET"])
+@login_required
+def livesearchathletes(team_id):
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    athletes = Athlete.query
+    #filter by both text and also team _id
+    athletes=athletes.filter_by(team_id=team_id)
+    athletes= athletes.filter(Athlete.first_name.like('%' + searchbox + '%'))
+    athletes = athletes.order_by(Athlete.first_name).all()
+    print(athletes[0].id)
+    res = {}
+    for athlete in athletes:
+        res[athlete.id] = [athlete.first_name, athlete.last_name, athlete.status]
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
+
+    
