@@ -9,15 +9,15 @@ function uponStartup(id, watchData, hawkinData) {
         "alert alert-success alter-dismissable fade show"
       )[0]
     ) {
-      console.log("Exists!");
-      console.log(
-        document.getElementsByClassName(
-          //".alert alert-success alter-dismissable fade showwfiuweiuf"
-          "alert alert-success alter-dismissable fade show"
-        )[0]
-      );
+      // console.log("Exists!");
+//       console.log(
+//         document.getElementsByClassName(
+//           //".alert alert-success alter-dismissable fade showwfiuweiuf"
+//           "alert alert-success alter-dismissable fade show"
+//         )[0]
+//       );
       setTimeout(function () {
-        console.log("REMOVE ALERT");
+        //console.log("REMOVE ALERT");
         alerts = document.getElementsByClassName(
           "alert alert-success alter-dismissable fade show"
         );
@@ -34,7 +34,7 @@ function uponStartup(id, watchData, hawkinData) {
       }, 5000);
       clearInterval(checkExist);
     } else {
-      console.log("does not exist");
+      //console.log("does not exist");
     }
   }, 100); // check every 100ms
 

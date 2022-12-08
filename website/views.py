@@ -148,7 +148,7 @@ def coach_dashboard(id):
     return render_template("coach_dashboard.html", coach=coach, current_user=current_user, team=currentTeam, watchData=watchData)
 
 #Coach Athlete Page
-@views.route('/coach/athlete/<string:id>', methods = ['GET', 'POST'])
+@views.route('team/coach/athlete/<string:id>', methods = ['GET', 'POST'])
 @login_required
 def athlete_coach_dashboard(id):
 
@@ -433,5 +433,23 @@ def livesearch():
     #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
     return res
     #return "hello world"
+
+
+@views.route("/livesearchathletes/<string:team_id>",methods=["POST","GET"])
+@login_required
+def livesearchathletes(team_id):
+    searchbox = request.form.get("text")
+    print("hi", searchbox)
+    athletes = Athlete.query
+    #filter by both text and also team _id
+    athletes=athletes.filter_by(team_id=team_id)
+    athletes= athletes.filter(Athlete.first_name.like('%' + searchbox + '%'))
+    athletes = athletes.order_by(Athlete.first_name).all()
+    print(athletes[0].id)
+    res = {}
+    for athlete in athletes:
+        res[athlete.id] = [athlete.first_name, athlete.last_name, athlete.status]
+    #return render_template("admin_view.html", user=current_user, teams = teams, watchData={})
+    return res
 
     
