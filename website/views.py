@@ -200,11 +200,11 @@ def athlete_dashboard():
 
     res = get_oura_recovery('2022-11-10', '2022-11-17')
 
-    print(res.json())
-    print("SCORE AFTER THIS")
-    print(res.json()['data'][0]['score'])
 
-    sleepScore = res.json()['data'][0]['score']
+    if type(res) != str and res.status_code == 200:
+        sleepScore = res.json()['data'][0]['score']
+    else:
+        sleepScore = "N/A"
 
 
     #print(res)
@@ -402,6 +402,8 @@ def team_select():
 
 def get_oura_recovery(start_date, end_date):
 
+    data = {}
+
     if len(current_user.tokens) == 0:
         return 'No token found'
     try:
@@ -411,6 +413,7 @@ def get_oura_recovery(start_date, end_date):
         'end_date': end_date }
         )
     except:
+        #Todo: Maybe redirect to authorize
         res = "Please re-authorize"
 
     return res
