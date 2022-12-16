@@ -6,8 +6,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from csv import DictReader
 from . import oauth
 import flask
-#import flow
-import api_tool
+
 
 
 auth = Blueprint('auth', __name__)

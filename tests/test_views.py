@@ -4,6 +4,7 @@ import json
 import pytest
 from website import views
 
+
 def create_admin(client):
 
     client.post("/create-user", 
@@ -308,6 +309,7 @@ def test_users_csv(client):
     print(response.data)
     assert b'<!doctype html>' in response.data 
 
+
 def test_livesearch(client):
     create_coach_athlete_and_team(client)
 
@@ -342,14 +344,3 @@ def test_team_select(client):
     response = client.get("/team-select")
     print(response.data)
     assert b'testTeam' in response.data
-
-def test_get_oura_recovery(client):
-    create_coach_athlete_and_team(client)
-
-    client.post("/login", 
-        data={"colby_id": "testAthlete3",
-              "password": "12345678"})
-
-    response = client.get("/athlete")
-    print(response.data)
-    assert b'oura' in response.data
