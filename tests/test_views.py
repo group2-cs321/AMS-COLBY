@@ -210,6 +210,56 @@ def test_permission_page(client):
     assert response.status_code == 200 # redirect to home page
     assert b'<h1>No Access</h1>' in response.data 
 
+def test_permission_page_peak(client):
+
+    #1. create admin and login as admin
+    create_admin(client)
+
+    #2. create the coach and team, to be changed to an athlete
+    create_coach_athlete_and_team(client)
+
+    #3. login as the coach
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    #4. check if they could login in as the coach
+    response = client.get('/team/1', follow_redirects=True)
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'<h6 class="mb-1">Notes</h6>' in response.data 
+
+    response = client.get('/admin/permissions')
+
+    assert response.status_code == 200
+    assert b'<h1>No Access</h1>' in response.data
+
+    #5. login in as the admin
+    client.post("/login", 
+            data={"colby_id": "testAdmin",
+                  "password": "12345678"})
+
+    #6. change the coach's permission to an athlete
+    client.post("/admin/permissions", 
+        data={"user_to_change": "testAthlete3", 
+              "athlete_data": "1",
+              "team_data": "1",
+              "notes": "1",
+              "create_account": "1",
+              "permission_change": "1",
+              "role": "1"})
+
+    #7. login as the coach (already changed to an athlete)
+    client.post("/login", 
+        data={"colby_id": "testAthlete3",
+              "password": "12345678"})
+
+    #8. check if they don't have access to coach page anymore
+    response = client.get('/team/1', follow_redirects=True)
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    #assert b'<h1>No Access</h1>' in response.data 
+
 def test_create_note(client):
     create_coach_athlete_and_team(client)
     create_peak(client)
@@ -286,6 +336,27 @@ def test_edit_team(client):
     assert response.status_code == 200 # redirect to home page
     assert b'<span class="pl-2">Athlete4 Test</span>' in response.data
     #to make sure now testAthlete4 is in testTeam now - end
+
+def test_create_team(client):
+    create_admin(client)
+
+    client.post('/login', data = {"colby_id": "testAdmin",
+                  "password": "12345678"})
+
+    response = client.get('/create-team')
+
+    create_coach_athlete_and_team(client)
+
+    assert response.status_code == 200
+
+    client.post('/create-team', data={"team_name": "testTeam",
+                  "athletes": ["testAthlete3"],
+                  "coaches": "testCoach3"})
+
+    response = client.get('/create-team')
+
+    assert response.status_code == 200
+
 
 def test_parse_CSV():
     views.parse_CSV()
