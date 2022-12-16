@@ -2,6 +2,7 @@
 from website import create_app
 import json
 import pytest
+from website import views
 
 def create_admin(client):
 
@@ -285,9 +286,70 @@ def test_edit_team(client):
     assert b'<span class="pl-2">Athlete4 Test</span>' in response.data
     #to make sure now testAthlete4 is in testTeam now - end
 
+def test_parse_CSV():
+    views.parse_CSV()
+    assert len(views.parse_CSV()) == 10
+    assert len(views.parse_CSV()[1]) != 0
+
+def test_users_csv(client):
+    create_peak(client)
+
+    response = client.post("/users-CSV")
+
+    print(response.data)
+    assert b'<h1>No Access</h1>' in response.data 
 
 
+    create_admin(client)
 
+    response = client.post("/users-CSV", 
+            data={"file": "/website/static/assets/testdata/user.csv"})
 
+    print(response.data)
+    assert b'<!doctype html>' in response.data 
 
+def test_livesearch(client):
+    create_coach_athlete_and_team(client)
 
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.post("livesearch", 
+        data={"text": "testTeam"})
+    print(response.data)
+    assert b'testTeam' in response.data 
+
+def test_livesearchathletes(client):
+    create_coach_athlete_and_team(client)
+
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.post("livesearchathletes/1", 
+        data={"text": "Athlete3"})
+    print(response.data)
+    assert b'Athlete3' in response.data 
+
+def test_team_select(client):
+    create_coach_athlete_and_team(client)
+
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.get("/team-select")
+    print(response.data)
+    assert b'testTeam' in response.data
+
+def test_get_oura_recovery(client):
+    create_coach_athlete_and_team(client)
+
+    client.post("/login", 
+        data={"colby_id": "testAthlete3",
+              "password": "12345678"})
+
+    response = client.get("/athlete")
+    print(response.data)
+    assert b'oura' in response.data
