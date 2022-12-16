@@ -8,40 +8,10 @@ from . import oauth
 import flask
 #import flow
 import api_tool
+from website.helper import *
 
 
 auth = Blueprint('auth', __name__)
-
-# TODO: Move this to a different file
-def parse_CSV():
-    """parse CSV file
-    
-    Reads an athelete data csv file
- 
-    Returns
-    -------
-    watchData: nested list of strings and floats
-    """
-
-    watchData=[[],[],[],[],[],[],[],[],[],[]]
-
-    with open("website/static/assets/testdata/watchData.csv", 'r') as f:
-         
-        dict_reader = DictReader(f)
-         
-        list_of_dict = list(dict_reader)
-        for i in range(5):
-            watchData[0].append(list_of_dict[i]["date"])
-            watchData[1].append(float(list_of_dict[i]["Restfulness Score"]))
-            watchData[2].append(float(list_of_dict[i]["Total Sleep Duration"])/60**2)
-            watchData[3].append(float(list_of_dict[i]["REM Sleep Duration"])/60**2)
-            watchData[4].append(float(list_of_dict[i]["Light Sleep Duration"])/60**2)
-            watchData[5].append(float(list_of_dict[i]["Deep Sleep Duration"])/60**2)
-            watchData[6].append(float(list_of_dict[i]["Average Resting Heart Rate"]))
-            watchData[7].append(float(list_of_dict[i]["Lowest Resting Heart Rate"]))
-            watchData[8].append(float(list_of_dict[i]["Steps"]))
-            watchData[9].append(float(list_of_dict[i]["Sleep Score"]))
-    return watchData
 
 @auth.route('/login', methods= ['GET', 'POST'])
 def login():
