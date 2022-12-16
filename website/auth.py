@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, request
 from .models import User, Coach, Athlete, OAuth2Token
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from csv import DictReader
 from . import oauth
+from website.helper import * 
 import flask
-#import flow
 import api_tool
 from website.helper import *
 
@@ -123,17 +123,15 @@ def create_user():
             flash('Passwords don\'t match.', category='error')
         else:
             #add user to database'
-            new_user = User(colby_id=colby_id, first_name=first_name, last_name = last_name,
-                 password=generate_password_hash(password1, method='sha256'),
-                 role = role, athlete_data = athlete_data, team_data = team_data, notes = notes,
-                 account_create = create_account, permission_change = permission_change)
+            new_user(db, colby_id, first_name, last_name, password1, role, athlete_data, team_data, notes, create_account, permission_change)
+
             if int(role) == 2:
-                print("creating coach")
-                coach = Coach(colby_id=colby_id, first_name=first_name, last_name = last_name)
-                db.session.add(coach)
+                #adds an ahtlete to the database
+                new_coach(db, colby_id, first_name, last_name)
+
             if int(role) == 3:
-                athlete = Athlete(colby_id=colby_id, first_name=first_name, last_name = last_name)
-                db.session.add(athlete)
+                #adds an ahtlete to the database
+                new_athlete(db, colby_id, first_name, last_name)
             
             db.session.add(new_user)
             db.session.commit()
