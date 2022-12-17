@@ -130,6 +130,30 @@ def test_coach_home(client):
     assert response.status_code == 200 # redirect to home page
     assert b'<h6 class="mb-1">Notes</h6>' in response.data 
 
+    #check that an athlete can't access team page
+    client.post("/login", 
+        data={"colby_id": "testAthlete3",
+              "password": "12345678"})
+    response = client.get('/team/1', follow_redirects=True)
+    print(response.data)
+    assert b'No Access' in response.data 
+
+    #check that the admin can access team page
+    create_admin(client)
+    response = client.get('/team/1', follow_redirects=True)
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'<h6 class="mb-1">Notes</h6>' in response.data 
+
+    #check that a peak member can access team page
+    create_peak(client)
+    response = client.get('/team/1', follow_redirects=True)
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'<h6 class="mb-1">Notes</h6>' in response.data 
+
+
+
 
 def test_athlete_home(client):
 
@@ -164,6 +188,7 @@ def test_athlete_coach_dashboard(client):
     print(response.data)
     assert response.status_code == 200 # redirect to home page
     assert b'<h5><a>Readiness</a></h5>' in response.data 
+ 
 
 def test_permission_page(client):
 
@@ -279,6 +304,43 @@ def test_create_note(client):
     assert response.status_code == 200 # redirect to home page
     assert b'<p class="text-muted mb-0"> Testing Note</p>' in response.data 
 
+
+    #the admin can also post notes
+    create_admin(client)
+    client.post("/new-note", 
+        data={"athletes": "testAthlete3", 
+              "content": "Testing Note",
+              "clearance": "Not Cleared"})
+
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.get('team/coach/athlete/1', follow_redirects=True)
+
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'<p class="text-muted mb-0"> Testing Note</p>' in response.data 
+
+
+    #check that a coach can't access create note page
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.get('/new-note', follow_redirects=True)
+    print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'No Access' in response.data 
+
+    #check that an athlete can't access create note page
+    client.post("/login", 
+        data={"colby_id": "testAthlete3",
+              "password": "12345678"})
+    response = client.get('/new-note', follow_redirects=True)
+    print(response.data)
+    assert b'No Access' in response.data 
+
 def test_edit_team(client):
     create_coach_athlete_and_team(client)
     create_admin(client)
@@ -336,6 +398,74 @@ def test_edit_team(client):
     assert response.status_code == 200 # redirect to home page
     assert b'<span class="pl-2">Athlete4 Test</span>' in response.data
     #to make sure now testAthlete4 is in testTeam now - end
+
+    #Delete testAthlete4 from testTeam - begin
+    client.post("/login", 
+            data={"colby_id": "testAdmin",
+                  "password": "12345678"})
+
+    client.get("/team-select")
+
+    team_id = "1"
+
+    client.post("/edit-team/1", 
+        data={ "athletes_add": [],
+              "athletes_del": ["testAthlete4"],
+              "coaches": "testCoach3"})
+    #Delete testAthlete4 from testTeam - end
+
+    #to make sure now testAthlete4 is not in testTeam - begin
+    client.post("/login", 
+        data={"colby_id": "testCoach3",
+              "password": "12345678"})
+
+    response = client.get('/team/1', follow_redirects=True)
+
+    #print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'<span class="pl-2">Athlete4 Test</span>' not in response.data
+    #to make sure now testAthlete4 is not in testTeam - end
+
+    #add coach - begin
+    client.post("/login", 
+            data={"colby_id": "testAdmin",
+                  "password": "12345678"})
+
+    client.post("/create-user", 
+                data={"colby_id": "testCoach4",
+                      "firstname": "Coach",
+                      "lastname": "Test",
+                      "athlete_data": "2",
+                      "team_data": "2",
+                      "notes": "2",
+                      "create_account": "2",
+                      "permission_change": "2",
+                      "role": "2",
+                      "password1": "12345678",
+                      "password2": "12345678"})
+
+    client.get("/team-select")
+
+    team_id = "1"
+
+    client.post("/edit-team/1", 
+        data={ "athletes_add": [],
+              "athletes_del": [],
+              "coaches": "testCoach4"})
+    #add coach - end
+
+    #to make sure now testCoach4 is the coach of testTeam now - begin
+    client.post("/login", 
+        data={"colby_id": "testCoach4",
+              "password": "12345678"})
+
+    response = client.get('/team/1', follow_redirects=True)
+
+    #print(response.data)
+    assert response.status_code == 200 # redirect to home page
+    assert b'testTeam' in response.data
+    #to make sure now testCoach4 is the coach of testTeam now - end
+
 
 def test_create_team(client):
     create_admin(client)

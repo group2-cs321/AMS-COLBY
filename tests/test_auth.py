@@ -10,7 +10,7 @@ def test_create_app():
 
     assert app != None
 
-def test_failed_login_no_user(client):
+def test_wrong_password(client):
 
     response = client.get('/login')
     print("\n\n ******* \n", response.data)
@@ -41,7 +41,7 @@ def test_failed_login_no_user(client):
         assert response.status_code == 200
         assert b'Incorrect password, try again.' in response.data
 
-def test_wrong_password(client):
+def test_failed_login_no_user(client):
     response = client.get('/login')
     assert response.status_code == 200
     assert b'colby_id' in response.data
@@ -82,6 +82,15 @@ def test_create_admin(client):
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data
 
+    #wrong password - admin
+    response = client.post("/login", 
+                                data={"colby_id": "testAdmin",
+                                      "password": "123456789"})
+
+    print("\n\n", response.data)
+    assert response.status_code == 200
+    assert b'Incorrect password, try again.' in response.data
+
 def test_create_peak(client):
 
     response = client.get('/create-user')
@@ -106,6 +115,15 @@ def test_create_peak(client):
         # print("\n\n", response.data)
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data
+
+    #wrong password - peak
+    response = client.post("/login", 
+                                data={"colby_id": "testPEAK",
+                                      "password": "123456789"})
+
+    print("\n\n", response.data)
+    assert response.status_code == 200
+    assert b'Incorrect password, try again.' in response.data
 
 def test_create_coach(client):
 
@@ -132,6 +150,15 @@ def test_create_coach(client):
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data
 
+    #wrong password - coach
+    response = client.post("/login", 
+                                data={"colby_id": "testCoach",
+                                      "password": "123456789"})
+
+    print("\n\n", response.data)
+    assert response.status_code == 200
+    assert b'Incorrect password, try again.' in response.data
+
 def test_create_athlete(client):
 
     response = client.get('/create-user')
@@ -156,6 +183,15 @@ def test_create_athlete(client):
         print("\n\n", response.data)
         assert response.status_code == 302 # redirect to home page
         assert b'Redirecting' in response.data 
+
+    #wrong password - athlete
+    response = client.post("/login", 
+                                data={"colby_id": "testAthlete",
+                                      "password": "123456789"})
+
+    print("\n\n", response.data)
+    assert response.status_code == 200
+    assert b'Incorrect password, try again.' in response.data
 
 def test_success_ath_login(client):
 
