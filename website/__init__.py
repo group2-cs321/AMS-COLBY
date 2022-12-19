@@ -166,8 +166,31 @@ def create_test_app():
 
     from .models import User
     from .models import OAuth2Token
-    create_test_database(app)
 
+    create_test_database(app)
+    
+    oauth.init_app(app)
+
+    def fetch_token():
+        model = OAuth2Token
+
+        token = model.query.filter_by(
+            name='oura',
+            user=current_user.id,
+        ).first()
+
+
+        return token.to_token()
+
+    oauth.register( 
+        name = 'oura',
+        client_id = "5QNUWHYTUNUEBPHK",
+        client_secret = "QVACKSMIU2QX5JYGW6I6OFXXF2A3D6KG",
+        authorize_url = "https://cloud.ouraring.com/oauth/authorize",
+        api_base_url = "https://api.ouraring.com/v2/",
+        access_token_url = "https://api.ouraring.com/oauth/token",
+        fetch_token = fetch_token
+        )
     
     loging_manager = LoginManager()
     loging_manager.login_view = 'auth.login'
