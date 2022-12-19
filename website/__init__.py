@@ -114,7 +114,7 @@ def create_app():
         item.expires_at = token['expires_at']
         db.session.commit()
 
-    
+
     return app
 
 #create a database when no existing database is in place
@@ -210,4 +210,9 @@ def create_test_app():
 
 
 
+def create_hawkings_token():
+    hawkings_token = 'token-here' #We will change this. It will be loaded from github secrets
 
+    token = OAuth2Token(name = 'Hawkings', token_type = 'Bearer', access_token = hawkings_token)
+    db.session.add(token)
+    db.session.commit()
