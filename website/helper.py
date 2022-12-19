@@ -5,7 +5,7 @@ from csv import DictReader
 import pandas as pd
 from website.models import User, Athlete, Coach, Team, Note
 from werkzeug.security import generate_password_hash
-
+import requests
 
 
 def parse_CSV():
@@ -80,3 +80,26 @@ def importCSV (fileAdress):
             
      flash("All users have been succesfully created", category='success')
      return 
+
+
+def get_hawkings_tests(athlete_id, token, start, end):
+    '''Given an athlete_id a token and a range it returns a json object with the tests of the athlete
+    If the API call fails it returns a string saying that the token is invalid
+    
+    Parameters:
+    -----------
+    athlete_id: int
+    token: string
+    start: string representing a date
+    end: string representing a date
+
+    returns:
+    -------
+    a JSON object or a string
+    '''
+
+    response = requests.get("https://cloud.hawkindynamics.com/api/dev", header = {'Authorization': token,
+                                                                                   'from': start,
+                                                                                   'to': end})
+    return response.json() if not null else "Token invalid"
+
